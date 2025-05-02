@@ -1,8 +1,8 @@
-JetBrains Aqua Hotkeys Reference
+## Hotkeys Reference
 
 This document lists the essential keyboard shortcuts for JetBrains Aqua to enhance developer productivity.
 
-🔍 Navigation
+### Navigation
 
 Search Everywhere: Double Shift
 
@@ -16,7 +16,7 @@ Go to Line: Ctrl + G (Windows/Linux), Cmd + L (macOS)
 
 Recent Files: Ctrl + E (Windows/Linux), Cmd + E (macOS)
 
-🛠 Code Editing
+### Code Editing
 
 Basic Code Completion: Ctrl + Space (Windows/Linux), Ctrl + Space (macOS)
 
@@ -30,7 +30,7 @@ Override Methods: Ctrl + O (Windows/Linux), Cmd + O (macOS)
 
 Implement Methods: Ctrl + I (Windows/Linux), Cmd + I (macOS)
 
-🔄 Refactoring
+### Refactoring
 
 Rename: Shift + F6
 
@@ -40,7 +40,7 @@ Extract Method: Ctrl + Alt + M (Windows/Linux), Cmd + Alt + M (macOS)
 
 Inline: Ctrl + Alt + N (Windows/Linux), Cmd + Alt + N (macOS)
 
-🧪 Testing
+### Testing
 
 Run Tests: Ctrl + Shift + F10 (Windows/Linux), Ctrl + Shift + R (macOS)
 
@@ -48,7 +48,7 @@ Debug Tests: Ctrl + Shift + D (Windows/Linux), Ctrl + Shift + D (macOS)
 
 Rerun Tests: Shift + F10
 
-📁 Project Management
+### Project Management
 
 Open Project View: Alt + 1 (Windows/Linux), Cmd + 1 (macOS)
 
@@ -56,7 +56,7 @@ Open Terminal: Alt + F12 (Windows/Linux), Cmd + Option + T (macOS)
 
 Open Version Control: Alt + 9 (Windows/Linux), Cmd + 9 (macOS)
 
-💡 Utilities
+### Utilities
 
 Show Intention Actions: Alt + Enter
 
