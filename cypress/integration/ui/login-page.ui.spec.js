@@ -27,6 +27,9 @@ describe('LoginPage: Given Login page opened',{testIsolation: false}, () => {
             it('Then user should see the logo', () => {
                 // not implemented yet
             });
+
+            // TODO: fix the bug bugLog.loginPage_noLogoIsVisible - here the link to the issue in GitHub will be provided in case of bug found
+
             it('Then user should see the list of Accepted usernames', () => {
                 // not implemented yet
             });

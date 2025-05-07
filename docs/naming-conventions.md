@@ -9,7 +9,6 @@
     - [It block title](#it-block-title)
 - [Cypress commands naming convention](#cypress-commands-naming-convention)
 - [UI elements localization keys naming convention](#ui-elements-localization-keys-naming-convention)
-- [UI elements colors keys naming convention](#ui-elements-colors-keys-naming-convention)
 
 ## Test file naming convention
 
