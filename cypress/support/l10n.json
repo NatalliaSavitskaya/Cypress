@@ -1,0 +1,17 @@
+{
+  "loginPage": {
+    "title": "Swag Labs",
+    "form": {
+      "login": "Login",
+      "username": "Username",
+      "password": "Password"
+    },
+    "errors": {
+      "usernameIsRequired": "Epic sadface: Username is required",
+      "passwordIsRequired": "Epic sadface: Password is required",
+      "userIsLockedOut": "Epic sadface: Sorry, this user has been locked out.",
+      "accessToPageDenied": "Epic sadface: You can only access '/inventory.html' when you are logged in.",
+      "userNotFound": "Epic sadface: Username and password do not match any user in this service"
+    }
+  }
+}
