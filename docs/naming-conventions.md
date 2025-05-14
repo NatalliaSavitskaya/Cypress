@@ -41,16 +41,16 @@
 - Provide the condition.
 - Patterns:
     - Integration tests: `ModuleName.SubmoduleName.Endpoint.CRUD: When 'condition'`
-    - PageName.ComponentName.USER_ROLE: When 'condition'`
-    - E2E tests: `FlowName.SubFlowName.USER_ROLE: When 'condition'`
+    - PageName.ComponentName: When 'condition'`
+    - E2E tests: `FlowName.SubFlowName: When 'condition'`
 
 ### It block title
 
 - Provide the expected result.
 - Patterns:
     - Integration tests: `ModuleName.SubmoduleName.Endpoint.CRUD: Then 'expected result'`
-    - PageName.ComponentName.USER_ROLE: Then 'expected result'`
-    - E2E tests: `FlowName.SubFlowName.USER_ROLE: Then 'expected result'`
+    - PageName.ComponentName: Then 'expected result'`
+    - E2E tests: `FlowName.SubFlowName: Then 'expected result'`
 
 ## Cypress commands naming convention
 
