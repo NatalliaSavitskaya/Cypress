@@ -15,3 +15,18 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+// Import necessary modules and resources
+import l10n from './l10n.json';
+import selectors from './selectors';
+import urls from './urls';
+import requirements from './requirements';
+
+// Declare global variables
+global.l10n = l10n;
+global.selectors = selectors;
+global.urls = urls;
+global.requirements = requirements;
+
+// Separate selectors by pages
+global.loginPage = selectors.login;

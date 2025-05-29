@@ -1,5 +1,12 @@
 {
+  "name": "cypress-project",
+  "version": "1.0.0",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
   "devDependencies": {
-    "cypress": "^14.3.2"
+    "cypress": "^14.3.2",
+    "prettier": "^3.5.3"
   }
 }
