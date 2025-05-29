@@ -69,5 +69,3 @@ The `main` branch is protected with the following enforced rules:
 | Disallow merge & rebase merges           | ✅ Enforced  |
 | Auto-delete branch after PR merge        | ✅ Enabled   |
 | Block direct commits to `main`           | ✅ Enforced  |
-
----
