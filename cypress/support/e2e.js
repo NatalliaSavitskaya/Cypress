@@ -29,4 +29,4 @@ global.urls = urls;
 global.requirements = requirements;
 
 // Separate selectors by pages
-global.loginPage = selectors.login;
+global.loginPage = selectors.loginPage;

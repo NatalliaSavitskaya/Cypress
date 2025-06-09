@@ -5,16 +5,16 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
 
   context('LoginPage: When user explore the Login page', () => {
     it('LoginPage: Then user should see the title', () => {
-      cy.get(selectors.loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
+      cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
     });
     it('LoginPage: Then user should see the Username field with placeholder', () => {
-      cy.get(selectors.loginPage.username).should('have.attr', 'placeholder', l10n.loginPage.form.username).and('have.value', '').and('be.visible');
+      cy.get(loginPage.username).should('have.attr', 'placeholder', l10n.loginPage.form.username).and('have.value', '').and('be.visible');
     });
     it('LoginPage: Then user should see the Password field with placeholder', () => {
-      cy.get(selectors.loginPage.password).should('have.attr', 'placeholder', l10n.loginPage.form.password).and('have.value', '').and('be.visible');
+      cy.get(loginPage.password).should('have.attr', 'placeholder', l10n.loginPage.form.password).and('have.value', '').and('be.visible');
     });
     it('LoginPage: Then user should see the Login button', () => {
-      cy.get(selectors.loginPage.login).should('have.value', l10n.loginPage.form.login).and('be.visible').and('be.enabled');
+      cy.get(loginPage.login).should('have.value', l10n.loginPage.form.login).and('be.visible').and('be.enabled');
     });
     it('LoginPage: Then user should see the URL of Login page', () => {
       // not implemented yet
