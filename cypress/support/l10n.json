@@ -13,5 +13,11 @@
       "accessToPageDenied": "Epic sadface: You can only access '/inventory.html' when you are logged in.",
       "userNotFound": "Epic sadface: Username and password do not match any user in this service"
     }
+  },
+  "inventoryPage": {
+    "title": "Products"
+  },
+  "generalItems": {
+    "logOut": "Logout"
   }
 }

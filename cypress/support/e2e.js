@@ -27,6 +27,9 @@ global.l10n = l10n;
 global.selectors = selectors;
 global.urls = urls;
 global.requirements = requirements;
+global.users = require('../sensitive-data/test-users.json');
 
 // Separate selectors by pages
 global.loginPage = selectors.loginPage;
+global.inventoryPage = selectors.inventoryPage
+global.generalItems = selectors.generalItems
