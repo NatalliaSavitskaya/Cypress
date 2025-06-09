@@ -17,7 +17,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
       cy.get(loginPage.login).should('have.value', l10n.loginPage.form.login).and('be.visible').and('be.enabled');
     });
     it('LoginPage: Then user should see the URL of Login page', () => {
-      cy.url().should('eq', 'https://www.saucedemo.com/');
+      cy.url().should('eq', urls.pages.login);
     });
     it('LoginPage: Then user should see the list of Accepted usernames', () => {
       cy.get(loginPage.acceptedUsernames)
@@ -50,7 +50,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
       cy.get(loginPage.login).click();
     });
     it('LoginPage: Then Standard user should be navigated to the Inventory page', () => {
-      cy.url().should('eq', 'https://www.saucedemo.com/inventory.html');
+      cy.url().should('eq', urls.pages.inventory);
     });
     it('LoginPage: Then Standard user should see the title of Inventory page', () => {
       cy.get(inventoryPage.title).should('have.text', l10n.inventoryPage.title).and('be.visible');
@@ -195,7 +195,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     });
     it('LoginPage: Then user should be navigated to the Login page', () => {
       cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
-      cy.url().should('eq', 'https://www.saucedemo.com/');
+      cy.url().should('eq', urls.pages.login);
     });
   });
 });
