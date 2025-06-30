@@ -18,10 +18,10 @@ const inventoryPage = {
         dropdown: '[data-test="product-sort-container"]',
         currentOption: '[data-test="active-option"]',
         options: {
-            nameAscending: 'option[value="az"]',
-            nameDescending: 'option[value="za"]',
-            priceAscending: 'option[value="lohi"]',
-            priceDescending: 'option[value="hilo"]'
+            nameAscending: 'az',
+            nameDescending: 'za',
+            priceAscending: 'lohi',
+            priceDescending: 'hilo'
         },
     },
     inventoryItem: {
@@ -34,7 +34,7 @@ const inventoryPage = {
     },
 };
 
-const generalItems = {
+const headerItems = {
     logOut: '[data-test="logout-sidebar-link"]',
     burgerMenu: '[id="react-burger-menu-btn"]',
     resetAppState: '[data-test="reset-sidebar-link"]',
@@ -44,12 +44,12 @@ const generalItems = {
     cartProductsCounter: '[data-test="shopping-cart-badge"]'
 };
 
-const footerComp = {
+const footerItems = {
     twitter: '[data-test="social-twitter"]',
     facebook: '[data-test="social-facebook"]',
     linkedin: '[data-test="social-linkedin"]',
     copyRight: '[data-test="footer-copy"]'
 };
 export default {
-    loginPage, inventoryPage, generalItems, footerComp
+    loginPage, inventoryPage, headerItems, footerItems
 };

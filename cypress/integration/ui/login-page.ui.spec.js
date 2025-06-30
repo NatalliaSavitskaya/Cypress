@@ -47,7 +47,9 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     beforeEach(() => {
       cy.get(loginPage.username).type(users.StandardUser.username);
       cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then Standard user should be navigated to the Inventory page', () => {
       cy.url().should('eq', urls.pages.inventory);
@@ -61,7 +63,9 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     beforeEach(() => {
       cy.get(loginPage.username).type('invalid_username');
       cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
@@ -87,7 +91,9 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     beforeEach(() => {
       cy.get(loginPage.username).type(users.StandardUser.username);
       cy.get(loginPage.password).type('invalid_password');
-      cy.get(loginPage.login).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
@@ -112,7 +118,9 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   context('LoginPage: When Standard user leaves Username field empty and enters valid Password and clicks Login button', () => {
     beforeEach(() => {
       cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
@@ -137,7 +145,9 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   context('LoginPage: When Standard user enters valid Username and leaves Password field empty and clicks Login button', () => {
     beforeEach(() => {
       cy.get(loginPage.username).type(users.StandardUser.username);
-      cy.get(loginPage.login).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
@@ -163,7 +173,9 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     beforeEach(() => {
       cy.get(loginPage.username).type(users.LockedUser.username);
       cy.get(loginPage.password).type(users.LockedUser.password);
-      cy.get(loginPage.login).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
@@ -189,9 +201,13 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     beforeEach(() => {
       cy.get(loginPage.username).type(users.StandardUser.username);
       cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).click();
-      cy.get(generalItems.burgerMenu).click();
-      cy.get(generalItems.logOut).click();
+      cy.get(loginPage.login).then(($btn) => {
+        cy.wrap($btn).click();
+      });
+      cy.get(headerItems.burgerMenu).click();
+      cy.get(headerItems.logOut).then(($btn) => {
+        cy.wrap($btn).click();
+      });
     });
     it('LoginPage: Then user should be navigated to the Login page', () => {
       cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');

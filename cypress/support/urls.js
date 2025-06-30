@@ -1,6 +1,7 @@
 const pages = {
-    login: `${Cypress.env('baseUrl')}/`,
-    inventory: `${Cypress.env('baseUrl')}/inventory.html`,
+    login: `${Cypress.config('baseUrl')}/`,
+    inventory: `${Cypress.config('baseUrl')}/inventory.html`,
+    cart: `${Cypress.config('baseUrl')}/cart.html`,
 }
 
 const externalPages = {
