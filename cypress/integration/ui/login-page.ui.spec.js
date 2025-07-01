@@ -63,8 +63,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     beforeEach(() => {
       cy.get(loginPage.username).type('invalid_username');
       cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
+      cy.then(() => {
+        cy.get(loginPage.login).click();
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {

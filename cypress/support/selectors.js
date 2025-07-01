@@ -39,7 +39,6 @@ const headerItems = {
     burgerMenu: '[id="react-burger-menu-btn"]',
     resetAppState: '[data-test="reset-sidebar-link"]',
     closeMenu: '[id="react-burger-cross-btn"]',
-    sortingControl: '[data-test="product-sort-container"]',
     cartIcon: '[data-test="shopping-cart-link"]',
     cartProductsCounter: '[data-test="shopping-cart-badge"]'
 };

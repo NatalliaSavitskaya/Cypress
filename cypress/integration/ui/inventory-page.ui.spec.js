@@ -1,7 +1,12 @@
 describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
-    loginStandardUser();
+    cy.then(() => {
+      cy.loginUser(users.StandardUser);
+    });
+    cy.then(() => {
+      cy.resetAppState();
+    });
   });
 
   context('InventoryPage: When user explore the Inventory page', () => {
@@ -12,13 +17,13 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
       cy.get(inventoryPage.title).should('have.text', l10n.inventoryPage.title).and('be.visible');
     });
     it('InventoryPage: Then user should see sorting control with default value', () => {
-      cy.get(headerItems.sortingControl).contains(l10n.headerItems.sortingOptions.nameAsc).and('be.visible');
+      cy.get(inventoryPage.sorting.dropdown)
+        .should('have.value', inventoryPage.sorting.options.nameAscending);
     });
     it('InventoryPage: Then user should see the Cart icon', () => {
       cy.get(headerItems.cartIcon).should('be.visible');
     });
     it('InventoryPage: Then the Cart Product Counter does not contain any numbers', () => {
-      resetAppState();
       cy.get(headerItems.cartProductsCounter).should('not.exist');
     });
     it('InventoryPage: Then default number of product cards should be displayed', () => {
@@ -28,24 +33,16 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
 
   context('InventoryPage: When user explore the footers on the Inventory page', () => {
     it('InventoryPage: Then LinkedIn icon with link should be displayed', () => {
-      cy.get(footerItems.linkedin)
-        .should('have.attr', 'href', urls.externalPages.linkedin)
-        .and('be.visible');
+      cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');
     });
     it('InventoryPage: Then Twitter icon with link should be displayed', () => {
-      cy.get(footerItems.twitter)
-        .should('have.attr', 'href', urls.externalPages.twitter)
-        .and('be.visible');
+      cy.get(footerItems.twitter).should('have.attr', 'href', urls.externalPages.twitter).and('be.visible');
     });
     it('InventoryPage: Then Facebook icon with link should be displayed', () => {
-      cy.get(footerItems.facebook)
-        .should('have.attr', 'href', urls.externalPages.facebook)
-        .and('be.visible');
+      cy.get(footerItems.facebook).should('have.attr', 'href', urls.externalPages.facebook).and('be.visible');
     });
     it('InventoryPage: Then the Copyright notice should be displayed', () => {
-      cy.get(footerItems.copyRight)
-        .should('have.text', l10n.footerItems.copyRight)
-        .and('be.visible');
+      cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
   });
 
@@ -57,7 +54,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
           .find(inventoryPage.inventoryItem.title)
           .invoke('text')
           .then((actualName) => {
-              expect(actualName.trim()).to.eq(item.title);
+            expect(actualName.trim()).to.eq(item.title);
           });
       });
     });
@@ -70,7 +67,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
           .then((actualDescription) => {
             cy.log(`Expected: ${item.description}`);
             cy.log(`Actual: ${actualDescription.trim()}`);
-              expect(actualDescription.trim()).to.eq(item.description);
+            expect(actualDescription.trim()).to.eq(item.description);
           });
       });
     });
@@ -81,7 +78,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
           .find(inventoryPage.inventoryItem.price)
           .invoke('text')
           .then((actualPrice) => {
-              expect(actualPrice.trim()).to.eq(item.price);
+            expect(actualPrice.trim()).to.eq(item.price);
           });
       });
     });
@@ -112,7 +109,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.price)
         .then(($prices) => {
-          const prices = [...$prices].map(priceEl => parseFloat(priceEl.innerText.replace('$', '').trim()));
+          const prices = [...$prices].map((priceEl) => parseFloat(priceEl.innerText.replace('$', '').trim()));
           const sortedPrices = [...prices].sort((a, b) => a - b);
           expect(prices).to.deep.equal(sortedPrices);
         });
@@ -125,7 +122,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.price)
         .then(($prices) => {
-          const prices = [...$prices].map(priceEl => parseFloat(priceEl.innerText.replace('$', '').trim()));
+          const prices = [...$prices].map((priceEl) => parseFloat(priceEl.innerText.replace('$', '').trim()));
           const sortedPrices = [...prices].sort((a, b) => b - a);
           expect(prices).to.deep.equal(sortedPrices);
         });
@@ -138,7 +135,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.title)
         .then(($titles) => {
-          const titles = [...$titles].map(titleEl => titleEl.innerText.trim().toLowerCase());
+          const titles = [...$titles].map((titleEl) => titleEl.innerText.trim().toLowerCase());
           const sortedTitles = [...titles].sort((a, b) => a.localeCompare(b));
           expect(titles).to.deep.equal(sortedTitles);
         });
@@ -151,7 +148,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.title)
         .then(($titles) => {
-          const titles = [...$titles].map(titleEl => titleEl.innerText.trim().toLowerCase());
+          const titles = [...$titles].map((titleEl) => titleEl.innerText.trim().toLowerCase());
           const sortedTitles = [...titles].sort((a, b) => b.localeCompare(a));
           expect(titles).to.deep.equal(sortedTitles);
         });
@@ -160,75 +157,40 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
 
   context('InventoryPage: When user adds first product to the cart', () => {
     before(() => {
-      cy.get(inventoryPage.inventoryItems)
-        .first()
-        .find(inventoryPage.inventoryItem.addButton)
-        .click();
+      cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.addButton).click();
     });
     it('InventoryPage: Then the Cart Product Counter is increased by 1', () => {
-      cy.get(headerItems.cartProductsCounter)
-        .should('be.visible')
-        .and('have.text', '1');
+      cy.get(headerItems.cartProductsCounter).should('be.visible').and('have.text', '1');
     });
     it('InventoryPage: Then Add to cart button is not shown for the added item', () => {
-      cy.get(inventoryPage.inventoryItems)
-        .first()
-        .find(inventoryPage.inventoryItem.addButton)
-        .should('not.exist');
+      cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.addButton).should('not.exist');
     });
     it('InventoryPage: Then Remove button is shown for the added item', () => {
-      cy.get(inventoryPage.inventoryItems)
-        .first()
-        .find(inventoryPage.inventoryItem.removeButton)
-        .should('be.visible');
+      cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.removeButton).should('be.visible');
     });
   });
 
   context('InventoryPage: When user removes first added to the Card item from it', () => {
     it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
-      cy.get(inventoryPage.inventoryItems)
-        .first()
-        .find(inventoryPage.inventoryItem.removeButton)
-        .click();
+      cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.removeButton).click();
       cy.get(headerItems.cartProductsCounter).should('not.exist');
     });
     it('InventoryPage: Then Add to card button is shown for the removed item', () => {
-      cy.get(inventoryPage.inventoryItems)
-        .first()
-        .find(inventoryPage.inventoryItem.addButton)
-        .should('be.visible');
+      cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.addButton).should('be.visible');
     });
     it('InventoryPage: Then Remove button is not shown on removed item', () => {
-      cy.get(inventoryPage.inventoryItems)
-        .first()
-        .find(inventoryPage.inventoryItem.removeButton)
-        .should('not.exist');
+      cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.removeButton).should('not.exist');
     });
   });
 
   context('InventoryPage: When user clicks on Cart icon', () => {
-    it('InventoryPage: Then user should be redirected to the Cart page',() => {
+    it('InventoryPage: Then user should be redirected to the Cart page', () => {
       cy.get(headerItems.cartIcon).click();
       cy.url().should('eq', urls.pages.cart);
     });
   });
 
   after(() => {
-    resetAppState();
+    cy.resetAppState();
   });
 });
-
-function resetAppState() {
-  cy.get(headerItems.burgerMenu).click();
-  cy.get(headerItems.resetAppState)
-    .should('exist')
-    .and('be.visible')
-    .click({ force: true });
-  cy.get(headerItems.closeMenu).click();
-}
-
-function loginStandardUser() {
-  cy.get(loginPage.username).type(users.StandardUser.username);
-  cy.get(loginPage.password).type(users.StandardUser.password);
-  cy.get(loginPage.login).click();
-}
