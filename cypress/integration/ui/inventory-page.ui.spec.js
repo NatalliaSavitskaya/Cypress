@@ -32,19 +32,16 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
         .should('have.attr', 'href', urls.externalPages.linkedin)
         .and('be.visible');
     });
-
     it('InventoryPage: Then Twitter icon with link should be displayed', () => {
       cy.get(footerItems.twitter)
         .should('have.attr', 'href', urls.externalPages.twitter)
         .and('be.visible');
     });
-
     it('InventoryPage: Then Facebook icon with link should be displayed', () => {
       cy.get(footerItems.facebook)
         .should('have.attr', 'href', urls.externalPages.facebook)
         .and('be.visible');
     });
-
     it('InventoryPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight)
         .should('have.text', l10n.footerItems.copyRight)
@@ -52,11 +49,7 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
     });
   });
 
-
   context('InventoryPage: When user explore the product items on the Inventory page', () => {
-    before(() => {
-      resetAppState();
-    });
     it('InventoryPage: Then user should see the title for each product', () => {
       cy.get(inventoryPage.inventoryItems).each(($el, index) => {
         const item = products[index];
@@ -192,13 +185,11 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
   });
 
   context('InventoryPage: When user removes first added to the Card item from it', () => {
-    before(() => {
+    it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
       cy.get(inventoryPage.inventoryItems)
         .first()
         .find(inventoryPage.inventoryItem.removeButton)
         .click();
-    });
-    it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
       cy.get(headerItems.cartProductsCounter).should('not.exist');
     });
     it('InventoryPage: Then Add to card button is shown for the removed item', () => {
@@ -215,21 +206,15 @@ describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () 
     });
   });
 
-  after(() => {
-    resetAppState();
-  });
-});
-
-describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () => {
-  before(() => {
-    cy.visit('/');
-    loginStandardUser();
-  });
   context('InventoryPage: When user clicks on Cart icon', () => {
     it('InventoryPage: Then user should be redirected to the Cart page',() => {
       cy.get(headerItems.cartIcon).click();
       cy.url().should('eq', urls.pages.cart);
     });
+  });
+
+  after(() => {
+    resetAppState();
   });
 });
 
