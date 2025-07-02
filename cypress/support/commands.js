@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('resetAppState', () => {
+  cy.get(headerItems.burgerMenu).click({ animationDistanceThreshold: 20 });
+  cy.then(() => {
+    cy.get(headerItems.resetAppState).click();
+  });
+  cy.then(() => {
+    cy.get(headerItems.closeMenu).click();
+  });
+});
+Cypress.Commands.add('loginUser', ({username,password}) => {
+  cy.get(loginPage.username).type(username,{ delay: 0 });
+  cy.get(loginPage.password).type(password, { log: false, delay: 0 });
+  cy.then(() => {
+    cy.get(loginPage.login).click();
+  });
+});

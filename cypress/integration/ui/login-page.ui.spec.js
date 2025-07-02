@@ -4,116 +4,215 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When user explore the Login page', () => {
-    it('LoginPage: Then user should see the title', () => {
-      cy.get(selectors.loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
+    it('LoginPage: Then user should see the title of Login page', () => {
+      cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
     });
     it('LoginPage: Then user should see the Username field with placeholder', () => {
-      cy.get(selectors.loginPage.username).should('have.attr', 'placeholder', l10n.loginPage.form.username).and('have.value', '').and('be.visible');
+      cy.get(loginPage.username).should('have.attr', 'placeholder', l10n.loginPage.form.username).and('have.value', '').and('be.visible');
     });
     it('LoginPage: Then user should see the Password field with placeholder', () => {
-      cy.get(selectors.loginPage.password).should('have.attr', 'placeholder', l10n.loginPage.form.password).and('have.value', '').and('be.visible');
+      cy.get(loginPage.password).should('have.attr', 'placeholder', l10n.loginPage.form.password).and('have.value', '').and('be.visible');
     });
     it('LoginPage: Then user should see the Login button', () => {
-      cy.get(selectors.loginPage.login).should('have.value', l10n.loginPage.form.login).and('be.visible').and('be.enabled');
+      cy.get(loginPage.login).should('have.value', l10n.loginPage.form.login).and('be.visible').and('be.enabled');
     });
     it('LoginPage: Then user should see the URL of Login page', () => {
-      // not implemented yet
+      cy.url().should('eq', urls.pages.login);
     });
-    it('LoginPage: Then user should see the logo', () => {
-      // not implemented yet
-    });
-
-    // TODO: fix the bug bugLog.loginPage_noLogoIsVisible - here the link to the issue in GitHub will be provided in case of bug found
-
     it('LoginPage: Then user should see the list of Accepted usernames', () => {
-      // not implemented yet
+      cy.get(loginPage.acceptedUsernames)
+        .should('be.visible')
+        .invoke('text')
+        .then((text) => {
+          expect(text).to.include('Accepted usernames are:');
+          expect(text).to.include('standard_user');
+          expect(text).to.include('locked_out_user');
+          expect(text).to.include('problem_user');
+          expect(text).to.include('performance_glitch_user');
+          expect(text).to.include('error_user');
+          expect(text).to.include('visual_user');
+        });
     });
     it('LoginPage: Then user should see the Password for all users', () => {
-      // not implemented yet
+      cy.get(loginPage.acceptedPassword)
+        .should('be.visible')
+        .invoke('text')
+        .then((text) => {
+          expect(text).to.include('secret_sauce');
+        });
     });
   });
 
-  context('LoginPage: When user enters valid credentials and clicks Login button', () => {
-    it('LoginPage: Then user should be navigated to the Inventory page', () => {
-      // not implemented yet
+  context('LoginPage: When Standard user enters valid credentials and clicks Login button', () => {
+    before(() => {
+      cy.loginUser(users.StandardUser);
+    });
+    it('LoginPage: Then Standard user should be navigated to the Inventory page', () => {
+      cy.url().should('eq', urls.pages.inventory);
+    });
+    it('LoginPage: Then Standard user should see the title of Inventory page', () => {
+      cy.get(inventoryPage.title).should('have.text', l10n.inventoryPage.title).and('be.visible');
     });
   });
 
-  context('LoginPage: When user enters invalid credentials and clicks Login button', () => {
-    it('LoginPage: Then Username and Password fields should be underlined with a red line', () => {
-      // not implemented yet
+  context('LoginPage: When logged in Standard user clicks Logout button', () => {
+    before(() => {
+      cy.get(headerItems.burgerMenu).click();
+      cy.then(() => {
+        cy.get(headerItems.logOut).click();
+      });
     });
-    it('LoginPage: Then the error message should be displayed under the Login button', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
-      // not implemented yet
-    });
-  });
-
-  context('LoginPage: When user leaves Username field empty and enters valid Password and clicks Login button', () => {
-    it('LoginPage: Then Username and Password fields should be underlined with a red line', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the error message should be displayed under the Login button', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
-      // not implemented yet
-    });
-  });
-
-  context('LoginPage: When user enters valid Username and leaves Password field empty and clicks Login button', () => {
-    it('LoginPage: Then Username and Password fields should be underlined with a red line', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the error message should be displayed under the Login button', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
-      // not implemented yet
-    });
-  });
-
-  context('LoginPage: When user leaves Username and Password fields empty and clicks Login button', () => {
-    it('LoginPage: Then Username and Password fields should be underlined with a red line', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the error message should be displayed under the Login button', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
-      // not implemented yet
-    });
-    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
-      // not implemented yet
-    });
-  });
-
-  context('LoginPage: When logged in user clicks Logout button', () => {
     it('LoginPage: Then user should be navigated to the Login page', () => {
-      // not implemented yet
+      cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
+      cy.url().should('eq', urls.pages.login);
+    });
+  });
+
+  context('LoginPage: When Standard user enters invalid Username and valid Password and clicks Login button', () => {
+    before(() => {
+      cy.get(loginPage.username).type('invalid_username',{ delay: 0 });
+      cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
+      });
+    });
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userNotFound);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(loginPage.username).clear();
+      cy.get(loginPage.password).clear();
+    });
+  });
+
+  context('LoginPage: When Standard user enters valid Username and invalid Password and clicks Login button', () => {
+    before(() => {
+      cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
+      cy.get(loginPage.password).type('invalid_password', { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
+      });
+    });
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userNotFound);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(loginPage.username).clear();
+      cy.get(loginPage.password).clear();
+    });
+  });
+
+  context('LoginPage: When Standard user leaves Username field empty and enters valid Password and clicks Login button', () => {
+    before(() => {
+      cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
+      });
+    });
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.usernameIsRequired);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(loginPage.password).clear();
+    });
+  });
+
+  context('LoginPage: When Standard user enters valid Username and leaves Password field empty and clicks Login button', () => {
+    before(() => {
+      cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
+      });
+    });
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.passwordIsRequired);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(loginPage.username).clear();
+    });
+  });
+
+  context('LoginPage: When Locked user enters valid credentials and clicks Login button', () => {
+    before(() => {
+      cy.loginUser(users.LockedUser);
+    })
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userIsLockedOut);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
     });
   });
 });

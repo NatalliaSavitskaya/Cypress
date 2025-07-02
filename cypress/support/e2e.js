@@ -21,12 +21,18 @@ import l10n from './l10n.json';
 import selectors from './selectors';
 import urls from './urls';
 import requirements from './requirements';
+import products from '../products/products.json';
 
 // Declare global variables
 global.l10n = l10n;
 global.selectors = selectors;
 global.urls = urls;
 global.requirements = requirements;
+global.users = require('../sensitive-data/test-users.json');
+global.products = products;
 
 // Separate selectors by pages
-global.loginPage = selectors.login;
+global.loginPage = selectors.loginPage;
+global.inventoryPage = selectors.inventoryPage;
+global.headerItems = selectors.headerItems;
+global.footerItems = selectors.footerItems
