@@ -1,5 +1,5 @@
 describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit('/');
   });
 
@@ -44,12 +44,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters valid credentials and clicks Login button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.username).type(users.StandardUser.username);
-      cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
-      });
+    before(() => {
+      cy.loginUser(users.StandardUser);
     });
     it('LoginPage: Then Standard user should be navigated to the Inventory page', () => {
       cy.url().should('eq', urls.pages.inventory);
@@ -59,10 +55,23 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     });
   });
 
+  context('LoginPage: When logged in Standard user clicks Logout button', () => {
+    before(() => {
+      cy.get(headerItems.burgerMenu).click();
+      cy.then(() => {
+        cy.get(headerItems.logOut).click();
+      });
+    });
+    it('LoginPage: Then user should be navigated to the Login page', () => {
+      cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
+      cy.url().should('eq', urls.pages.login);
+    });
+  });
+
   context('LoginPage: When Standard user enters invalid Username and valid Password and clicks Login button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.username).type('invalid_username');
-      cy.get(loginPage.password).type(users.StandardUser.password);
+    before(() => {
+      cy.get(loginPage.username).type('invalid_username',{ delay: 0 });
+      cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
       cy.then(() => {
         cy.get(loginPage.login).click();
       });
@@ -85,14 +94,18 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
       cy.get(loginPage.errorClose).should('be.visible');
     });
+    after(() => {
+      cy.get(loginPage.username).clear();
+      cy.get(loginPage.password).clear();
+    });
   });
 
   context('LoginPage: When Standard user enters valid Username and invalid Password and clicks Login button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.username).type(users.StandardUser.username);
-      cy.get(loginPage.password).type('invalid_password');
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
+    before(() => {
+      cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
+      cy.get(loginPage.password).type('invalid_password', { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
@@ -113,13 +126,17 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
       cy.get(loginPage.errorClose).should('be.visible');
     });
+    after(() => {
+      cy.get(loginPage.username).clear();
+      cy.get(loginPage.password).clear();
+    });
   });
 
   context('LoginPage: When Standard user leaves Username field empty and enters valid Password and clicks Login button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
+    before(() => {
+      cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
@@ -140,13 +157,16 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
       cy.get(loginPage.errorClose).should('be.visible');
     });
+    after(() => {
+      cy.get(loginPage.password).clear();
+    });
   });
 
   context('LoginPage: When Standard user enters valid Username and leaves Password field empty and clicks Login button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.username).type(users.StandardUser.username);
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
+    before(() => {
+      cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
@@ -167,16 +187,15 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
       cy.get(loginPage.errorClose).should('be.visible');
     });
+    after(() => {
+      cy.get(loginPage.username).clear();
+    });
   });
 
   context('LoginPage: When Locked user enters valid credentials and clicks Login button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.username).type(users.LockedUser.username);
-      cy.get(loginPage.password).type(users.LockedUser.password);
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
-      });
-    });
+    before(() => {
+      cy.loginUser(users.LockedUser);
+    })
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
     });
@@ -194,24 +213,6 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     });
     it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
       cy.get(loginPage.errorClose).should('be.visible');
-    });
-  });
-
-  context('LoginPage: When logged in Standard user clicks Logout button', () => {
-    beforeEach(() => {
-      cy.get(loginPage.username).type(users.StandardUser.username);
-      cy.get(loginPage.password).type(users.StandardUser.password);
-      cy.get(loginPage.login).then(($btn) => {
-        cy.wrap($btn).click();
-      });
-      cy.get(headerItems.burgerMenu).click();
-      cy.get(headerItems.logOut).then(($btn) => {
-        cy.wrap($btn).click();
-      });
-    });
-    it('LoginPage: Then user should be navigated to the Login page', () => {
-      cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
-      cy.url().should('eq', urls.pages.login);
     });
   });
 });

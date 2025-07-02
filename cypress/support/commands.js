@@ -34,8 +34,8 @@ Cypress.Commands.add('resetAppState', () => {
   });
 });
 Cypress.Commands.add('loginUser', ({username,password}) => {
-  cy.get(loginPage.username).type(username);
-  cy.get(loginPage.password).type(password);
+  cy.get(loginPage.username).type(username,{ delay: 0 });
+  cy.get(loginPage.password).type(password, { log: false, delay: 0 });
   cy.then(() => {
     cy.get(loginPage.login).click();
   });
