@@ -1,4 +1,4 @@
-describe('LoginPage: Given Inventory page opened', { testIsolation: false }, () => {
+describe('InventoryPage: Given Inventory page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
     cy.then(() => {
