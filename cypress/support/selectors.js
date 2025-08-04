@@ -34,6 +34,34 @@ const inventoryPage = {
     },
 };
 
+const cartPage = {
+    title: '[data-test="title"]',
+    quantityLabel: '[data-test="cart-quantity-label"]',
+    descriptionLabel: '[data-test="cart-desc-label"]',
+    continueShopping: '[data-test="continue-shopping"]',
+    checkout: '[data-test="checkout"]',
+    items: '[data-test="inventory-item"]',
+    item: {
+        title: '[data-test="inventory-item-name"]',
+        description: '[data-test="inventory-item-desc"]',
+        price: '[data-test="inventory-item-price"]',
+        quantity: '[data-test="item-quantity"]',
+        remove: '[data-test^="remove-"]',
+    },
+};
+
+const checkoutPage = {
+    title: '[data-test="title"]',
+    firstName: '[data-test="firstName"]',
+    lastName: '[data-test="lastName"]',
+    zip: '[data-test="postalCode"]',
+    continue: '[data-test="continue"]',
+    cancel: '[data-test="cancel"]',
+    error: '.error-message-container',
+    errorMessage: '[data-test="error"]',
+    errorClose: '[data-test="error-button"]',
+};
+
 const headerItems = {
     logOut: '[data-test="logout-sidebar-link"]',
     burgerMenu: '[id="react-burger-menu-btn"]',
@@ -50,5 +78,5 @@ const footerItems = {
     copyRight: '[data-test="footer-copy"]'
 };
 export default {
-    loginPage, inventoryPage, headerItems, footerItems
+    loginPage, inventoryPage, cartPage, checkoutPage, headerItems, footerItems
 };

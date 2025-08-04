@@ -18,6 +18,27 @@
     "title": "Products",
     "addToCartButton": "Add to cart"
   },
+  "cartPage": {
+    "title": "Your Cart",
+    "continueShopping": "Continue Shopping",
+    "checkout": "Checkout",
+    "quantity": "QTY",
+    "description": "Description",
+    "remove": "Remove"
+  },
+  "checkoutPage": {
+    "title": "Checkout: Your Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "postalCode": "Postal Code",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "errors": {
+      "firstNameIsRequired": "Error: First Name is required",
+      "lastNameIsRequired": "Error: Last Name is required",
+      "postalCodeIsRequired": "Error: Postal Code is required"
+    }
+  },
   "headerItems": {
     "logOut": "Logout",
     "sortingOptions": {

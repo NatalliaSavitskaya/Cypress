@@ -34,5 +34,7 @@ global.products = products;
 // Separate selectors by pages
 global.loginPage = selectors.loginPage;
 global.inventoryPage = selectors.inventoryPage;
+global.cartPage = selectors.cartPage;
+global.checkoutPage = selectors.checkoutPage;
 global.headerItems = selectors.headerItems;
 global.footerItems = selectors.footerItems
