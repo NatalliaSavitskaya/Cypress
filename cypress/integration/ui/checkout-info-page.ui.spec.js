@@ -15,8 +15,6 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
     });
   });
 
-  let randomIndex;
-
   context('CheckoutInfoPage: When user explore the Checkout Info page', () => {
     it('CheckoutInfoPage: Then user should see the URL of Checkout Info page', () => {
       cy.url().should('eq', urls.pages.checkoutInfo);
@@ -70,8 +68,8 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
 
   context('CheckoutInfoPage: When user leaves Firstname field empty and enters valid Lastname and Code and clicks Continue button', () => {
     before(() => {
-      cy.get(checkoutInfoPage.lastName).type('LastName', { delay: 0 });
-      cy.get(checkoutInfoPage.zip).type('ZIP', { delay: 0 });
+      cy.get(checkoutInfoPage.lastName).type(usersInfo.StandardUserInfo.lastname, { delay: 0 });
+      cy.get(checkoutInfoPage.zip).type(usersInfo.StandardUserInfo.zipcode, { delay: 0 });
       cy.then(() => {
         cy.get(checkoutInfoPage.continue).click();
       });
@@ -108,8 +106,8 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
 
   context('CheckoutInfoPage: When user leaves Lastname field empty and enters valid Firstname and Code and clicks Continue button', () => {
     before(() => {
-      cy.get(checkoutInfoPage.firstName).type('FirstName', { delay: 0 });
-      cy.get(checkoutInfoPage.zip).type('ZIP', { delay: 0 });
+      cy.get(checkoutInfoPage.firstName).type(usersInfo.StandardUserInfo.firstname, { delay: 0 });
+      cy.get(checkoutInfoPage.zip).type(usersInfo.StandardUserInfo.zipcode, { delay: 0 });
       cy.then(() => {
         cy.get(checkoutInfoPage.continue).click();
       });
@@ -146,8 +144,8 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
 
   context('CheckoutInfoPage: When user leaves ZIPCode field empty and enters valid Firstname and Lastname and clicks Continue button', () => {
     before(() => {
-      cy.get(checkoutInfoPage.firstName).type('FirstName', { delay: 0 });
-      cy.get(checkoutInfoPage.lastName).type('LastName', { delay: 0 });
+      cy.get(checkoutInfoPage.firstName).type(usersInfo.StandardUserInfo.firstname, { delay: 0 });
+      cy.get(checkoutInfoPage.lastName).type(usersInfo.StandardUserInfo.lastname, { delay: 0 });
       cy.then(() => {
         cy.get(checkoutInfoPage.continue).click();
       });
@@ -184,7 +182,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
 
   context('CheckoutInfoPage: When user fills First name, Last name, ZIP Code with valid data and clicks Continue button', () => {
     before(() => {
-      cy.checkoutUser({ firstname: 'FirstName', lastname: 'LastName', zipcode: '12345' });
+      cy.checkoutUser(usersInfo.StandardUserInfo);
     });
     it('CheckoutInfoPage: Then user should be redirected to the Checkout Overview page', () => {
       cy.url().should('eq', urls.pages.checkoutOverview);

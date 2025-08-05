@@ -1,0 +1,12 @@
+{
+  "StandardUserInfo": {
+    "firstname": "John",
+    "lastname": "Doe",
+    "zipcode": "12345"
+  },
+  "LockedUserInfo": {
+    "firstname": "Mikle",
+    "lastname": "Johnson",
+    "zipcode": "54321"
+  }
+}

@@ -41,6 +41,8 @@
   },
   "checkoutOverviewPage": {
     "title": "Checkout: Overview",
+    "quantity": "QTY",
+    "description": "Description",
     "finish": "Finish",
     "cancel": "Cancel",
     "itemTotal": "Item total",
