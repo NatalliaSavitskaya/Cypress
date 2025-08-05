@@ -12,9 +12,23 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
     });
   });
 
+  let randomIndex;
+
   context('CartPage: When no products are added to Cart and user explore the Cart page', () => {
+    it('CartPage: Then user should see the URL of Cart page', () => {
+      cy.url().should('eq', urls.pages.cart);
+    });
     it('CartPage: Then user should see the title of Cart page', () => {
       cy.get(cartPage.title).should('have.text', l10n.cartPage.title).and('be.visible');
+    });
+    it('CartPage: Then user should see the Cart icon', () => {
+      cy.get(headerItems.cartIcon).should('be.visible');
+    });
+    it('CartPage: Then the Cart Product Counter does not contain any numbers', () => {
+      cy.get(headerItems.cartProductsCounter).should('not.exist');
+    });
+    it('CartPage: Then user should see Burger menu', () => {
+      cy.get(headerItems.burgerMenu).should('be.visible');
     });
     it('CartPage: Then user should see the QTY label', () => {
       cy.get(cartPage.quantityLabel).should('have.text', l10n.cartPage.quantity).and('be.visible');
@@ -33,9 +47,6 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
     });
     it('CartPage: Checkout button is green-colored', () => {
       cy.get(cartPage.checkout).should('have.css', 'background-color', 'rgb(61, 220, 145)');
-    });
-    it('CartPage: Then user should see the URL of Cart page', () => {
-      cy.url().should('eq', urls.pages.cart);
     });
     it('CartPage: Then LinkedIn icon with link should be displayed', () => {
       cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');
@@ -64,7 +75,6 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
   });
 
   context('CartPage: When one  random product is added to Cart and user explore the Cart page', () => {
-    let randomIndex;
     before(() => {
       cy.get(inventoryPage.inventoryItems).then(($items) => {
         randomIndex = Math.floor(Math.random() * $items.length);
@@ -100,6 +110,23 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
     });
   });
 
+  context('CartPage: When user clicks on the Product item in the Cart', () => {
+    before(() => {
+      cy.then(() => {
+        cy.get(cartPage.item.title).click();
+      });
+    });
+    it('CartPage: Then the user is redirected to the Product item page', () => {
+      cy.url().should('eq', (urls.pages.inventoryItem + products[randomIndex].id));
+      cy.get(inventoryPage.inventoryItem.title).should('have.text', products[randomIndex].title);
+    });
+    after(()=> {
+      cy.then(() => {
+        cy.get(headerItems.cartIcon).click();
+      });
+    })
+  });
+
   context('CartPage: When user clicks Remove button', () => {
     before(() => {
       cy.then(() => {
@@ -121,8 +148,8 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
       });
     });
     it('CartPage: Then user should be redirected to the Checkout page', () => {
-      cy.url().should('eq', urls.pages.checkout);
-      cy.get(checkoutPage.title).should('have.text', l10n.checkoutPage.title);
+      cy.url().should('eq', urls.pages.checkoutInfo);
+      cy.get(checkoutInfoPage.title).should('have.text', l10n.checkoutInfoPage.title);
     });
   });
 });

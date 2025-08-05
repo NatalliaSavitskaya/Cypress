@@ -1,8 +1,10 @@
 const pages = {
     login: `${Cypress.config('baseUrl')}/`,
     inventory: `${Cypress.config('baseUrl')}/inventory.html`,
+    inventoryItem: `${Cypress.config('baseUrl')}/inventory-item.html?id=`,
     cart: `${Cypress.config('baseUrl')}/cart.html`,
-    checkout: `${Cypress.config('baseUrl')}/checkout-step-one.html`,
+    checkoutInfo: `${Cypress.config('baseUrl')}/checkout-step-one.html`,
+    checkoutOverview: `${Cypress.config('baseUrl')}/checkout-step-two.html`,
 }
 
 const externalPages = {

@@ -26,7 +26,7 @@
     "description": "Description",
     "remove": "Remove"
   },
-  "checkoutPage": {
+  "checkoutInfoPage": {
     "title": "Checkout: Your Information",
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -38,6 +38,14 @@
       "lastNameIsRequired": "Error: Last Name is required",
       "postalCodeIsRequired": "Error: Postal Code is required"
     }
+  },
+  "checkoutOverviewPage": {
+    "title": "Checkout: Overview",
+    "finish": "Finish",
+    "cancel": "Cancel",
+    "itemTotal": "Item total",
+    "tax": "Tax",
+    "total": "Total"
   },
   "headerItems": {
     "logOut": "Logout",

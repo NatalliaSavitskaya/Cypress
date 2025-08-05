@@ -50,7 +50,7 @@ const cartPage = {
     },
 };
 
-const checkoutPage = {
+const checkoutInfoPage = {
     title: '[data-test="title"]',
     firstName: '[data-test="firstName"]',
     lastName: '[data-test="lastName"]',
@@ -58,8 +58,30 @@ const checkoutPage = {
     continue: '[data-test="continue"]',
     cancel: '[data-test="cancel"]',
     error: '.error-message-container',
+    errorIcon: '[data-icon="times-circle"]',
     errorMessage: '[data-test="error"]',
     errorClose: '[data-test="error-button"]',
+};
+
+const checkoutOverviewPage = {
+    title: '[data-test="title"]',
+    finish: '[data-test="finish"]',
+    cancel: '[data-test="cancel"]',
+    paymentInfoLabel: '[data-test="payment-info-label"]',
+    paymentInfo: '[data-test="payment-info-value"]',
+    shippingInfoLabel: '[data-test="shipping-info-label"]',
+    shippingInfo: '[data-test="shipping-info-value"]',
+    itemsTotalLabel: '[data-test="total-info-label"]',
+    itemsTotal: '[data-test="subtotal-label"]',
+    priceTotal: '[data-test="total-label"]',
+    tax: '[data-test="tax-label"]',
+    items: '[data-test="inventory-item"]',
+    item: {
+        title: '[data-test="item-0-title-link"]',
+        description: '[data-test="inventory-item-desc"]',
+        price: '[data-test="item-quantity"]',
+        quantity: '[data-test="item-quantity"]',
+    },
 };
 
 const headerItems = {
@@ -78,5 +100,5 @@ const footerItems = {
     copyRight: '[data-test="footer-copy"]'
 };
 export default {
-    loginPage, inventoryPage, cartPage, checkoutPage, headerItems, footerItems
+    loginPage, inventoryPage, cartPage, checkoutInfoPage, checkoutOverviewPage, headerItems, footerItems
 };

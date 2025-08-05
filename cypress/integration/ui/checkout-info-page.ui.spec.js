@@ -1,0 +1,194 @@
+describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: false }, () => {
+  before(() => {
+    cy.visit('/');
+    cy.then(() => {
+      cy.loginUser(users.StandardUser);
+    });
+    cy.then(() => {
+      cy.resetAppState();
+    });
+    cy.then(() => {
+      cy.get(headerItems.cartIcon).click();
+    });
+    cy.then(() => {
+      cy.get(cartPage.checkout).click();
+    });
+  });
+
+  let randomIndex;
+
+  context('CheckoutInfoPage: When user explore the Checkout Info page', () => {
+    it('CheckoutInfoPage: Then user should see the URL of Checkout Info page', () => {
+      cy.url().should('eq', urls.pages.checkoutInfo);
+    });
+    it('CheckoutInfoPage: Then user should see the title of Checkout Info page', () => {
+      cy.get(checkoutInfoPage.title).should('have.text', l10n.checkoutInfoPage.title).and('be.visible');
+    });
+    it('CheckoutInfoPage: Then user should see the Cart icon', () => {
+      cy.get(headerItems.cartIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then user should see Burger menu', () => {
+      cy.get(headerItems.burgerMenu).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then user should see the Cancel button', () => {
+      cy.get(checkoutInfoPage.cancel).should('have.text', l10n.checkoutInfoPage.cancel).and('be.visible').and('be.enabled');
+    });
+    it('CheckoutInfoPage: Then user should see the Continue button', () => {
+      cy.get(checkoutInfoPage.continue).should('have.value', l10n.checkoutInfoPage.continue).and('be.visible').and('be.enabled');
+    });
+    it('CheckoutInfoPage: Continue button is green-colored', () => {
+      cy.get(checkoutInfoPage.continue).should('have.css', 'background-color', 'rgb(61, 220, 145)');
+    });
+    it('CheckoutInfoPage: Then LinkedIn icon with link should be displayed', () => {
+      cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');
+    });
+    it('CheckoutInfoPage: Then Twitter icon with link should be displayed', () => {
+      cy.get(footerItems.twitter).should('have.attr', 'href', urls.externalPages.twitter).and('be.visible');
+    });
+    it('CheckoutInfoPage: Then Facebook icon with link should be displayed', () => {
+      cy.get(footerItems.facebook).should('have.attr', 'href', urls.externalPages.facebook).and('be.visible');
+    });
+    it('CheckoutInfoPage: Then the Copyright notice should be displayed', () => {
+      cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
+    });
+  });
+
+  context('CheckoutInfoPage: When user clicks Cancel button', () => {
+    before(() => {
+      cy.then(() => {
+        cy.get(checkoutInfoPage.cancel).click();
+      });
+    });
+    it('CheckoutInfoPage: Then user should be redirected to the Cart page', () => {
+      cy.url().should('eq', urls.pages.cart);
+      cy.get(cartPage.title).should('have.text', l10n.cartPage.title);
+    });
+    after(() => {
+      cy.get(cartPage.checkout).click();
+    });
+  });
+
+  context('CheckoutInfoPage: When user leaves Firstname field empty and enters valid Lastname and Code and clicks Continue button', () => {
+    before(() => {
+      cy.get(checkoutInfoPage.lastName).type('LastName', { delay: 0 });
+      cy.get(checkoutInfoPage.zip).type('ZIP', { delay: 0 });
+      cy.then(() => {
+        cy.get(checkoutInfoPage.continue).click();
+      });
+    });
+    it('CheckoutInfoPage: Then Firstname field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then Lastname field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then ZipCode field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(checkoutInfoPage.errorMessage).contains(l10n.checkoutInfoPage.errors.firstNameIsRequired);
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of Firstname field', () => {
+      cy.get(checkoutInfoPage.firstName).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of Lastname field', () => {
+      cy.get(checkoutInfoPage.lastName).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of ZipCode field', () => {
+      cy.get(checkoutInfoPage.zip).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(checkoutInfoPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(checkoutInfoPage.lastName).clear();
+      cy.get(checkoutInfoPage.zip).clear();
+    });
+  });
+
+  context('CheckoutInfoPage: When user leaves Lastname field empty and enters valid Firstname and Code and clicks Continue button', () => {
+    before(() => {
+      cy.get(checkoutInfoPage.firstName).type('FirstName', { delay: 0 });
+      cy.get(checkoutInfoPage.zip).type('ZIP', { delay: 0 });
+      cy.then(() => {
+        cy.get(checkoutInfoPage.continue).click();
+      });
+    });
+    it('CheckoutInfoPage: Then Firstname field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then Lastname field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then ZipCode field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(checkoutInfoPage.errorMessage).contains(l10n.checkoutInfoPage.errors.lastNameIsRequired);
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of Firstname field', () => {
+      cy.get(checkoutInfoPage.firstName).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of Lastname field', () => {
+      cy.get(checkoutInfoPage.lastName).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of ZipCode field', () => {
+      cy.get(checkoutInfoPage.zip).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(checkoutInfoPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(checkoutInfoPage.firstName).clear();
+      cy.get(checkoutInfoPage.zip).clear();
+    });
+  });
+
+  context('CheckoutInfoPage: When user leaves ZIPCode field empty and enters valid Firstname and Lastname and clicks Continue button', () => {
+    before(() => {
+      cy.get(checkoutInfoPage.firstName).type('FirstName', { delay: 0 });
+      cy.get(checkoutInfoPage.lastName).type('LastName', { delay: 0 });
+      cy.then(() => {
+        cy.get(checkoutInfoPage.continue).click();
+      });
+    });
+    it('CheckoutInfoPage: Then Firstname field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then Lastname field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then ZipCode field should be underlined with a red line', () => {
+      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+    });
+    it('CheckoutInfoPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(checkoutInfoPage.errorMessage).contains(l10n.checkoutInfoPage.errors.postalCodeIsRequired);
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of Firstname field', () => {
+      cy.get(checkoutInfoPage.firstName).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of Lastname field', () => {
+      cy.get(checkoutInfoPage.lastName).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of ZipCode field', () => {
+      cy.get(checkoutInfoPage.zip).parent().find(checkoutInfoPage.errorIcon).should('be.visible');
+    });
+    it('CheckoutInfoPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(checkoutInfoPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(checkoutInfoPage.firstName).clear();
+      cy.get(checkoutInfoPage.lastName).clear();
+    });
+  });
+
+  context('CheckoutInfoPage: When user fills First name, Last name, ZIP Code with valid data and clicks Continue button', () => {
+    before(() => {
+      cy.checkoutUser({ firstname: 'FirstName', lastname: 'LastName', zipcode: '12345' });
+    });
+    it('CheckoutInfoPage: Then user should be redirected to the Checkout Overview page', () => {
+      cy.url().should('eq', urls.pages.checkoutOverview);
+      cy.get(checkoutOverviewPage.title).should('have.text', l10n.checkoutOverviewPage.title);
+    });
+  });
+});
