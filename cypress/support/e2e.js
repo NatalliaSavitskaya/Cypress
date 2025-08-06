@@ -38,5 +38,6 @@ global.inventoryPage = selectors.inventoryPage;
 global.cartPage = selectors.cartPage;
 global.checkoutInfoPage = selectors.checkoutInfoPage;
 global.checkoutOverviewPage = selectors.checkoutOverviewPage;
+global.checkoutCompletePage = selectors.checkoutCompletePage;
 global.headerItems = selectors.headerItems;
 global.footerItems = selectors.footerItems

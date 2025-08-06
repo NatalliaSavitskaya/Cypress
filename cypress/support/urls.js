@@ -5,6 +5,7 @@ const pages = {
     cart: `${Cypress.config('baseUrl')}/cart.html`,
     checkoutInfo: `${Cypress.config('baseUrl')}/checkout-step-one.html`,
     checkoutOverview: `${Cypress.config('baseUrl')}/checkout-step-two.html`,
+    checkoutComplete: `${Cypress.config('baseUrl')}/checkout-complete.html`,
 }
 
 const externalPages = {

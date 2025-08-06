@@ -45,9 +45,20 @@
     "description": "Description",
     "finish": "Finish",
     "cancel": "Cancel",
-    "itemTotal": "Item total",
-    "tax": "Tax",
-    "total": "Total"
+    "paymentInfoLabel": "Payment Information:",
+    "paymentInfo": "SauceCard #31337",
+    "shippingInfoLabel": "Shipping Information:",
+    "shippingInfo": "Free Pony Express Delivery!",
+    "itemsTotalLabel": "Price Total",
+    "itemTotal": "Item total: $",
+    "tax": "Tax: $",
+    "total": "Total: $"
+  },
+  "checkoutCompletePage": {
+    "title": "Checkout: Complete!",
+    "messageTitle": "Thank you for your order!",
+    "message": "Your order has been dispatched, and will arrive just as fast as the pony can get there!",
+    "backHome": "Back Home"
   },
   "headerItems": {
     "logOut": "Logout",

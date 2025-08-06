@@ -79,11 +79,21 @@ const checkoutOverviewPage = {
     tax: '[data-test="tax-label"]',
     items: '[data-test="inventory-item"]',
     item: {
-        title: '[data-test="item-0-title-link"]',
+        title: '[data-test="inventory-item-name"]',
         description: '[data-test="inventory-item-desc"]',
-        price: '[data-test="item-quantity"]',
+        price: '[data-test="inventory-item-price"]',
         quantity: '[data-test="item-quantity"]',
     },
+};
+
+const checkoutCompletePage = {
+    title: '[data-test="title"]',
+    confirmation: {
+        title: '[data-test="complete-header"]',
+        message: '[data-test="complete-text"]',
+        icon: '[data-test="complete-image"]',
+    },
+    backHome: '[data-test="back-to-products"]',
 };
 
 const headerItems = {
@@ -102,5 +112,5 @@ const footerItems = {
     copyRight: '[data-test="footer-copy"]'
 };
 export default {
-    loginPage, inventoryPage, cartPage, checkoutInfoPage, checkoutOverviewPage, headerItems, footerItems
+    loginPage, inventoryPage, cartPage, checkoutInfoPage, checkoutOverviewPage, checkoutCompletePage, headerItems, footerItems
 };
