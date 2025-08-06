@@ -88,10 +88,10 @@ const checkoutOverviewPage = {
 
 const checkoutCompletePage = {
     title: '[data-test="title"]',
+    successIcon: '[data-test="pony-express"]',
     confirmation: {
         title: '[data-test="complete-header"]',
         message: '[data-test="complete-text"]',
-        icon: '[data-test="complete-image"]',
     },
     backHome: '[data-test="back-to-products"]',
 };
