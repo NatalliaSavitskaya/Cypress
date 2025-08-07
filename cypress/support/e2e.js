@@ -29,7 +29,7 @@ global.selectors = selectors;
 global.urls = urls;
 global.requirements = requirements;
 global.users = require('../sensitive-data/test-users.json');
-global.usersInfo = require('../sensitive-data/user-info-data.json');
+global.usersInfo = require('../test-data/user-info-data.json');
 global.products = products;
 
 // Separate selectors by pages

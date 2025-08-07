@@ -6,6 +6,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
     });
     cy.then(() => {
       cy.resetAppState();
+      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
     });
     cy.then(() => {
       cy.get(headerItems.cartIcon).click();
@@ -49,6 +50,12 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
     it('CheckoutInfoPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
+    it.skip('CheckoutInfoPage: Then Terms Of Service link should be displayed', () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip('CheckoutInfoPage: Then Privacy Policy link should be displayed', () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
+    });
   });
 
   context('CheckoutInfoPage: When user clicks Cancel button', () => {
@@ -67,6 +74,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
   });
 
   context('CheckoutInfoPage: When user leaves Firstname field empty and enters valid Lastname and Code and clicks Continue button', () => {
+    // TODO: fix the bug checkoutInfoPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/12#issue-3300298712
     before(() => {
       cy.get(checkoutInfoPage.lastName).type(usersInfo.StandardUserInfo.lastname, { delay: 0 });
       cy.get(checkoutInfoPage.zip).type(usersInfo.StandardUserInfo.zipcode, { delay: 0 });
@@ -105,6 +113,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
   });
 
   context('CheckoutInfoPage: When user leaves Lastname field empty and enters valid Firstname and Code and clicks Continue button', () => {
+    // TODO: fix the bug checkoutInfoPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/12#issue-3300298712
     before(() => {
       cy.get(checkoutInfoPage.firstName).type(usersInfo.StandardUserInfo.firstname, { delay: 0 });
       cy.get(checkoutInfoPage.zip).type(usersInfo.StandardUserInfo.zipcode, { delay: 0 });
@@ -143,6 +152,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
   });
 
   context('CheckoutInfoPage: When user leaves ZIPCode field empty and enters valid Firstname and Lastname and clicks Continue button', () => {
+    // TODO: fix the bug checkoutInfoPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/12#issue-3300298712
     before(() => {
       cy.get(checkoutInfoPage.firstName).type(usersInfo.StandardUserInfo.firstname, { delay: 0 });
       cy.get(checkoutInfoPage.lastName).type(usersInfo.StandardUserInfo.lastname, { delay: 0 });
@@ -181,6 +191,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
   });
 
   context('CheckoutInfoPage: When user fills First name, Last name, ZIP Code with valid data and clicks Continue button', () => {
+    //TODO: fix the bug checkoutInfoPage_spacesValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/13#issue-3300312197
     before(() => {
       cy.checkoutUser(usersInfo.StandardUserInfo);
     });

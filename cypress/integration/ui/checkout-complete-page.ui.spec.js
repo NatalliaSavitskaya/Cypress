@@ -1,12 +1,17 @@
 describe('CheckoutCompletePage: Given Checkout Complete page opened', { testIsolation: false }, () => {
+  let randomIndex;
   before(() => {
     cy.visit('/');
     cy.then(() => {
       cy.loginUser(users.StandardUser);
     });
-    cy.get(inventoryPage.inventoryItems).then(($items) => {
-      let randomIndex = Math.floor(Math.random() * $items.length);
-      cy.wrap($items).eq(randomIndex).find(inventoryPage.inventoryItem.addButton).click();
+    cy.getRandomProductIndex().then((index) => {
+      randomIndex = index;
+      cy.get(inventoryPage.inventoryItems)
+        .eq(randomIndex)
+        .within(() => {
+          cy.get(inventoryPage.inventoryItem.addButton).click();
+        });
     });
     cy.then(() => {
       cy.get(headerItems.cartIcon).click();
@@ -34,8 +39,9 @@ describe('CheckoutCompletePage: Given Checkout Complete page opened', { testIsol
       cy.get(headerItems.burgerMenu).should('be.visible');
     });
     it('CheckoutCompletePage: Then user should see the Green Tick icon', () => {
-      cy.get(checkoutCompletePage.successIcon).should('be.visible')
-        .and($img => {
+      cy.get(checkoutCompletePage.successIcon)
+        .should('be.visible')
+        .and(($img) => {
           expect($img).to.have.attr('src');
           expect($img.attr('src')).to.match(/^data:image\/png;base64,/);
         });
@@ -61,13 +67,17 @@ describe('CheckoutCompletePage: Given Checkout Complete page opened', { testIsol
     it('CheckoutCompletePage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
+    it.skip('CheckoutCompletePage: Then Terms Of Service link should be displayed', () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip('CheckoutCompletePage: Then Privacy Policy link should be displayed', () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
+    });
   });
 
   context('CheckoutCompletePage: When user clicks Back home button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(checkoutCompletePage.backHome).click();
-      });
+      cy.get(checkoutCompletePage.backHome).click();
     });
     it('CheckoutCompletePage: Then user should be redirected to the Inventory page', () => {
       cy.url().should('eq', urls.pages.inventory);

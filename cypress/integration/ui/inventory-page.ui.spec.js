@@ -6,6 +6,7 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
     });
     cy.then(() => {
       cy.resetAppState();
+      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
     });
   });
 
@@ -44,10 +45,17 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
     it('InventoryPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
+    it.skip('InventoryPage: Then Terms Of Service link should be displayed', () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip('InventoryPage: Then Privacy Policy link should be displayed', () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
+    });
   });
 
   context('InventoryPage: When user explore the product items on the Inventory page', () => {
     it('InventoryPage: Then user should see the title for each product', () => {
+      // TODO: fix the bug inventoryPage_cardTitleNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/9#issue-3300246812
       cy.get(inventoryPage.inventoryItems).each(($el, index) => {
         const item = products[index];
         cy.wrap($el)
@@ -59,6 +67,7 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
       });
     });
     it('InventoryPage: Then user should see the description for each product', () => {
+      // TODO: fix the bug inventoryPage_cardDescriptionNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/10#issue-3300259694
       cy.get(inventoryPage.inventoryItems).each(($el, index) => {
         const item = products[index];
         cy.wrap($el)
@@ -192,5 +201,6 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
 
   after(() => {
     cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
   });
 });

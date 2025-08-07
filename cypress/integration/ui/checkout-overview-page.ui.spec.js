@@ -7,6 +7,7 @@ describe('CheckoutOverviewPage: Given there are no Products in Cart and Checkout
     });
     cy.then(() => {
       cy.resetAppState();
+      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
     });
     cy.then(() => {
       cy.get(headerItems.cartIcon).click();
@@ -63,6 +64,12 @@ describe('CheckoutOverviewPage: Given there are no Products in Cart and Checkout
     it('CheckoutOverviewPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
+    it.skip('CheckoutOverviewPage: Then Terms Of Service link should be displayed', () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip('CheckoutOverviewPage: Then Privacy Policy link should be displayed', () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
+    });
   });
 });
 
@@ -75,10 +82,15 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
     });
     cy.then(() => {
       cy.resetAppState();
+      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
     });
-    cy.get(inventoryPage.inventoryItems).then(($items) => {
-      randomIndex = Math.floor(Math.random() * $items.length);
-      cy.wrap($items).eq(randomIndex).find(inventoryPage.inventoryItem.addButton).click();
+    cy.getRandomProductIndex().then((index) => {
+      randomIndex = index;
+      cy.get(inventoryPage.inventoryItems)
+        .eq(randomIndex)
+        .within(() => {
+          cy.get(inventoryPage.inventoryItem.addButton).click();
+        });
     });
     cy.then(() => {
       cy.get(headerItems.cartIcon).click();
@@ -112,9 +124,11 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
       cy.get(checkoutOverviewPage.descriptionLabel).should('have.text', l10n.checkoutOverviewPage.description).and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Name of the Product', () => {
+      // TODO: fix the bug inventoryPage_cardTitleNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/9#issue-3300246812
       cy.get(checkoutOverviewPage.item.title).should('have.text', products[randomIndex].title).and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Description of the Product', () => {
+      // TODO: fix the bug inventoryPage_cardDescriptionNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/10#issue-3300259694
       cy.get(checkoutOverviewPage.item.description).should('have.text', products[randomIndex].description).and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Price of the Product', () => {
@@ -139,6 +153,7 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
       cy.get(checkoutOverviewPage.itemsTotalLabel).should('have.text', l10n.checkoutOverviewPage.itemsTotalLabel).and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Item Total label and value', () => {
+      // TODO: fix the bug checkoutOverviewPage_itemTotalNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/15#issue-3300356757
       cy.get(checkoutOverviewPage.itemsTotal).should('have.text',
         (l10n.checkoutOverviewPage.itemTotal+parseFloat(products[randomIndex].price.replace('$', '')))).and('be.visible');
     });
@@ -170,6 +185,12 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
     });
     it('CheckoutOverviewPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
+    });
+    it.skip('CheckoutOverviewPage: Then Terms Of Service link should be displayed', () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip('CheckoutOverviewPage: Then Privacy Policy link should be displayed', () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
     });
   });
 

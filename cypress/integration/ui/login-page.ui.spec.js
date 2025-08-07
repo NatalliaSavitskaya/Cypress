@@ -69,6 +69,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters invalid Username and valid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.username).type('invalid_username',{ delay: 0 });
       cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
@@ -101,6 +103,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters valid Username and invalid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
       cy.get(loginPage.password).type('invalid_password', { delay: 0 });
@@ -133,6 +137,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user leaves Username field empty and enters valid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
       cy.then(() => {
@@ -163,6 +169,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters valid Username and leaves Password field empty and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
       cy.then(() => {
@@ -193,6 +201,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Locked user enters valid credentials and clicks Login button', () => {
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.loginUser(users.LockedUser);
     })
@@ -217,6 +226,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Locked user enters valid Username and invalid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
     before(() => {
       cy.get(loginPage.username).type(users.LockedUser.username, { delay: 0 });
       cy.get(loginPage.password).type('invalid_password', { delay: 0 });
@@ -249,6 +259,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Locked user enters valid Username and leaves Password field empty and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
     before(() => {
       cy.get(loginPage.username).type(users.LockedUser.username, { delay: 0 });
       cy.then(() => {

@@ -6,6 +6,7 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
     });
     cy.then(() => {
       cy.resetAppState();
+      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
     });
     cy.then(() => {
       cy.get(headerItems.cartIcon).click();
@@ -43,6 +44,7 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
       cy.get(cartPage.continueShopping).should('have.text', l10n.cartPage.continueShopping).and('be.visible').and('be.enabled');
     });
     it('CartPage: Then user should see the Checkout button', () => {
+      // TODO: fix the bug cartPage_CheckoutIsEnabledWhenEmptyCart: https://github.com/NatalliaSavitskaya/Cypress/issues/11#issue-3300273293
       cy.get(cartPage.checkout).should('have.text', l10n.cartPage.checkout).and('be.visible').and('be.enabled');
     });
     it('CartPage: Checkout button is green-colored', () => {
@@ -60,13 +62,17 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
     it('CartPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
+    it.skip(`CartPage: Then Terms Of Service link should be displayed`, () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip(`CartPage: Then Privacy Policy link should be displayed`, () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
+    });
   });
 
   context('CartPage: When user clicks Continue Shopping button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(cartPage.continueShopping).click();
-      });
+      cy.get(cartPage.continueShopping).click();
     });
     it('CartPage: Then user should be redirected to the Inventory page', () => {
       cy.url().should('eq', urls.pages.inventory);
@@ -76,62 +82,53 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
 
   context('CartPage: When one  random product is added to Cart and user explore the Cart page', () => {
     before(() => {
-      cy.get(inventoryPage.inventoryItems).then(($items) => {
-        randomIndex = Math.floor(Math.random() * $items.length);
-        cy.wrap($items).eq(randomIndex).find(inventoryPage.inventoryItem.addButton).click();
-      });
-      cy.then(() => {
-        cy.get(headerItems.cartIcon).click();
+      cy.getRandomProductIndex().then((index) => {
+        randomIndex = index;
+        cy.get(inventoryPage.inventoryItems)
+          .eq(randomIndex)
+          .within(() => {
+            cy.get(inventoryPage.inventoryItem.addButton).click();
+          });
+        cy.then(() => {
+          cy.get(headerItems.cartIcon).click();
+        });
       });
     });
     it('CartPage: Then the Cart Product Counter is increased by 1', () => {
       cy.get(headerItems.cartProductsCounter).should('be.visible').and('have.text', '1');
     });
-    it('CartPage: Then user should see the QTY of the product on Cart page', () => {
+    it('CartPage: Then user should see Product Title, Description, QTY, Price and Remove button for the selected Product', () => {
+      // TODO: fix the bug cartPage_fixedProductQuantity: https://github.com/NatalliaSavitskaya/Cypress/issues/14#issue-3300338819
       cy.get(cartPage.item.quantity).should('have.text', '1').and('be.visible');
-    });
-    it('CartPage: Then user should see the Product Title on Cart page', () => {
+      // TODO: fix the bug inventoryPage_cardTitleNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/9#issue-3300246812
       cy.get(cartPage.item.title).should('have.text', products[randomIndex].title).and('be.visible');
-    });
-    it('CartPage: Then user should see the Product Description on Cart page', () => {
+      // TODO: fix the bug inventoryPage_cardDescriptionNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/10#issue-3300259694
       cy.get(cartPage.item.description).should('have.text', products[randomIndex].description).and('be.visible');
-    });
-    it('CartPage: Then user should see the Product Price on Cart page', () => {
       cy.get(cartPage.item.price).should('have.text', products[randomIndex].price).and('be.visible');
-    });
-    it('CartPage: Then user should see the Remove button', () => {
       cy.get(cartPage.item.remove).should('have.text', l10n.cartPage.remove).and('be.visible').and('be.enabled');
-    });
-    it('CartPage: Remove button is red-border', () => {
-      cy.get(cartPage.checkout).should('have.css', 'border', '0px none rgb(19, 35, 34)');
-    });
-    it('CartPage: Remove label on the button red', () => {
-      cy.get(cartPage.checkout).should('have.css', 'color', 'rgb(19, 35, 34)');
+      cy.get(cartPage.item.remove).should('have.css', 'border', '0.8px solid rgb(226, 35, 26)');
+      cy.get(cartPage.item.remove).should('have.css', 'color', 'rgb(226, 35, 26)');
     });
   });
 
   context('CartPage: When user clicks on the Product item in the Cart', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(cartPage.item.title).click();
-      });
+      cy.get(cartPage.item.title).click();
     });
     it('CartPage: Then the user is redirected to the Product item page', () => {
-      cy.url().should('eq', (urls.pages.inventoryItem + products[randomIndex].id));
+      cy.url().should('eq', urls.pages.inventoryItem + products[randomIndex].id);
       cy.get(inventoryPage.inventoryItem.title).should('have.text', products[randomIndex].title);
     });
-    after(()=> {
+    after(() => {
       cy.then(() => {
         cy.get(headerItems.cartIcon).click();
       });
-    })
+    });
   });
 
   context('CartPage: When user clicks Remove button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(cartPage.item.remove).click();
-      });
+      cy.get(cartPage.item.remove).click();
     });
     it('CartPage: Then the Cart Product Counter is not displayed', () => {
       cy.get(headerItems.cartProductsCounter).should('not.exist');
@@ -143,9 +140,8 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
 
   context('CartPage: When user clicks Checkout button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(cartPage.checkout).click();
-      });
+      cy.get(cartPage.checkout).click();
+      // TODO: fix the bug cartPage_CheckoutIsEnabledWhenEmptyCart: https://github.com/NatalliaSavitskaya/Cypress/issues/11#issue-3300273293
     });
     it('CartPage: Then user should be redirected to the Checkout page', () => {
       cy.url().should('eq', urls.pages.checkoutInfo);
