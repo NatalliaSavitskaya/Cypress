@@ -18,8 +18,7 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
       cy.get(inventoryPage.title).should('have.text', l10n.inventoryPage.title).and('be.visible');
     });
     it('InventoryPage: Then user should see sorting control with default value', () => {
-      cy.get(inventoryPage.sorting.dropdown)
-        .should('have.value', inventoryPage.sorting.options.nameAscending);
+      cy.get(inventoryPage.sorting.dropdown).should('have.value', inventoryPage.sorting.options.nameAscending);
     });
     it('InventoryPage: Then user should see the Cart icon', () => {
       cy.get(headerItems.cartIcon).should('be.visible');

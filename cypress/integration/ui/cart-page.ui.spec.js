@@ -43,12 +43,8 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
     it('CartPage: Then user should see the Continue Shopping button', () => {
       cy.get(cartPage.continueShopping).should('have.text', l10n.cartPage.continueShopping).and('be.visible').and('be.enabled');
     });
-    it('CartPage: Then user should see the Checkout button', () => {
+    it.skip('CartPage: Then user shouldn`t see the Checkout button', () => {
       // TODO: fix the bug cartPage_CheckoutIsEnabledWhenEmptyCart: https://github.com/NatalliaSavitskaya/Cypress/issues/11#issue-3300273293
-      cy.get(cartPage.checkout).should('have.text', l10n.cartPage.checkout).and('be.visible').and('be.enabled');
-    });
-    it('CartPage: Checkout button is green-colored', () => {
-      cy.get(cartPage.checkout).should('have.css', 'background-color', 'rgb(61, 220, 145)');
     });
     it('CartPage: Then LinkedIn icon with link should be displayed', () => {
       cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');

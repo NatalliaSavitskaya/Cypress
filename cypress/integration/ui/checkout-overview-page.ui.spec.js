@@ -135,7 +135,7 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
       cy.get(checkoutOverviewPage.item.price).should('have.text', products[randomIndex].price).and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Quantity value of the Product', () => {
-      cy.get(checkoutOverviewPage.item.quantity).should('have.text', "1").and('be.visible');
+      cy.get(checkoutOverviewPage.item.quantity).should('have.text', '1').and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Payment Information label', () => {
       cy.get(checkoutOverviewPage.paymentInfoLabel).should('have.text', l10n.checkoutOverviewPage.paymentInfoLabel).and('be.visible');
@@ -154,16 +154,19 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
     });
     it('CheckoutOverviewPage: Then user should see the Item Total label and value', () => {
       // TODO: fix the bug checkoutOverviewPage_itemTotalNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/15#issue-3300356757
-      cy.get(checkoutOverviewPage.itemsTotal).should('have.text',
-        (l10n.checkoutOverviewPage.itemTotal+parseFloat(products[randomIndex].price.replace('$', '')))).and('be.visible');
+      cy.get(checkoutOverviewPage.itemsTotal)
+        .should('have.text', l10n.checkoutOverviewPage.itemTotal + parseFloat(products[randomIndex].price.replace('$', '')))
+        .and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Tax label and value', () => {
-      cy.get(checkoutOverviewPage.tax).should('have.text', (l10n.checkoutOverviewPage.tax +
-        (parseFloat(products[randomIndex].price.replace('$', ''))*0.08).toFixed(2))).and('be.visible');
+      cy.get(checkoutOverviewPage.tax)
+        .should('have.text', l10n.checkoutOverviewPage.tax + (parseFloat(products[randomIndex].price.replace('$', '')) * 0.08).toFixed(2))
+        .and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Total label and value', () => {
-      cy.get(checkoutOverviewPage.priceTotal).should('have.text', (l10n.checkoutOverviewPage.total +
-        (parseFloat(products[randomIndex].price.replace('$', ''))*1.08).toFixed(2))).and('be.visible');
+      cy.get(checkoutOverviewPage.priceTotal)
+        .should('have.text', l10n.checkoutOverviewPage.total + (parseFloat(products[randomIndex].price.replace('$', '')) * 1.08).toFixed(2))
+        .and('be.visible');
     });
     it('CheckoutOverviewPage: Then user should see the Cancel button', () => {
       cy.get(checkoutOverviewPage.cancel).should('have.text', l10n.checkoutOverviewPage.cancel).and('be.visible').and('be.enabled');

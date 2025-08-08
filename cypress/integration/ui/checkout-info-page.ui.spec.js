@@ -60,9 +60,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
 
   context('CheckoutInfoPage: When user clicks Cancel button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(checkoutInfoPage.cancel).click();
-      });
+      cy.get(checkoutInfoPage.cancel).click();
     });
     it('CheckoutInfoPage: Then user should be redirected to the Cart page', () => {
       cy.url().should('eq', urls.pages.cart);

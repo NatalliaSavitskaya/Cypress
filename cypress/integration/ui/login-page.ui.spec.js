@@ -72,7 +72,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
     // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
-      cy.get(loginPage.username).type('invalid_username',{ delay: 0 });
+      cy.get(loginPage.username).type('invalid_username', { delay: 0 });
       cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
       cy.then(() => {
         cy.get(loginPage.login).click();
@@ -204,7 +204,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.loginUser(users.LockedUser);
-    })
+    });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
       cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
     });
