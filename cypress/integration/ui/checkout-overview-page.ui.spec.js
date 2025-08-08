@@ -196,18 +196,14 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
 
   context('CheckoutOverviewPage: When user clicks Cancel button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(checkoutOverviewPage.cancel).click();
-      });
+      cy.get(checkoutOverviewPage.cancel).click();
     });
     it('CheckoutOverviewPage: Then user should be redirected to the Inventory page', () => {
       cy.url().should('eq', urls.pages.inventory);
       cy.get(inventoryPage.title).should('have.text', l10n.inventoryPage.title);
     });
     after(() => {
-      cy.then(() => {
-        cy.get(headerItems.cartIcon).click();
-      });
+      cy.get(headerItems.cartIcon).click();
       cy.then(() => {
         cy.get(cartPage.checkout).click();
       });
@@ -217,18 +213,14 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
 
   context('CheckoutOverviewPage: When user clicks on the Product item on the CheckoutOverview page', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(checkoutOverviewPage.item.title).click();
-      });
+      cy.get(checkoutOverviewPage.item.title).click();
     });
     it('CheckoutOverviewPage: Then the user is redirected to the Product item page', () => {
       cy.url().should('eq', urls.pages.inventoryItem + products[randomIndex].id);
       cy.get(inventoryPage.inventoryItem.title).should('have.text', products[randomIndex].title);
     });
     after(() => {
-      cy.then(() => {
-        cy.get(headerItems.cartIcon).click();
-      });
+      cy.get(headerItems.cartIcon).click();
       cy.then(() => {
         cy.get(cartPage.checkout).click();
       });
@@ -238,19 +230,14 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
 
   context('CheckoutOverviewPage: When user clicks Finish button', () => {
     before(() => {
-      cy.then(() => {
-        cy.get(checkoutOverviewPage.finish).click();
-      });
+      cy.get(checkoutOverviewPage.finish).click();
     });
     it('CheckoutOverviewPage: Then user should be redirected to the Checkout Complete Page page', () => {
       cy.url().should('eq', urls.pages.checkoutComplete);
       cy.get(checkoutCompletePage.title).should('have.text', l10n.checkoutCompletePage.title);
     });
     after(() => {
-      cy.then(() => {
-        cy.get(headerItems.cartIcon).click();
-      });
+      cy.get(headerItems.cartIcon).click();
     });
   });
 });
-
