@@ -3,7 +3,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     cy.visit('/');
   });
 
-  context('LoginPage: When user explore the Login page', () => {
+  context('LoginPage: When user explores the Login page', () => {
     it('LoginPage: Then user should see the title of Login page', () => {
       cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
     });

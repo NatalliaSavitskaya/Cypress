@@ -42,7 +42,6 @@ describe('CheckoutCompletePage: Given Checkout Complete page opened', { testIsol
       cy.get(checkoutCompletePage.successIcon)
         .should('be.visible')
         .and(($img) => {
-          expect($img).to.have.attr('src');
           expect($img.attr('src')).to.match(/^data:image\/png;base64,/);
         });
     });

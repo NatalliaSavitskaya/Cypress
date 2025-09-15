@@ -1,4 +1,3 @@
-let randomIndex;
 describe('CheckoutOverviewPage: Given there are no Products in Cart and Checkout Overview page is opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');

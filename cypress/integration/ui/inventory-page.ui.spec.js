@@ -10,7 +10,7 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
     });
   });
 
-  context('InventoryPage: When user explore the Inventory page', () => {
+  context('InventoryPage: When user explores the Inventory page', () => {
     it('InventoryPage: Then page URL should be displayed', () => {
       cy.url().should('eq', urls.pages.inventory);
     });
@@ -112,8 +112,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Price in the ascending order', () => {
-    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.priceAscending);
+    });
+    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.price)
         .then(($prices) => {
@@ -125,8 +127,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Price in the descending order', () => {
-    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.priceDescending);
+    });
+    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.price)
         .then(($prices) => {
@@ -138,8 +142,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Name in the ascending order', () => {
-    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.nameAscending);
+    });
+    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.title)
         .then(($titles) => {
@@ -151,8 +157,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Name in the descending order', () => {
-    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.nameDescending);
+    });
+    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.title)
         .then(($titles) => {
@@ -179,8 +187,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user removes first added to the Card item from it', () => {
-    it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
+    before(() => {
       cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.removeButton).click();
+    });
+    it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
       cy.get(headerItems.cartProductsCounter).should('not.exist');
     });
     it('InventoryPage: Then Add to card button is shown for the removed item', () => {

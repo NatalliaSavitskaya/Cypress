@@ -4,13 +4,18 @@ Running Cypress Tests
 
 Debug Mode
 
-`npx cypress open`
+```bash
+npx cypress open
+```
+
 
 Launches the Cypress Test Runner in interactive mode.
 
 Headless Mode
 
-`npx cypress run`
+```bash
+npx cypress run
+```
 
 Runs all Cypress tests in the command line without a GUI.
 
