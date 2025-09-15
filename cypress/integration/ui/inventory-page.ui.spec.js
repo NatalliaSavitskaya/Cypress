@@ -1,13 +1,9 @@
 describe('InventoryPage: Given Inventory page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
-    cy.then(() => {
-      cy.resetAppState();
-      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
-    });
+    cy.loginUser(users.StandardUser);
+    cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
   });
 
   context('InventoryPage: When user explores the Inventory page', () => {

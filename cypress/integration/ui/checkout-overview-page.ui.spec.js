@@ -1,19 +1,14 @@
+import requirements from '../../support/requirements.js';
+
 describe('CheckoutOverviewPage: Given there are no Products in Cart and Checkout Overview page is opened', { testIsolation: false }, () => {
+  let randomIndex;
   before(() => {
     cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
-    cy.then(() => {
-      cy.resetAppState();
-      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
-    });
-    cy.then(() => {
-      cy.get(headerItems.cartIcon).click();
-    });
-    cy.then(() => {
-      cy.get(cartPage.checkout).click();
-    });
+    cy.loginUser(users.StandardUser);
+    cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
+    cy.get(headerItems.cartIcon).click();
+    cy.get(cartPage.checkout).click();
     cy.checkoutUser(usersInfo.StandardUserInfo);
   });
 
@@ -49,7 +44,7 @@ describe('CheckoutOverviewPage: Given there are no Products in Cart and Checkout
       cy.get(checkoutOverviewPage.finish).should('have.text', l10n.checkoutOverviewPage.finish).and('be.visible').and('be.enabled');
     });
     it('CheckoutOverviewPage: Finish button is green-colored', () => {
-      cy.get(checkoutOverviewPage.finish).should('have.css', 'background-color', 'rgb(61, 220, 145)');
+      cy.get(checkoutOverviewPage.finish).should('have.css', 'background-color', requirements.colors.green);
     });
     it('CheckoutOverviewPage: Then LinkedIn icon with link should be displayed', () => {
       cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');
@@ -70,37 +65,22 @@ describe('CheckoutOverviewPage: Given there are no Products in Cart and Checkout
       // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
     });
   });
-});
 
-describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Checkout Overview page is opened', { testIsolation: false }, () => {
-  let randomIndex;
-  before(() => {
-    cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
-    cy.then(() => {
-      cy.resetAppState();
-      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
-    });
-    cy.getRandomProductIndex().then((index) => {
-      randomIndex = index;
-      cy.get(inventoryPage.inventoryItems)
-        .eq(randomIndex)
-        .within(() => {
-          cy.get(inventoryPage.inventoryItem.addButton).click();
-        });
-    });
-    cy.then(() => {
+  context('CheckoutOverviewPage: When User adds 1 random Product to the Cart and Checkout Overview page is opened', () => {
+    before(() => {
+      cy.get(checkoutOverviewPage.cancel).click();
+      cy.getRandomProductIndex().then((index) => {
+        randomIndex = index;
+        cy.get(inventoryPage.inventoryItems)
+          .eq(randomIndex)
+          .within(() => {
+            cy.get(inventoryPage.inventoryItem.addButton).click();
+          });
+      });
       cy.get(headerItems.cartIcon).click();
-    });
-    cy.then(() => {
       cy.get(cartPage.checkout).click();
+      cy.checkoutUser(usersInfo.StandardUserInfo);
     });
-    cy.checkoutUser(usersInfo.StandardUserInfo);
-  });
-
-  context('CheckoutOverviewPage: When user explore the CheckoutOverviewPage page', () => {
     it('CheckoutOverviewPage: Then user should see the URL of CheckoutOverviewPage page', () => {
       cy.url().should('eq', urls.pages.checkoutOverview);
     });
@@ -174,7 +154,7 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
       cy.get(checkoutOverviewPage.finish).should('have.text', l10n.checkoutOverviewPage.finish).and('be.visible').and('be.enabled');
     });
     it('CheckoutOverviewPage: Finish button is green-colored', () => {
-      cy.get(checkoutOverviewPage.finish).should('have.css', 'background-color', 'rgb(61, 220, 145)');
+      cy.get(checkoutOverviewPage.finish).should('have.css', 'background-color', requirements.colors.green);
     });
     it('CheckoutOverviewPage: Then LinkedIn icon with link should be displayed', () => {
       cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');
@@ -206,9 +186,7 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
     });
     after(() => {
       cy.get(headerItems.cartIcon).click();
-      cy.then(() => {
-        cy.get(cartPage.checkout).click();
-      });
+      cy.get(cartPage.checkout).click();
       cy.checkoutUser(usersInfo.StandardUserInfo);
     });
   });
@@ -223,9 +201,7 @@ describe('CheckoutOverviewPage: Given there is 1 random Product in Cart and Chec
     });
     after(() => {
       cy.get(headerItems.cartIcon).click();
-      cy.then(() => {
-        cy.get(cartPage.checkout).click();
-      });
+      cy.get(cartPage.checkout).click();
       cy.checkoutUser(usersInfo.StandardUserInfo);
     });
   });

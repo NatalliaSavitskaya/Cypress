@@ -1,19 +1,13 @@
+import requirements from '../../support/requirements.js';
+
 describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
-    cy.then(() => {
-      cy.resetAppState();
-      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
-    });
-    cy.then(() => {
-      cy.get(headerItems.cartIcon).click();
-    });
-    cy.then(() => {
-      cy.get(cartPage.checkout).click();
-    });
+    cy.loginUser(users.StandardUser);
+    cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
+    cy.get(headerItems.cartIcon).click();
+    cy.get(cartPage.checkout).click();
   });
 
   context('CheckoutInfoPage: When user explore the Checkout Info page', () => {
@@ -36,7 +30,7 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
       cy.get(checkoutInfoPage.continue).should('have.value', l10n.checkoutInfoPage.continue).and('be.visible').and('be.enabled');
     });
     it('CheckoutInfoPage: Continue button is green-colored', () => {
-      cy.get(checkoutInfoPage.continue).should('have.css', 'background-color', 'rgb(61, 220, 145)');
+      cy.get(checkoutInfoPage.continue).should('have.css', 'background-color', requirements.colors.green);
     });
     it('CheckoutInfoPage: Then LinkedIn icon with link should be displayed', () => {
       cy.get(footerItems.linkedin).should('have.attr', 'href', urls.externalPages.linkedin).and('be.visible');
@@ -81,13 +75,13 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
       });
     });
     it('CheckoutInfoPage: Then Firstname field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then Lastname field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then ZipCode field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then the error message should be displayed under the Login button', () => {
       cy.get(checkoutInfoPage.errorMessage).contains(l10n.checkoutInfoPage.errors.firstNameIsRequired);
@@ -120,13 +114,13 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
       });
     });
     it('CheckoutInfoPage: Then Firstname field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then Lastname field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then ZipCode field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then the error message should be displayed under the Login button', () => {
       cy.get(checkoutInfoPage.errorMessage).contains(l10n.checkoutInfoPage.errors.lastNameIsRequired);
@@ -159,13 +153,13 @@ describe('CheckoutInfoPage: Given Checkout Info page opened', { testIsolation: f
       });
     });
     it('CheckoutInfoPage: Then Firstname field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.firstName).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then Lastname field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.lastName).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then ZipCode field should be underlined with a red line', () => {
-      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(checkoutInfoPage.zip).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('CheckoutInfoPage: Then the error message should be displayed under the Login button', () => {
       cy.get(checkoutInfoPage.errorMessage).contains(l10n.checkoutInfoPage.errors.postalCodeIsRequired);

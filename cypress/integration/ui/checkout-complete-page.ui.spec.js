@@ -2,9 +2,7 @@ describe('CheckoutCompletePage: Given Checkout Complete page opened', { testIsol
   let randomIndex;
   before(() => {
     cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
+    cy.loginUser(users.StandardUser);
     cy.getRandomProductIndex().then((index) => {
       randomIndex = index;
       cy.get(inventoryPage.inventoryItems)
@@ -13,16 +11,10 @@ describe('CheckoutCompletePage: Given Checkout Complete page opened', { testIsol
           cy.get(inventoryPage.inventoryItem.addButton).click();
         });
     });
-    cy.then(() => {
-      cy.get(headerItems.cartIcon).click();
-    });
-    cy.then(() => {
-      cy.get(cartPage.checkout).click();
-    });
+    cy.get(headerItems.cartIcon).click();
+    cy.get(cartPage.checkout).click();
     cy.checkoutUser(usersInfo.StandardUserInfo);
-    cy.then(() => {
-      cy.get(checkoutOverviewPage.finish).click();
-    });
+    cy.get(checkoutOverviewPage.finish).click();
   });
 
   context('CheckoutCompletePage: When user explore the Checkout Complete page', () => {

@@ -1,16 +1,12 @@
+import requirements from '../../support/requirements.js';
+
 describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
-    cy.then(() => {
-      cy.resetAppState();
-      // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
-    });
-    cy.then(() => {
-      cy.get(headerItems.cartIcon).click();
-    });
+    cy.loginUser(users.StandardUser);
+    cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
+    cy.get(headerItems.cartIcon).click();
   });
 
   let randomIndex;
@@ -85,9 +81,7 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
           .within(() => {
             cy.get(inventoryPage.inventoryItem.addButton).click();
           });
-        cy.then(() => {
-          cy.get(headerItems.cartIcon).click();
-        });
+        cy.get(headerItems.cartIcon).click();
       });
     });
     it('CartPage: Then the Cart Product Counter is increased by 1', () => {
@@ -102,8 +96,7 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
       cy.get(cartPage.item.description).should('have.text', products[randomIndex].description).and('be.visible');
       cy.get(cartPage.item.price).should('have.text', products[randomIndex].price).and('be.visible');
       cy.get(cartPage.item.remove).should('have.text', l10n.cartPage.remove).and('be.visible').and('be.enabled');
-      cy.get(cartPage.item.remove).should('have.css', 'border', '0.8px solid rgb(226, 35, 26)');
-      cy.get(cartPage.item.remove).should('have.css', 'color', 'rgb(226, 35, 26)');
+      cy.get(cartPage.item.remove).should('have.css', 'color', requirements.colors.red);
     });
   });
 
@@ -116,9 +109,7 @@ describe('CartPage: Given Cart page opened', { testIsolation: false }, () => {
       cy.get(inventoryPage.inventoryItem.title).should('have.text', products[randomIndex].title);
     });
     after(() => {
-      cy.then(() => {
-        cy.get(headerItems.cartIcon).click();
-      });
+      cy.get(headerItems.cartIcon).click();
     });
   });
 
