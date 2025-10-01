@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import text from './requirements';
+import text from '../../requirements';
 
 Cypress.Commands.add('resetAppState', () => {
   cy.get(headerItems.burgerMenu).click({ animationDistanceThreshold: 20 });

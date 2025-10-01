@@ -14,7 +14,9 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands/ui/commands'
+import './commands/api/common.api.commands';
+import './commands/api/booking.api.commands';
 
 // Import necessary modules and resources
 import l10n from './l10n.json';
