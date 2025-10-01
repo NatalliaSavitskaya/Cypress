@@ -1,9 +1,11 @@
+import requirements from '../../support/requirements.js';
+
 describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
   });
 
-  context('LoginPage: When user explore the Login page', () => {
+  context('LoginPage: When user explores the Login page', () => {
     it('LoginPage: Then user should see the title of Login page', () => {
       cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
     });
@@ -58,9 +60,7 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   context('LoginPage: When logged in Standard user clicks Logout button', () => {
     before(() => {
       cy.get(headerItems.burgerMenu).click();
-      cy.then(() => {
-        cy.get(headerItems.logOut).click();
-      });
+      cy.get(headerItems.logOut).click();
     });
     it('LoginPage: Then user should be navigated to the Login page', () => {
       cy.get(loginPage.title).should('have.text', l10n.loginPage.title).and('be.visible');
@@ -69,18 +69,22 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters invalid Username and valid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
-      cy.get(loginPage.username).type('invalid_username',{ delay: 0 });
+      cy.getRandomText().then((randomText) => {
+        cy.get(loginPage.username).type(randomText, { delay: 0 });
+      });
       cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
       cy.then(() => {
         cy.get(loginPage.login).click();
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
-      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then Password field should be underlined with a red line', () => {
-      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then the error message should be displayed under the Login button', () => {
       cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userNotFound);
@@ -101,18 +105,22 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters valid Username and invalid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
-      cy.get(loginPage.password).type('invalid_password', { delay: 0 });
+      cy.getRandomText().then((randomText) => {
+        cy.get(loginPage.password).type(randomText, { delay: 0 });
+      });
       cy.then(() => {
         cy.get(loginPage.login).click();
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
-      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then Password field should be underlined with a red line', () => {
-      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then the error message should be displayed under the Login button', () => {
       cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userNotFound);
@@ -133,6 +141,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user leaves Username field empty and enters valid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
       cy.then(() => {
@@ -140,10 +150,10 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
-      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then Password field should be underlined with a red line', () => {
-      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then the error message should be displayed under the Login button', () => {
       cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.usernameIsRequired);
@@ -163,6 +173,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Standard user enters valid Username and leaves Password field empty and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
       cy.then(() => {
@@ -170,10 +182,10 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
       });
     });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
-      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then Password field should be underlined with a red line', () => {
-      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then the error message should be displayed under the Login button', () => {
       cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.passwordIsRequired);
@@ -193,14 +205,15 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   });
 
   context('LoginPage: When Locked user enters valid credentials and clicks Login button', () => {
+    // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.loginUser(users.LockedUser);
-    })
+    });
     it('LoginPage: Then Username field should be underlined with a red line', () => {
-      cy.get(loginPage.username).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then Password field should be underlined with a red line', () => {
-      cy.get(loginPage.password).should('have.css', 'border-bottom-color', 'rgb(226, 35, 26)');
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
     });
     it('LoginPage: Then the error message should be displayed under the Login button', () => {
       cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userIsLockedOut);
@@ -213,6 +226,72 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     });
     it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
       cy.get(loginPage.errorClose).should('be.visible');
+    });
+  });
+
+  context('LoginPage: When Locked user enters valid Username and invalid Password and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    before(() => {
+      cy.get(loginPage.username).type(users.LockedUser.username, { delay: 0 });
+      cy.getRandomText().then((randomText) => {
+        cy.get(loginPage.password).type(randomText, { delay: 0 });
+      });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
+      });
+    });
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.userNotFound);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(loginPage.username).clear();
+      cy.get(loginPage.password).clear();
+    });
+  });
+
+  context('LoginPage: When Locked user enters valid Username and leaves Password field empty and clicks Login button', () => {
+    // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
+    before(() => {
+      cy.get(loginPage.username).type(users.LockedUser.username, { delay: 0 });
+      cy.then(() => {
+        cy.get(loginPage.login).click();
+      });
+    });
+    it('LoginPage: Then Username field should be underlined with a red line', () => {
+      cy.get(loginPage.username).should('have.css', 'border-bottom-color', requirements.colors.red);
+    });
+    it('LoginPage: Then Password field should be underlined with a red line', () => {
+      cy.get(loginPage.password).should('have.css', 'border-bottom-color', requirements.colors.red);
+    });
+    it('LoginPage: Then the error message should be displayed under the Login button', () => {
+      cy.get(loginPage.errorMessage).contains(l10n.loginPage.errors.passwordIsRequired);
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Username field', () => {
+      cy.get(loginPage.username).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of Password field', () => {
+      cy.get(loginPage.password).parent().find(loginPage.errorIcon).should('be.visible');
+    });
+    it('LoginPage: Then the cross icon should be displayed to the right of error message', () => {
+      cy.get(loginPage.errorClose).should('be.visible');
+    });
+    after(() => {
+      cy.get(loginPage.username).clear();
     });
   });
 });

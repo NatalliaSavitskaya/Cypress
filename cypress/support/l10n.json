@@ -18,6 +18,48 @@
     "title": "Products",
     "addToCartButton": "Add to cart"
   },
+  "cartPage": {
+    "title": "Your Cart",
+    "continueShopping": "Continue Shopping",
+    "checkout": "Checkout",
+    "quantity": "QTY",
+    "description": "Description",
+    "remove": "Remove"
+  },
+  "checkoutInfoPage": {
+    "title": "Checkout: Your Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "postalCode": "Postal Code",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "errors": {
+      "firstNameIsRequired": "Error: First Name is required",
+      "lastNameIsRequired": "Error: Last Name is required",
+      "postalCodeIsRequired": "Error: Postal Code is required"
+    }
+  },
+  "checkoutOverviewPage": {
+    "title": "Checkout: Overview",
+    "quantity": "QTY",
+    "description": "Description",
+    "finish": "Finish",
+    "cancel": "Cancel",
+    "paymentInfoLabel": "Payment Information:",
+    "paymentInfo": "SauceCard #31337",
+    "shippingInfoLabel": "Shipping Information:",
+    "shippingInfo": "Free Pony Express Delivery!",
+    "itemsTotalLabel": "Price Total",
+    "itemTotal": "Item total: $",
+    "tax": "Tax: $",
+    "total": "Total: $"
+  },
+  "checkoutCompletePage": {
+    "title": "Checkout: Complete!",
+    "messageTitle": "Thank you for your order!",
+    "message": "Your order has been dispatched, and will arrive just as fast as the pony can get there!",
+    "backHome": "Back Home"
+  },
   "headerItems": {
     "logOut": "Logout",
     "sortingOptions": {

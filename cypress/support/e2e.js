@@ -29,10 +29,15 @@ global.selectors = selectors;
 global.urls = urls;
 global.requirements = requirements;
 global.users = require('../sensitive-data/test-users.json');
+global.usersInfo = require('../test-data/user-info-data.json');
 global.products = products;
 
 // Separate selectors by pages
 global.loginPage = selectors.loginPage;
 global.inventoryPage = selectors.inventoryPage;
+global.cartPage = selectors.cartPage;
+global.checkoutInfoPage = selectors.checkoutInfoPage;
+global.checkoutOverviewPage = selectors.checkoutOverviewPage;
+global.checkoutCompletePage = selectors.checkoutCompletePage;
 global.headerItems = selectors.headerItems;
 global.footerItems = selectors.footerItems

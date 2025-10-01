@@ -1,15 +1,12 @@
 describe('InventoryPage: Given Inventory page opened', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
-    cy.then(() => {
-      cy.loginUser(users.StandardUser);
-    });
-    cy.then(() => {
-      cy.resetAppState();
-    });
+    cy.loginUser(users.StandardUser);
+    cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
   });
 
-  context('InventoryPage: When user explore the Inventory page', () => {
+  context('InventoryPage: When user explores the Inventory page', () => {
     it('InventoryPage: Then page URL should be displayed', () => {
       cy.url().should('eq', urls.pages.inventory);
     });
@@ -17,8 +14,7 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
       cy.get(inventoryPage.title).should('have.text', l10n.inventoryPage.title).and('be.visible');
     });
     it('InventoryPage: Then user should see sorting control with default value', () => {
-      cy.get(inventoryPage.sorting.dropdown)
-        .should('have.value', inventoryPage.sorting.options.nameAscending);
+      cy.get(inventoryPage.sorting.dropdown).should('have.value', inventoryPage.sorting.options.nameAscending);
     });
     it('InventoryPage: Then user should see the Cart icon', () => {
       cy.get(headerItems.cartIcon).should('be.visible');
@@ -44,10 +40,17 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
     it('InventoryPage: Then the Copyright notice should be displayed', () => {
       cy.get(footerItems.copyRight).should('have.text', l10n.footerItems.copyRight).and('be.visible');
     });
+    it.skip('InventoryPage: Then Terms Of Service link should be displayed', () => {
+      // TODO: fix the bug footerItems_TermsOfServiceLink: https://github.com/NatalliaSavitskaya/Cypress/issues/7#issue-3300213312
+    });
+    it.skip('InventoryPage: Then Privacy Policy link should be displayed', () => {
+      // TODO: fix the bug footerItems_PrivacyPolicyLink: https://github.com/NatalliaSavitskaya/Cypress/issues/8#issue-3300216450
+    });
   });
 
   context('InventoryPage: When user explore the product items on the Inventory page', () => {
     it('InventoryPage: Then user should see the title for each product', () => {
+      // TODO: fix the bug inventoryPage_cardTitleNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/9#issue-3300246812
       cy.get(inventoryPage.inventoryItems).each(($el, index) => {
         const item = products[index];
         cy.wrap($el)
@@ -59,6 +62,7 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
       });
     });
     it('InventoryPage: Then user should see the description for each product', () => {
+      // TODO: fix the bug inventoryPage_cardDescriptionNotValidated: https://github.com/NatalliaSavitskaya/Cypress/issues/10#issue-3300259694
       cy.get(inventoryPage.inventoryItems).each(($el, index) => {
         const item = products[index];
         cy.wrap($el)
@@ -104,8 +108,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Price in the ascending order', () => {
-    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.priceAscending);
+    });
+    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.price)
         .then(($prices) => {
@@ -117,8 +123,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Price in the descending order', () => {
-    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.priceDescending);
+    });
+    it('InventoryPage: Product items are sorted by Price in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.price)
         .then(($prices) => {
@@ -130,8 +138,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Name in the ascending order', () => {
-    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.nameAscending);
+    });
+    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.title)
         .then(($titles) => {
@@ -143,8 +153,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user sort the product items by Name in the descending order', () => {
-    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
+    before(() => {
       cy.get(inventoryPage.sorting.dropdown).select(inventoryPage.sorting.options.nameDescending);
+    });
+    it('InventoryPage: Product items are sorted by Name in the ascending order', () => {
       cy.get(inventoryPage.inventoryItems)
         .find(inventoryPage.inventoryItem.title)
         .then(($titles) => {
@@ -171,8 +183,10 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
   });
 
   context('InventoryPage: When user removes first added to the Card item from it', () => {
-    it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
+    before(() => {
       cy.get(inventoryPage.inventoryItems).first().find(inventoryPage.inventoryItem.removeButton).click();
+    });
+    it('InventoryPage: Then the Cart Product Counter is not displayed', () => {
       cy.get(headerItems.cartProductsCounter).should('not.exist');
     });
     it('InventoryPage: Then Add to card button is shown for the removed item', () => {
@@ -192,5 +206,6 @@ describe('InventoryPage: Given Inventory page opened', { testIsolation: false },
 
   after(() => {
     cy.resetAppState();
+    // TODO: fix the bug inventoryPage_resetDoesNotClearRemoveButton: https://github.com/NatalliaSavitskaya/Cypress/issues/6#issue-3300190487
   });
 });

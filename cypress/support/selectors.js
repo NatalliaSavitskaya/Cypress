@@ -34,6 +34,68 @@ const inventoryPage = {
     },
 };
 
+const cartPage = {
+    title: '[data-test="title"]',
+    quantityLabel: '[data-test="cart-quantity-label"]',
+    descriptionLabel: '[data-test="cart-desc-label"]',
+    continueShopping: '[data-test="continue-shopping"]',
+    checkout: '[data-test="checkout"]',
+    items: '[data-test="inventory-item"]',
+    item: {
+        title: '[data-test="inventory-item-name"]',
+        description: '[data-test="inventory-item-desc"]',
+        price: '[data-test="inventory-item-price"]',
+        quantity: '[data-test="item-quantity"]',
+        remove: '[data-test^="remove-"]',
+    },
+};
+
+const checkoutInfoPage = {
+    title: '[data-test="title"]',
+    firstName: '[data-test="firstName"]',
+    lastName: '[data-test="lastName"]',
+    zip: '[data-test="postalCode"]',
+    continue: '[data-test="continue"]',
+    cancel: '[data-test="cancel"]',
+    error: '.error-message-container',
+    errorIcon: '[data-icon="times-circle"]',
+    errorMessage: '[data-test="error"]',
+    errorClose: '[data-test="error-button"]',
+};
+
+const checkoutOverviewPage = {
+    title: '[data-test="title"]',
+    finish: '[data-test="finish"]',
+    cancel: '[data-test="cancel"]',
+    quantityLabel: '[data-test="cart-quantity-label"]',
+    descriptionLabel: '[data-test="cart-desc-label"]',
+    paymentInfoLabel: '[data-test="payment-info-label"]',
+    paymentInfo: '[data-test="payment-info-value"]',
+    shippingInfoLabel: '[data-test="shipping-info-label"]',
+    shippingInfo: '[data-test="shipping-info-value"]',
+    itemsTotalLabel: '[data-test="total-info-label"]',
+    itemsTotal: '[data-test="subtotal-label"]',
+    priceTotal: '[data-test="total-label"]',
+    tax: '[data-test="tax-label"]',
+    items: '[data-test="inventory-item"]',
+    item: {
+        title: '[data-test="inventory-item-name"]',
+        description: '[data-test="inventory-item-desc"]',
+        price: '[data-test="inventory-item-price"]',
+        quantity: '[data-test="item-quantity"]',
+    },
+};
+
+const checkoutCompletePage = {
+    title: '[data-test="title"]',
+    successIcon: '[data-test="pony-express"]',
+    confirmation: {
+        title: '[data-test="complete-header"]',
+        message: '[data-test="complete-text"]',
+    },
+    backHome: '[data-test="back-to-products"]',
+};
+
 const headerItems = {
     logOut: '[data-test="logout-sidebar-link"]',
     burgerMenu: '[id="react-burger-menu-btn"]',
@@ -50,5 +112,5 @@ const footerItems = {
     copyRight: '[data-test="footer-copy"]'
 };
 export default {
-    loginPage, inventoryPage, headerItems, footerItems
+    loginPage, inventoryPage, cartPage, checkoutInfoPage, checkoutOverviewPage, checkoutCompletePage, headerItems, footerItems
 };
