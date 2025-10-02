@@ -12,8 +12,12 @@ const externalPages = {
     linkedin: 'https://www.linkedin.com/company/sauce-labs/',
     facebook: 'https://www.facebook.com/saucelabs',
     twitter: 'https://twitter.com/saucelabs',
-};
+}
+
+const apiBaseUrl = {
+    booking: 'https://restful-booker.herokuapp.com/booking/',
+}
 
 export default {
-    pages, externalPages
+    pages, externalPages, apiBaseUrl
 };
