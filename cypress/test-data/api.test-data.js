@@ -1,137 +1,223 @@
 import { faker } from '@faker-js/faker';
+import numberToWords from 'number-to-words';
+
+const generateValidDates = () => {
+  const checkin = faker.date.soon({ days: 30 });
+  const checkout = faker.date.soon({ days: 60, refDate: checkin });
+  return {
+    checkin: checkin.toISOString().split('T')[0],
+    checkout: checkout.toISOString().split('T')[0],
+  };
+};
+
+const generateInvalidDates = () => {
+  const checkout = faker.date.soon({ days: 30 });
+  const checkin = faker.date.soon({ days: 60, refDate: checkout });
+  return {
+    checkin: checkin.toISOString().split('T')[0],
+    checkout: checkout.toISOString().split('T')[0],
+  };
+};
+
+const generatePrice = () => Math.floor(Math.random() * 1000) + 50;
 
 export const booking_testData = {
-  validBooking: {
-    body: {
-      firstname: faker.person.firstName(),
-      lastname: faker.person.lastName(),
-      totalprice: Math.floor(Math.random() * 1000) + 50,
-      depositpaid: Math.random() < 0.5,
-      bookingdates: {
-        checkin: faker.date.soon({ days: 30 }).toISOString().split('T')[0],
-        checkout: faker.date.soon({ days: 60 }).toISOString().split('T')[0],
+  validBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
       },
-    },
-    additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  emptyAdditionalDetailsBooking: {
-    body: {
-      firstname: 'Jim',
-      lastname: 'Smith',
-      totalprice: 333,
-      depositpaid: true,
-      bookingdates: {
-        checkin: '2018-02-01',
-        checkout: '2019-02-01',
+
+  emptyFirstNameBooking: () => {
+    return {
+      body: {
+        firstname: '',
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  emptyFirstNameBooking: {
-    body: {
-      firstname: '',
-      lastname: 'Smith',
-      totalprice: 222,
-      depositpaid: true,
-      bookingdates: {
-        checkin: '2019-01-01',
-        checkout: '2019-01-03',
+
+  emptyLastNameBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: '',
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  emptyLastNameBooking: {
-    body: {
-      firstname: 'Samantha',
-      lastname: '',
-      totalprice: 201,
-      depositpaid: true,
-      bookingdates: {
-        checkin: '2019-03-01',
-        checkout: '2019-03-02',
+
+  emptyTotalPriceBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: '',
+        depositpaid: true,
+        bookingdates: generateValidDates(),
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  emptyCheckInBooking: {
-    body: {
-      firstname: 'Mary',
-      lastname: 'Camry',
-      totalprice: 101,
-      depositpaid: true,
-      bookingdates: {
-        checkin: '',
-        checkout: '2019-01-01',
+
+  emptyCheckInBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: {
+          checkin: '',
+          checkout: faker.date.soon({ days: 60 }).toISOString().split('T')[0],
+        },
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  emptyCheckOutBooking: {
-    body: {
-      firstname: 'John',
-      lastname: 'Smile',
-      totalprice: 123,
-      depositpaid: true,
-      bookingdates: {
-        checkin: '2018-01-01',
-        checkout: '',
+
+  emptyCheckOutBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: {
+          checkin: faker.date.soon({ days: 30 }).toISOString().split('T')[0],
+          checkout: '',
+        },
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  invalidPriceDataTypeBooking: {
-    body: {
-      firstname: 'Bim',
-      lastname: 'Collen',
-      totalprice: 'One dollar',
-      depositpaid: true,
-      bookingdates: {
-        checkin: '2018-02-01',
-        checkout: '2019-02-01',
+
+  emptyAdditionalDetailsBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
       },
-    },
+      additionalNeeds: '',
+    };
   },
-  invalidDepositPaidDataTypeBooking: {
-    body: {
-      firstname: 'Bim',
-      lastname: 'Collen',
-      totalprice: 500,
-      depositpaid: 12345,
-      bookingdates: {
-        checkin: '2018-02-01',
-        checkout: '2019-02-01',
+
+  CheckInMoreThanCheckOutBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateInvalidDates(),
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  invalidCheckInDataTypeBooking: {
-    body: {
-      firstname: 'Bim',
-      lastname: 'Collen',
-      totalprice: 333,
-      depositpaid: true,
-      bookingdates: {
-        checkin: 'Hello!',
-        checkout: '2019-02-01',
+
+  CheckInEqualCheckOutBooking: () => {
+    const date = faker.date.soon({ days: 30 }).toISOString().split('T')[0];
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: {
+          checkin: date,
+          checkout: date,
+        },
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  invalidCheckOutDataTypeBooking: {
-    body: {
-      firstname: 'Bim',
-      lastname: 'Collen',
-      totalprice: 333,
-      depositpaid: true,
-      bookingdates: {
-        checkin: '2018-02-01',
-        checkout: 'Nice to meet you!',
+
+  invalidPriceDataTypeBooking: () => {
+    const number = generatePrice();
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: `${number} ${numberToWords.toWords(number)}`,
+        depositpaid: true,
+        bookingdates: generateValidDates(),
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
-  noDepositBooking: {
-    body: {
-      firstname: 'Bim',
-      lastname: 'Collen',
-      totalprice: 333,
-      depositpaid: false,
-      bookingdates: {
-        checkin: '2018-02-01',
-        checkout: '2018-02-02',
+
+  invalidDepositPaidDataTypeBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: generatePrice(),
+        bookingdates: generateValidDates(),
       },
-    },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  invalidCheckInDataTypeBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: {
+          checkin: faker.person.firstName(),
+          checkout: faker.date.soon({ days: 60 }).toISOString().split('T')[0],
+        },
+      },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  invalidCheckOutDataTypeBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: {
+          checkin: faker.date.soon({ days: 60 }).toISOString().split('T')[0],
+          checkout: faker.person.lastName(),
+        },
+      },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  noDepositBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: false,
+        bookingdates: generateValidDates(),
+      },
+      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
   },
 };

@@ -1,5 +1,8 @@
 Cypress.Commands.add('createBooking_POST', (data, restOptions = {}) => {
   const { body, additionalNeeds = '' } = data;
+
+  const requestBody = { ...body, additionalneeds: additionalNeeds };
+
   return cy.request({
     method: 'POST',
     url: 'https://restful-booker.herokuapp.com/booking',
@@ -7,8 +10,7 @@ Cypress.Commands.add('createBooking_POST', (data, restOptions = {}) => {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-    body: body,
-    additionalneeds: additionalNeeds,
+    body: requestBody,
     ...restOptions,
   });
 });
