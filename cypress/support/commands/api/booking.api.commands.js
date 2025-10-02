@@ -67,3 +67,11 @@ Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restO
       ...restOptions,
     });
   });
+
+Cypress.Commands.add('healthCheck_GET', (restOptions = {}) => {
+  return cy.request({
+    method: 'GET',
+    url: `${urls.apiBaseUrl.ping}`,
+    ...restOptions,
+  });
+});

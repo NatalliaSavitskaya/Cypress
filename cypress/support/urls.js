@@ -17,6 +17,7 @@ const externalPages = {
 const apiBaseUrl = {
     booking: 'https://restful-booker.herokuapp.com/booking/',
     auth: 'https://restful-booker.herokuapp.com/auth',
+    ping: 'https://restful-booker.herokuapp.com/ping',
 }
 
 export default {
