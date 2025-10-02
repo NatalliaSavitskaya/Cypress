@@ -31,7 +31,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -44,7 +44,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -57,7 +57,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -70,7 +70,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -86,7 +86,7 @@ export const booking_testData = {
           checkout: faker.date.soon({ days: 60 }).toISOString().split('T')[0],
         },
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -102,7 +102,7 @@ export const booking_testData = {
           checkout: '',
         },
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -115,7 +115,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: '',
+      additionalneeds: '',
     };
   },
 
@@ -128,7 +128,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateInvalidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -145,7 +145,55 @@ export const booking_testData = {
           checkout: date,
         },
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  CheckInInThePastBooking: () => {
+    let now = new Date();
+    let checkin = faker.date.between({
+      from: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
+      to: now
+    }).toISOString().split('T')[0];
+    let checkout = faker.date.between({
+      from: now,
+      to: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+    }).toISOString().split('T')[0];
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: { checkin, checkout  }
+      },
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None'])
+    };
+  },
+
+  invalidFirstnameDataTypeBooking: () => {
+    return {
+      body: {
+        firstname: faker.datatype.boolean(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
+      },
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  invalidLastnameDataTypeBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.datatype.boolean(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
+      },
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -159,7 +207,7 @@ export const booking_testData = {
         depositpaid: true,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -172,7 +220,7 @@ export const booking_testData = {
         depositpaid: generatePrice(),
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -188,7 +236,7 @@ export const booking_testData = {
           checkout: faker.date.soon({ days: 60 }).toISOString().split('T')[0],
         },
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 
@@ -204,7 +252,20 @@ export const booking_testData = {
           checkout: faker.person.lastName(),
         },
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  invalidAdditionalNeedsDataTypeBooking: () => {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
+      },
+      additionalneeds: faker.datatype.boolean(),
     };
   },
 
@@ -217,7 +278,20 @@ export const booking_testData = {
         depositpaid: false,
         bookingdates: generateValidDates(),
       },
-      additionalNeeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
+    };
+  },
+
+  updatedParameters:()=> {
+    return {
+      body: {
+        firstname: faker.person.firstName(),
+        lastname: faker.person.lastName(),
+        totalprice: generatePrice(),
+        depositpaid: true,
+        bookingdates: generateValidDates(),
+      },
+      additionalneeds: faker.helpers.arrayElement(['Breakfast', 'Lunch', 'Dinner', 'None']),
     };
   },
 };
