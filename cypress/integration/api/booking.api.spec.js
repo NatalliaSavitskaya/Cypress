@@ -29,7 +29,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.firstnameIsRequired);
       });
     });
   });
@@ -42,7 +42,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.lastnameIsRequired);
       });
     });
   });
@@ -55,7 +55,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.totalPriceIsRequired);
       });
     });
   });
@@ -68,7 +68,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInIsRequired);
       });
     });
   });
@@ -81,7 +81,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkOutIsRequired);
       });
     });
   });
@@ -94,7 +94,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.additionalNeedsIsRequired);
       });
     });
   });
@@ -107,7 +107,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
       });
     });
   });
@@ -120,7 +120,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
       });
     });
   });
@@ -133,7 +133,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInInThePast);
       });
     });
   });
@@ -146,7 +146,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -159,7 +159,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -172,7 +172,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -185,7 +185,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -198,7 +198,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -211,7 +211,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -224,7 +224,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -237,7 +237,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
       cy.createBooking_POST(bookingData, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -492,7 +492,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
     it.skip('Then the Error message is displayed', () => {
       cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: '' }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.firstnameIsRequired);
       });
     });
   });
@@ -502,7 +502,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
     it.skip('Then the Error message is displayed', () => {
       cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { lastname: '' }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.lastnameIsRequired);
       });
     });
   });
@@ -512,7 +512,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
       // TODO: fix the bug api_updateBooking_PATCH_emptyPriceValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/35
       cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { totalprice: '' }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.totalPriceIsRequired);
       });
     });
   });
@@ -524,7 +524,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkin: '' }
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInIsRequired);
       });
     });
   });
@@ -536,7 +536,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkout: '' }
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkOutIsRequired);
       });
     });
   });
@@ -549,7 +549,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         { additionalneeds: '' }
       ).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.additionalNeedsIsRequired);
       });
     });
   });
@@ -559,7 +559,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
     it.skip('Then the Error message is displayed', () => {
       cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: true}).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -569,7 +569,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
     it.skip('Then the Error message is displayed', () => {
       cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { lastname: false}).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -579,7 +579,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
       // TODO: fix the bug api_updateBooking_PATCH_invalidPriceDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/41
       cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { totalprice: 'One dollar' }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -591,7 +591,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkin: true}
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -603,7 +603,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkout: '' }
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -616,7 +616,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         { additionalneeds: false}
       ).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
       });
     });
   });
@@ -633,7 +633,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkin: checkin }
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInInThePast);
       });
     });
   });
@@ -654,7 +654,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkin, checkout }
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
       });
     });
   });
@@ -671,7 +671,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
         bookingdates: { checkin: futureDate, checkout: futureDate }
       }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq('Internal Server Error');
+        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
       });
     });
   });
