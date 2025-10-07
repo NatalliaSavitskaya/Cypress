@@ -3,7 +3,7 @@ Cypress.Commands.add('createBooking_POST', (data, restOptions = {}) => {
   const requestBody = { ...body, additionalneeds };
   return cy.request({
     method: 'POST',
-    url: 'https://restful-booker.herokuapp.com/booking',
+    url: `${urls.apiUrls.booking}`,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -16,7 +16,7 @@ Cypress.Commands.add('createBooking_POST', (data, restOptions = {}) => {
 Cypress.Commands.add('getBookingIds_GET', (params = {}, restOptions = {}) => {
   return cy.request({
     method: 'GET',
-    url: `${urls.apiBaseUrl.booking}`,
+    url: `${urls.apiUrls.booking}`,
     qs: params,
     ...restOptions,
   });
@@ -25,7 +25,7 @@ Cypress.Commands.add('getBookingIds_GET', (params = {}, restOptions = {}) => {
 Cypress.Commands.add('getBooking_GET', (id, restOptions = {}) => {
   return cy.request({
     method: 'GET',
-    url: `${urls.apiBaseUrl.booking}${id}`,
+    url: `${urls.apiUrls.booking}${id}`,
     headers: {
       'Accept': 'application/json',
     },
@@ -41,7 +41,7 @@ Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restO
 
     return cy.request({
       method: 'PATCH',
-      url: `${urls.apiBaseUrl.booking}${id}`,
+      url: `${urls.apiUrls.booking}${id}`,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -56,7 +56,7 @@ Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restO
   Cypress.Commands.add('createToken_POST', (restOptions = {}) => {
     return cy.request({
       method: 'POST',
-      url: `${urls.apiBaseUrl.auth}`,
+      url: `${urls.apiUrls.auth}`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -71,7 +71,7 @@ Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restO
 Cypress.Commands.add('healthCheck_GET', (restOptions = {}) => {
   return cy.request({
     method: 'GET',
-    url: `${urls.apiBaseUrl.ping}`,
+    url: `${urls.apiUrls.ping}`,
     ...restOptions,
   });
 });

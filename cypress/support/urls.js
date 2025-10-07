@@ -14,12 +14,12 @@ const externalPages = {
     twitter: 'https://twitter.com/saucelabs',
 }
 
-const apiBaseUrl = {
-    booking: 'https://restful-booker.herokuapp.com/booking/',
-    auth: 'https://restful-booker.herokuapp.com/auth',
-    ping: 'https://restful-booker.herokuapp.com/ping',
+const apiUrls = {
+    booking: `${Cypress.config('apiBaseUrl')}/booking/`,
+    auth: `${Cypress.config('apiBaseUrl')}/auth`,
+    ping: `${Cypress.config('apiBaseUrl')}/ping`,
 }
 
 export default {
-    pages, externalPages, apiBaseUrl
+    pages, externalPages, apiUrls
 };
