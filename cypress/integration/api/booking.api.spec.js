@@ -99,7 +99,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     });
   });
 
-  context('RestfulBooker.CreateBooking.POST: When Checkin > CheckOut is sent', () => {
+  context('RestfulBooker.CreateBooking.POST: When Checkin later than CheckOut is sent', () => {
     before(() => {
       bookingData = booking_testData.CheckInMoreThanCheckOutBooking();
     });
@@ -112,7 +112,7 @@ describe('RestfulBooker.CreateBooking: Given No preconditions', { testIsolation:
     });
   });
 
-  context('RestfulBooker.CreateBooking.POST: When Checkin = CheckOut is sent', () => {
+  context('RestfulBooker.CreateBooking.POST: When Checkin equal to CheckOut is sent', () => {
     before(() => {
       bookingData = booking_testData.CheckInEqualCheckOutBooking();
     });
@@ -317,7 +317,7 @@ describe('RestfulBooker.GetBookingIds: Some bookings are created', { testIsolati
         cy.log(createdCheckIn);
       });
     });
-    it('RestfulBooker.GetBookingIds.GET: Then all bookings in response have checkin >= search checkin date', () => {
+    it('RestfulBooker.GetBookingIds.GET: Then all bookings in response have checkin value later or equal to the sent checkin date', () => {
       cy.getBookingIds_GET({ checkin: createdCheckIn }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.be.an('array');
@@ -353,7 +353,7 @@ describe('RestfulBooker.GetBookingIds: Some bookings are created', { testIsolati
         cy.log(createdCheckOut);
       });
     });
-    it('RestfulBooker.GetBookingIds.GET: Then all bookings in response have checkout >= search checkout date', () => {
+    it('RestfulBooker.GetBookingIds.GET: Then all bookings in response have checkout value later or equal to the sent checkout date', () => {
       cy.getBookingIds_GET({ checkin: createdCheckOut }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.be.an('array');
@@ -638,7 +638,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating booking with CheckIn > CheckOut', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When updating booking with CheckIn later than CheckOut', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInMoreThanCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/50
     it.skip('Then the Error message is displayed', () => {
       let now = new Date();
@@ -659,7 +659,7 @@ describe('RestfulBooker.UpdateBooking: Some booking is created', { testIsolation
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating the booking with CheckIn = CheckOut', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When updating the booking with CheckIn equal CheckOut', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInEqualCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/51
     it.skip('Then the Error message is displayed', () => {
       let now = new Date();
