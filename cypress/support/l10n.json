@@ -74,16 +74,16 @@
   },
   "apiBooking": {
     "errors": {
-      "firstnameIsRequired": "Firstname is required.",
-      "lastnameIsRequired": "Lastname is required.",
-      "totalPriceIsRequired": "Totalprice is required.",
-      "depositPaidIsRequired": "DepositPaid is required.",
-      "checkInIsRequired": "CheckIn is required.",
-      "checkOutIsRequired": "CheckOut is required.",
-      "additionalNeedsIsRequired": "AdditionalNeeds is required.",
-      "checkInMoreThanCheckOut": "CheckOut  should be later than CheckIn.",
-      "checkInInThePast": "CheckIn value should be in the future.",
-      "generalError": "Internal Server Error."
+      "firstnameIsRequired": "Firstname is required",
+      "lastnameIsRequired": "Lastname is required",
+      "totalPriceIsRequired": "Totalprice is required",
+      "depositPaidIsRequired": "DepositPaid is required",
+      "checkInIsRequired": "CheckIn is required",
+      "checkOutIsRequired": "CheckOut is required",
+      "additionalNeedsIsRequired": "AdditionalNeeds is required",
+      "checkInMoreThanCheckOut": "CheckOut should be later than CheckIn",
+      "checkInInThePast": "CheckIn value should be in the future",
+      "generalError": "Internal Server Error"
     }
   }
 }
