@@ -12,8 +12,14 @@ const externalPages = {
     linkedin: 'https://www.linkedin.com/company/sauce-labs/',
     facebook: 'https://www.facebook.com/saucelabs',
     twitter: 'https://twitter.com/saucelabs',
-};
+}
+
+const apiUrls = {
+    booking: `${Cypress.config('apiBaseUrl')}/booking/`,
+    auth: `${Cypress.config('apiBaseUrl')}/auth`,
+    ping: `${Cypress.config('apiBaseUrl')}/ping`,
+}
 
 export default {
-    pages, externalPages
+    pages, externalPages, apiUrls
 };
