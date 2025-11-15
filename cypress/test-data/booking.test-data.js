@@ -105,16 +105,4 @@ export const booking_testData = {
       },
     });
   })(),
-
-  // parameters for update tests
-  updatedParameters: () => ({
-    body: {
-      firstname: genRandomText(),
-      lastname: genRandomText(),
-      totalprice: generatePrice(),
-      depositpaid: generateDepositPaid(),
-      bookingdates: generateValidDates(),
-    },
-    additionalneeds: genRandomText(),
-  }),
 };

@@ -1,4 +1,5 @@
 import { text } from './requirements';
+import { booking_testData } from '../test-data/booking.test-data';
 
 export function genRandomText() {
   const length = 10;
@@ -48,4 +49,9 @@ export function generateDateInThePast() {
   const daysInPast = Math.floor(Math.random() * 30) + 1;
   const pastDate = new Date(now.getTime() - daysInPast * 24 * 60 * 60 * 1000);
   return pastDate.toISOString().split('T')[0];
+}
+
+export function generateRandomField() {
+  const randomCase = booking_testData.emptyFieldCases[Math.floor(Math.random() * booking_testData.emptyFieldCases.length)];
+  return randomCase.field;
 }

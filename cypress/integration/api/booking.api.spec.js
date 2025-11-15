@@ -1,5 +1,5 @@
 import { booking_testData } from '../../test-data/booking.test-data.js';
-import { generateDateInThePast } from '../../support/utils';
+import { generateDateInThePast, generateRandomField } from '../../support/utils';
 
 describe('RestfulBooker.Booking: Given No preconditions', () => {
   let createdBooking;
@@ -152,39 +152,28 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
 
   context('RestfulBooker.UpdateBooking.PATCH: When update a random booking parameter with valid value', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the chosen parameter in booking is edited to the new value', () => {
-      const randomUpdate = booking_testData.updatedParameters();
-      const randomCase = booking_testData.emptyFieldCases[Math.floor(Math.random() * booking_testData.emptyFieldCases.length)];
-      const fieldToUpdate = randomCase.field;
-      cy.getBooking_GET(createdBooking.bookingid).then((originalResp) => {
-        const originalBooking = originalResp.body;
-        let oldValue;
-        let updateBody;
-        if (randomCase.field === 'checkin' || randomCase.field === 'checkout') {
-          oldValue = originalBooking.bookingdates[randomCase.field];
-          updateBody = { bookingdates: { [randomCase.field]: randomUpdate.body.bookingdates[randomCase.field] } };
-        } else if (randomCase.field === 'additionalneeds') {
-          oldValue = originalBooking.additionalneeds;
-          updateBody = { additionalneeds: randomUpdate.additionalneeds };
-        } else {
-          oldValue = originalBooking[randomCase.field];
-          updateBody = { [randomCase.field]: randomUpdate.body[randomCase.field] };
-        }
-        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody).then((response) => {
+      const updatedBooking = booking_testData.validBooking;
+      const fieldToUpdate = generateRandomField();
+
+      if (fieldToUpdate === 'checkin' || fieldToUpdate === 'checkout') {
+        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updatedBooking.body.bookingdates[fieldToUpdate]).then((response) => {
+          cy.log(`Updated **${fieldToUpdate}** from **${createdBooking.body.bookingdates[fieldToUpdate]}** to **${updatedBooking.body.bookingdates[fieldToUpdate]}**`);
           expect(response.status).to.eq(200);
-          let expectedValue;
-          if (fieldToUpdate === 'checkin' || fieldToUpdate === 'checkout') {
-            expectedValue = randomUpdate.body.bookingdates[fieldToUpdate];
-            expect(response.body.bookingdates[fieldToUpdate]).to.eq(expectedValue);
-          } else if (fieldToUpdate === 'additionalneeds') {
-            expectedValue = randomUpdate.additionalneeds;
-            expect(response.body.additionalneeds).to.eq(expectedValue);
-          } else {
-            expectedValue = randomUpdate.body[fieldToUpdate];
-            expect(response.body[fieldToUpdate]).to.eq(expectedValue);
-          }
-          cy.log(`Updated **${fieldToUpdate}** from **${oldValue}** to **${expectedValue}**`);
+          expect(response.body.bookingdates[fieldToUpdate]).to.eq(updatedBooking.body.bookingdates[fieldToUpdate]);
         });
-      });
+      } else if (fieldToUpdate === 'additionalneeds') {
+        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updatedBooking.additionalneeds).then((response) => {
+          cy.log(`Updated **${fieldToUpdate}** from **${createdBooking.additionalneeds}** to **${updatedBooking.additionalneeds}**`);
+          expect(response.status).to.eq(200);
+          expect(response.body.additionalneeds).to.eq(updatedBooking.additionalneeds);
+        });
+      } else {
+        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updatedBooking.body[fieldToUpdate]).then((response) => {
+          cy.log(`Updated **${fieldToUpdate}** from **${createdBooking.body[fieldToUpdate]}** to **${updatedBooking.body[fieldToUpdate]}**`);
+          expect(response.status).to.eq(200);
+          expect(response.body[fieldToUpdate]).to.eq(updatedBooking.body[fieldToUpdate]);
+        });
+      }
     });
   });
 
