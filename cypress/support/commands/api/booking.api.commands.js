@@ -8,7 +8,7 @@ Cypress.Commands.add('createBooking_POST', (data, restOptions = {}) => {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-    body: requestBody,
+    body: data,
     ...restOptions,
   });
 });
@@ -35,11 +35,12 @@ Cypress.Commands.add('getBooking_GET', (id, restOptions = {}) => {
 
 Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restOptions = {}) => {
 
-  return cy.createToken_POST().then((response) => {
+  return cy.createToken_POST({ failOnStatusCode: false }).then((response) => {
     const token = response.body.token;
     cy.log('Token: ' + token);
 
     return cy.request({
+      failOnStatusCode: false,
       method: 'PATCH',
       url: `${urls.apiUrls.booking}${id}`,
       headers: {

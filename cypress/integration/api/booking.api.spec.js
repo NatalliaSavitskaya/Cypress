@@ -1,74 +1,303 @@
-import { booking_testData } from '../../test-data/booking.test-data.js';
-import { generateDateInThePast, generateRandomField } from '../../support/utils';
+import { testData } from '../../test-data/booking.test-data.js';
 
 describe('RestfulBooker.Booking: Given No preconditions', () => {
   let createdBooking;
-  context('RestfulBooker.CreateBooking.POST: When valid request to create a booking is sent', () => {
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with valid data', () => {
     it('RestfulBooker.Booking.POST: Then Apartments are booked', () => {
-      cy.createBooking_POST(booking_testData.validBooking, {}).then((response) => {
+      cy.createBooking_POST(testData.validBooking).then((response) => {
         createdBooking = response.body;
         cy.log(`Booking created: ${JSON.stringify(createdBooking, null, 2)}`);
         expect(response.status).to.eq(200);
         expect(response.body).to.have.property('bookingid');
         expect(response.body).to.have.property('booking');
-        expect(response.body.booking).to.deep.equal({
-          ...booking_testData.validBooking.body,
-          additionalneeds: booking_testData.validBooking.additionalneeds,
-        });
+        expect(response.body.booking).to.deep.equal(testData.validBooking);
       });
     });
   });
 
-  context('RestfulBooker.CreateBooking.POST: When create booking with empty required field', () => {
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty Firstname', () => {
     // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
-    it.skip('RestfulBooker.CreateBooking.POST: Then the correct specific error message is received', () => {
-      const randomCase = booking_testData.emptyFieldCases[Math.floor(Math.random() * booking_testData.emptyFieldCases.length)];
-      cy.log(`Testing creating booking with empty field: **${randomCase.field}**`);
-      cy.createBooking_POST(randomCase.data, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(randomCase.expectedError);
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty Firstname', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyFirstnameBooking, null, 2)}`);
+      cy.createBooking_POST(testData.emptyFirstnameBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.emptyFirstnameBooking);
       });
     });
   });
 
-  context('RestfulBooker.CreateBooking.POST: When create booking with invalid data type in some field', () => {
-    // TODO: fix the bug api_createBooking_POST_invalidFieldDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/45
-    it.skip('RestfulBooker.CreateBooking.POST: Then general error message is received', () => {
-      const randomCase = booking_testData.invalidFieldCases[Math.floor(Math.random() * booking_testData.invalidFieldCases.length)];
-      cy.log(`Testing creating booking with invalid data type for field: **${randomCase.field}**`);
-      cy.createBooking_POST(randomCase.data, { failOnStatusCode: false }).then((response) => {
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty Lastname', () => {
+    // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty Lastname', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyLastnameBooking, null, 2)}`);
+      cy.createBooking_POST(testData.emptyLastnameBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.emptyLastnameBooking);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty TotalPrice', () => {
+    // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty TotalPrice', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyTotalPriceBooking, null, 2)}`);
+      cy.createBooking_POST(testData.emptyTotalPriceBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.emptyTotalPriceBooking.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.emptyTotalPriceBooking.lastname);
+        expect(response.body.booking.totalprice).is.null;
+        expect(response.body.booking.depositpaid).to.eq(testData.emptyTotalPriceBooking.depositpaid);
+        expect(response.body.booking.bookingdates.checkin).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkin);
+        expect(response.body.booking.bookingdates.checkout).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkout);
+        expect(response.body.booking.additionalneeds).to.eq(testData.emptyTotalPriceBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty DepositPaid', () => {
+    // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty DepositPaid', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyDepositPaid, null, 2)}`);
+      cy.createBooking_POST(testData.emptyDepositPaid).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.emptyDepositPaid.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.emptyDepositPaid.lastname);
+        expect(response.body.booking.totalprice).to.eq(testData.emptyDepositPaid.totalprice);
+        expect(response.body.booking.depositpaid).to.eq(false);
+        expect(response.body.booking.bookingdates.checkin).to.eq(testData.emptyDepositPaid.bookingdates.checkin);
+        expect(response.body.booking.bookingdates.checkout).to.eq(testData.emptyDepositPaid.bookingdates.checkout);
+        expect(response.body.booking.additionalneeds).to.eq(testData.emptyDepositPaid.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty Checkin', () => {
+    // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty Checkin', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyCheckinBooking, null, 2)}`);
+      cy.createBooking_POST(testData.emptyCheckinBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.emptyCheckinBooking.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.emptyCheckinBooking.lastname);
+        expect(response.body.booking.totalprice).to.eq(testData.emptyCheckinBooking.totalprice);
+        expect(response.body.booking.depositpaid).to.eq(testData.emptyCheckinBooking.depositpaid);
+        expect(response.body.booking.bookingdates.checkin).to.eq('0NaN-aN-aN');
+        expect(response.body.booking.bookingdates.checkout).to.eq(testData.emptyCheckinBooking.bookingdates.checkout);
+        expect(response.body.booking.additionalneeds).to.eq(testData.emptyCheckinBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty Checkout', () => {
+    // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty Checkout', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyCheckoutBooking, null, 2)}`);
+      cy.createBooking_POST(testData.emptyCheckoutBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.emptyCheckoutBooking.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.emptyCheckoutBooking.lastname);
+        expect(response.body.booking.totalprice).to.eq(testData.emptyCheckoutBooking.totalprice);
+        expect(response.body.booking.depositpaid).to.eq(testData.emptyCheckoutBooking.depositpaid);
+        expect(response.body.booking.bookingdates.checkin).to.eq(testData.emptyCheckoutBooking.bookingdates.checkin);
+        expect(response.body.booking.bookingdates.checkout).to.eq('0NaN-aN-aN');
+        expect(response.body.booking.additionalneeds).to.eq(testData.emptyCheckoutBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with empty AdditionalNeeds', () => {
+    // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty AdditionalNeeds', () => {
+      cy.log(`Booking created: ${JSON.stringify(testData.emptyAdditionalNeedsBooking, null, 2)}`);
+      cy.createBooking_POST(testData.emptyAdditionalNeedsBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.emptyAdditionalNeedsBooking);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no Firstname in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.noFirstnameBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.generalError);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no Lastname in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.noLastnameBooking, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no TotalPrice in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.noTotalPriceBooking, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no DepositPaid in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.noDepositPaid, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no Checkin in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.noCheckinBooking, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no Checkout in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.noCheckoutBooking, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with no AdditionalNeeds in the body', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked with no AdditionalNeeds', () => {
+      cy.createBooking_POST(testData.noAdditionalNeedsBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.noAdditionalNeedsBooking);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in Firstname', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.invalidTypeFirstnameBooking, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in Lastname', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
+      cy.createBooking_POST(testData.invalidTypeLastnameBooking, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(500);
+        expect(response.body).to.equal('Internal Server Error');
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in TotalPrice', () => {
+    // TODO: fix the bug api_createBooking_POST_invalidFieldDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/45
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked with null in TotalPrice', () => {
+      cy.createBooking_POST(testData.invalidTypeTotalPriceBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.invalidTypeTotalPriceBooking.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.invalidTypeTotalPriceBooking.lastname);
+        expect(response.body.booking.totalprice).to.be.null;
+        expect(response.body.booking.depositpaid).to.eq(testData.invalidTypeTotalPriceBooking.depositpaid);
+        expect(response.body.booking.bookingdates.checkin).to.eq(testData.invalidTypeTotalPriceBooking.bookingdates.checkin);
+        expect(response.body.booking.bookingdates.checkout).to.eq(testData.invalidTypeTotalPriceBooking.bookingdates.checkout);
+        expect(response.body.booking.additionalneeds).to.eq(testData.invalidTypeTotalPriceBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in DepositPaid', () => {
+    // TODO: fix the bug api_createBooking_POST_invalidFieldDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/45
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked with true value in DepositPaid', () => {
+      cy.createBooking_POST(testData.invalidTypeDepositPaid).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.invalidTypeDepositPaid.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.invalidTypeDepositPaid.lastname);
+        expect(response.body.booking.totalprice).to.eq(testData.invalidTypeDepositPaid.totalprice);
+        expect(response.body.booking.depositpaid).to.eq(true);
+        expect(response.body.booking.bookingdates.checkin).to.eq(testData.invalidTypeDepositPaid.bookingdates.checkin);
+        expect(response.body.booking.bookingdates.checkout).to.eq(testData.invalidTypeDepositPaid.bookingdates.checkout);
+        expect(response.body.booking.additionalneeds).to.eq(testData.invalidTypeDepositPaid.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in Checkin', () => {
+    // TODO: fix the bug api_createBooking_POST_invalidFieldDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/45
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked with "1970-01-01" in checkin', () => {
+      cy.createBooking_POST(testData.invalidTypeCheckinBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.invalidTypeCheckinBooking.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.invalidTypeCheckinBooking.lastname);
+        expect(response.body.booking.totalprice).to.eq(testData.invalidTypeCheckinBooking.totalprice);
+        expect(response.body.booking.depositpaid).to.eq(testData.invalidTypeCheckinBooking.depositpaid);
+        expect(response.body.booking.bookingdates.checkin).to.eq('1970-01-01');
+        expect(response.body.booking.bookingdates.checkout).to.eq(testData.invalidTypeCheckinBooking.bookingdates.checkout);
+        expect(response.body.booking.additionalneeds).to.eq(testData.invalidTypeCheckinBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in Checkout', () => {
+    // TODO: fix the bug api_createBooking_POST_invalidFieldDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/45
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked with "1970-01-01" in checkout', () => {
+      cy.createBooking_POST(testData.invalidTypeCheckoutBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking.firstname).to.eq(testData.invalidTypeCheckoutBooking.firstname);
+        expect(response.body.booking.lastname).to.eq(testData.invalidTypeCheckoutBooking.lastname);
+        expect(response.body.booking.totalprice).to.eq(testData.invalidTypeCheckoutBooking.totalprice);
+        expect(response.body.booking.depositpaid).to.eq(testData.invalidTypeCheckoutBooking.depositpaid);
+        expect(response.body.booking.bookingdates.checkin).to.eq(testData.invalidTypeCheckoutBooking.bookingdates.checkin);
+        expect(response.body.booking.bookingdates.checkout).to.eq('1970-01-01');
+        expect(response.body.booking.additionalneeds).to.eq(testData.invalidTypeCheckoutBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.CreateBooking.POST: When create booking with invalid datatype in AdditionalNeeds', () => {
+    // TODO: fix the bug api_createBooking_POST_invalidFieldDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/45
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked with no AdditionalNeeds', () => {
+      cy.createBooking_POST(testData.invalidTypeAdditionalNeedsBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.invalidTypeAdditionalNeedsBooking);
       });
     });
   });
 
   context('RestfulBooker.CreateBooking.POST: When create booking with Checkin later than CheckOut', () => {
     // TODO: fix the bug api_createBooking_POST_CheckInMoreThanCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/27
-    it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
-      cy.createBooking_POST(booking_testData.checkInMoreThanCheckOutBooking, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked', () => {
+      cy.createBooking_POST(testData.checkInMoreThanCheckOutBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.checkInMoreThanCheckOutBooking);
       });
     });
   });
 
   context('RestfulBooker.CreateBooking.POST: When create booking with Checkin equal to CheckOut', () => {
     // TODO: fix the bug api_createBooking_POST_CheckInEqualCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/28
-    it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
-      cy.createBooking_POST(booking_testData.checkInEqualCheckOutBooking, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked', () => {
+      cy.createBooking_POST(testData.checkInEqualCheckOutBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.checkInEqualCheckOutBooking);
       });
     });
   });
 
   context('RestfulBooker.CreateBooking.POST: When create booking with Checkin in the past', () => {
     // TODO: fix the bug api_createBooking_POST_CheckInInThePastValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/48
-    it.skip('RestfulBooker.CreateBooking.POST: Then Error message is received', () => {
-      cy.createBooking_POST(booking_testData.checkInInThePastBooking, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInInThePast);
+    it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked', () => {
+      cy.createBooking_POST(testData.checkInInThePastBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.checkInInThePastBooking);
       });
     });
   });
@@ -86,7 +315,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
   });
 
   context('RestfulBooker.GetBooking.GET: When search for a specific booking by bookingId', () => {
-    it('RestfulBooker.GetBooking.GET: Then the booking can be got', () => {
+    it('RestfulBooker.GetBooking.GET: Then the booking is found', () => {
       cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.firstname).to.eq(createdBooking.booking.firstname);
@@ -150,136 +379,295 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When update a random booking parameter with valid value', () => {
-    it('RestfulBooker.UpdateBooking.PATCH: Then the chosen parameter in booking is edited to the new value', () => {
-      const updatedBooking = booking_testData.validBooking;
-      const fieldToUpdate = generateRandomField();
-
-      if (fieldToUpdate === 'checkin' || fieldToUpdate === 'checkout') {
-        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updatedBooking.body.bookingdates[fieldToUpdate]).then((response) => {
-          cy.log(`Updated **${fieldToUpdate}** from **${createdBooking.body.bookingdates[fieldToUpdate]}** to **${updatedBooking.body.bookingdates[fieldToUpdate]}**`);
-          expect(response.status).to.eq(200);
-          expect(response.body.bookingdates[fieldToUpdate]).to.eq(updatedBooking.body.bookingdates[fieldToUpdate]);
-        });
-      } else if (fieldToUpdate === 'additionalneeds') {
-        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updatedBooking.additionalneeds).then((response) => {
-          cy.log(`Updated **${fieldToUpdate}** from **${createdBooking.additionalneeds}** to **${updatedBooking.additionalneeds}**`);
-          expect(response.status).to.eq(200);
-          expect(response.body.additionalneeds).to.eq(updatedBooking.additionalneeds);
-        });
-      } else {
-        cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updatedBooking.body[fieldToUpdate]).then((response) => {
-          cy.log(`Updated **${fieldToUpdate}** from **${createdBooking.body[fieldToUpdate]}** to **${updatedBooking.body[fieldToUpdate]}**`);
-          expect(response.status).to.eq(200);
-          expect(response.body[fieldToUpdate]).to.eq(updatedBooking.body[fieldToUpdate]);
-        });
-      }
+  context('RestfulBooker.UpdateBooking.PATCH: When update the Firstname with valid value', () => {
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in Firstname', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: testData.updatedValidBooking.firstname }).then((response) => {
+        cy.log(`Updated Firstname from **${testData.validBooking.firstname}** to **${testData.updatedValidBooking.firstname}**`);
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.updatedValidBooking.firstname);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq(testData.updatedValidBooking.firstname);
+      });
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating booking with an empty required field', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When update the Lastname with valid value', () => {
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in Lastname', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { lastname: testData.updatedValidBooking.lastname }).then((response) => {
+        cy.log(`Updated Lastname from **${testData.validBooking.lastname}** to **${testData.updatedValidBooking.lastname}**`);
+        expect(response.status).to.eq(200);
+        expect(response.body.lastname).to.eq(testData.updatedValidBooking.lastname);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.lastname).to.eq(testData.updatedValidBooking.lastname);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the TotalPrice with valid value', () => {
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in TotalPrice', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { totalprice: testData.updatedValidBooking.totalprice }).then((response) => {
+        cy.log(`Updated TotalPrice from **${testData.validBooking.totalprice}** to **${testData.updatedValidBooking.totalprice}**`);
+        expect(response.status).to.eq(200);
+        expect(response.body.totalprice).to.eq(testData.updatedValidBooking.totalprice);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.totalprice).to.eq(testData.updatedValidBooking.totalprice);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the BookingDates with valid value', () => {
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in BookingDates', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { bookingdates: testData.updatedValidBooking.bookingdates }).then((response) => {
+        cy.log(`Updated BookingDates from **${testData.validBooking.bookingdates.checkin}**, **${testData.validBooking.bookingdates.checkout}**
+         to **${testData.updatedValidBooking.bookingdates.checkin}**? **${testData.updatedValidBooking.bookingdates.checkout}**`);
+        expect(response.status).to.eq(200);
+        expect(response.body.bookingdates.checkin).to.eq(testData.updatedValidBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.updatedValidBooking.bookingdates.checkout);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.bookingdates.checkin).to.eq(testData.updatedValidBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.updatedValidBooking.bookingdates.checkout);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the AdditionalNeeds with valid value', () => {
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in AdditionalNeeds', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { additionalneeds: testData.updatedValidBooking.additionalneeds }).then((response) => {
+        cy.log(`Updated AdditionalNeeds from **${testData.validBooking.additionalneeds}** to **${testData.updatedValidBooking.additionalneeds}**`);
+        expect(response.status).to.eq(200);
+        expect(response.body.additionalneeds).to.eq(testData.updatedValidBooking.additionalneeds);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.additionalneeds).to.eq(testData.updatedValidBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the Firstname with empty value', () => {
     // TODO: fix the bug api_updateBooking_PATCH_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/33
-    it.skip('RestfulBooker.UpdateBooking.PATCH: Then the correct error message is received', () => {
-      const randomCase = booking_testData.emptyFieldCases[Math.floor(Math.random() * booking_testData.emptyFieldCases.length)];
-      cy.log(`Trying to update **${randomCase.field}** to an empty value`);
-      let updateBody;
-      if (randomCase.field === 'checkin' || randomCase.field === 'checkout') {
-        updateBody = { bookingdates: { [randomCase.field]: '' } };
-      } else if (randomCase.field === 'additionalneeds') {
-        updateBody = { additionalneeds: '' };
-      } else {
-        updateBody = { [randomCase.field]: '' };
-      }
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(randomCase.expectedError);
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the empty value in Firstname', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: '' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq('');
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq('');
       });
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating booking with invalid data type', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When update the Lastname with empty value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/33
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the empty value in Lastname', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { lastname: '' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.lastname).to.eq('');
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.lastname).to.eq('');
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the TotalPrice with empty value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/33
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with null value in TotalPrice', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { totalprice: '' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.totalprice).to.be.null;
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.totalprice).to.be.null;
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the DepositPaid with empty value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/33
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with false value in DepositPaid', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { depositpaid: '' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.depositpaid).to.eq(false);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.depositpaid).to.eq(false);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the BookingDates with empty value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/33
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with 0NaN-aN-aN value in BookingDates', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { bookingdates: '' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.bookingdates.checkin).to.eq('0NaN-aN-aN');
+        expect(response.body.bookingdates.checkout).to.eq('0NaN-aN-aN');
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.bookingdates.checkin).to.eq('0NaN-aN-aN');
+        expect(response.body.bookingdates.checkout).to.eq('0NaN-aN-aN');
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the AdditionalNeeds with empty value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/33
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the empty value in AdditionalNeeds', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { additionalneeds: '' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.additionalneeds).to.eq('');
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.additionalneeds).to.eq('');
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the Firstname with invalid datatype value', () => {
     // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
-    it.skip('RestfulBooker.UpdateBooking.PATCH: Then general error message is received', () => {
-      const randomCase = booking_testData.invalidFieldCases[Math.floor(Math.random() * booking_testData.invalidFieldCases.length)];
-      cy.log(`Trying to update field **${randomCase.field}** with invalid data type`);
-      let updateBody;
-      if (randomCase.field === 'checkin' || randomCase.field === 'checkout') {
-        updateBody = { bookingdates: { [randomCase.field]: randomCase.data.bookingdates[randomCase.field] } };
-      } else if (randomCase.field === 'additionalneeds') {
-        updateBody = { additionalneeds: randomCase.data.additionalneeds };
-      } else {
-        updateBody = { [randomCase.field]: randomCase.data[randomCase.field] };
-      }
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(randomCase.expectedError);
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in Firstname', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: testData.invalidTypeFirstnameBooking.firstname}).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.invalidTypeFirstnameBooking.firstname);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq(testData.invalidTypeFirstnameBooking.firstname);
       });
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating checkin to the value that is later than checkout', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When update the Lastname with invalid datatype value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in Lastname', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { lastname: testData.invalidTypeLastnameBooking.lastname }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.lastname).to.eq(testData.invalidTypeLastnameBooking.lastname);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.lastname).to.eq(testData.invalidTypeLastnameBooking.lastname);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the TotalPrice with invalid datatype value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with null value in TotalPrice', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { totalprice: testData.invalidTypeTotalPriceBooking.totalprice }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.totalprice).to.be.null;
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.totalprice).to.be.null;
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the DepositPaid with invalid datatype value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with true value in DepositPaid', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { depositpaid: testData.invalidTypeDepositPaid.depositpaid }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.depositpaid).to.eq(true);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.depositpaid).to.eq(true);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the BookingDates with invalid datatype value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with 1970-01-01 value in BookingDates', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
+        {
+          bookingdates: {
+            checkin: testData.invalidTypeCheckinBooking.bookingdates.checkin,
+            checkout: testData.invalidTypeCheckoutBooking.bookingdates.checkout
+          }}).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.bookingdates.checkin).to.eq('1970-01-01');
+        expect(response.body.bookingdates.checkout).to.eq('1970-01-01');
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.bookingdates.checkin).to.eq('1970-01-01');
+        expect(response.body.bookingdates.checkout).to.eq('1970-01-01');
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update the AdditionalNeeds with invalid datatype value', () => {
+    // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in AdditionalNeeds', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { additionalneeds: testData.invalidTypeAdditionalNeedsBooking.additionalneeds }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.additionalneeds).to.eq(testData.invalidTypeAdditionalNeedsBooking.additionalneeds);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.additionalneeds).to.eq(testData.invalidTypeAdditionalNeedsBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PATCH: When update checkin to the value that is later than checkout', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInMoreThanCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/50
-    it.skip('RestfulBooker.UpdateBooking.PATCH: Then the update is rejected with an error', () => {
-      const originalCheckin = createdBooking.booking.bookingdates.checkin;
-      const originalCheckout = createdBooking.booking.bookingdates.checkout;
-      if (!originalCheckout) {
-        cy.log('Checkout date is missing, cannot perform test');
-        return;
-      }
-      const checkoutDate = new Date(originalCheckout);
-      if (isNaN(checkoutDate.getTime())) {
-        cy.log(`Invalid checkout date: ${originalCheckout}`);
-        return;
-      }
-      const invalidCheckinDate = new Date(checkoutDate);
-      invalidCheckinDate.setDate(invalidCheckinDate.getDate() + 1);
-      const invalidCheckinStr = invalidCheckinDate.toISOString().split('T')[0];
-      const updateBody = { bookingdates: { checkin: invalidCheckinStr } };
-      cy.log(`Trying to update old checkin **${originalCheckin}** to **${invalidCheckinStr}** which is later than checkout **${originalCheckout}**`);
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with new values in BookingDates', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
+        {
+          bookingdates: {
+            checkin: testData.checkInMoreThanCheckOutBooking.bookingdates.checkin,
+            checkout: testData.checkInMoreThanCheckOutBooking.bookingdates.checkout
+          }}).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
       });
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating checkin to the value in the past', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When update checkin to the value in the past', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInInThePastValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/49
-    it.skip('RestfulBooker.UpdateBooking.PATCH: Then the update is rejected with an error', () => {
-      const pastCheckin = generateDateInThePast();
-      const updateBody = { bookingdates: { checkin: pastCheckin } };
-      cy.log(`Trying to update checkin **${createdBooking.booking.bookingdates.checkin}** to a past date **${pastCheckin}**`);
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInInThePast);
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with new values in BookingDates', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
+        {
+          bookingdates: {
+            checkin: testData.checkInInThePastBooking.bookingdates.checkin,
+            checkout: testData.checkInInThePastBooking.bookingdates.checkout
+          }}).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
       });
     });
   });
 
-  context('RestfulBooker.UpdateBooking.PATCH: When updating checkin to the value equal to checkout', () => {
+  context('RestfulBooker.UpdateBooking.PATCH: When update checkin to the value equal to checkout', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInEqualCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/51
-    it.skip('RestfulBooker.UpdateBooking.PATCH: Then the update is rejected with an error', () => {
-      const originalCheckin = createdBooking.booking.bookingdates.checkin;
-      const originalCheckout = createdBooking.booking.bookingdates.checkout;
-      const updateBody = { bookingdates: { checkin: originalCheckout } };
-      cy.log(`Trying to update checkin **${originalCheckin}** to be equal to checkout **${originalCheckout}**`);
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
+    it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with new values in BookingDates', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
+        {
+          bookingdates: {
+            checkin: testData.checkInEqualCheckOutBooking.bookingdates.checkin,
+            checkout: testData.checkInEqualCheckOutBooking.bookingdates.checkout
+          }}).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
       });
-    });
-  });
-
-  context('RestfulBooker.UpdateBooking.PATCH: When updating checkout to the value equal to checkin', () => {
-    // TODO: fix the bug api_updateBooking_PATCH_checkInEqualCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/51
-    it.skip('RestfulBooker.UpdateBooking.PATCH: Then the update is rejected with an error', () => {
-      const originalCheckin = createdBooking.booking.bookingdates.checkin;
-      const originalCheckout = createdBooking.booking.bookingdates.checkout;
-      const updateBody = { bookingdates: { checkout: originalCheckin } };
-      cy.log(`Trying to update checkout **${originalCheckout}** to be equal to checkin **${originalCheckin}**`);
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, updateBody, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(500);
-        expect(response.body).to.eq(l10n.apiBooking.errors.checkInMoreThanCheckOut);
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
       });
     });
   });

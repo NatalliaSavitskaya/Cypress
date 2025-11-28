@@ -1,108 +1,308 @@
-import { genRandomText, generatePrice, generateDepositPaid, generateValidDates, generateInvalidDates, generateDateInThePast } from '../support/utils';
+import { generateRandomText, generateNumber, generateBooleanValue, generateDateInRange, generateAdditionalNeeds } from '../support/utils';
 
-const baseBooking = () => ({
-  firstname: genRandomText(),
-  lastname: genRandomText(),
-  totalprice: generatePrice(),
-  depositpaid: generateDepositPaid(),
-  bookingdates: generateValidDates(),
-});
+export const testData = {
+  validBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
 
-const withOverride = (overrides = {}, additionalneeds) => ({
-  body: { ...baseBooking(), ...overrides },
-  additionalneeds: additionalneeds ?? genRandomText(),
-});
+  updatedValidBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateRandomText(10),
+  },
 
-export const booking_testData = {
-  validBooking: withOverride(),
+  emptyFirstnameBooking: {
+    firstname: '',
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
 
-  // empty fields
-  emptyFieldCases: (() => {
-    const validDates = generateValidDates();
-    return [
-      {
-        field: 'firstname',
-        data: withOverride({ firstname: '' }),
-        expectedError: l10n.apiBooking.errors.firstnameIsRequired,
-      },
-      {
-        field: 'lastname',
-        data: withOverride({ lastname: '' }),
-        expectedError: l10n.apiBooking.errors.lastnameIsRequired,
-      },
-      {
-        field: 'totalprice',
-        data: withOverride({ totalprice: '' }),
-        expectedError: l10n.apiBooking.errors.totalPriceIsRequired,
-      },
-      {
-        field: 'checkin',
-        data: withOverride({
-          bookingdates: { checkin: '', checkout: validDates.checkout },
-        }),
-        expectedError: l10n.apiBooking.errors.checkInIsRequired,
-      },
-      {
-        field: 'checkout',
-        data: withOverride({
-          bookingdates: { checkin: validDates.checkin, checkout: '' },
-        }),
-        expectedError: l10n.apiBooking.errors.checkOutIsRequired,
-      },
-      {
-        field: 'additionalneeds',
-        data: withOverride({}, ''),
-        expectedError: l10n.apiBooking.errors.additionalNeedsIsRequired,
-      },
-    ];
-  })(),
+  emptyLastnameBooking: {
+    firstname: generateRandomText(10),
+    lastname: '',
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
 
-  // invalid data types
-  invalidFieldCases: [
-    {
-      field: 'firstname',
-      data: withOverride({ firstname: generateDepositPaid() }),
+  emptyTotalPriceBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: '',
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
     },
-    {
-      field: 'lastname',
-      data: withOverride({ lastname: generateDepositPaid() }),
-    },
-    {
-      field: 'totalprice',
-      data: withOverride({ totalprice: generateDepositPaid() }),
-    },
-    {
-      field: 'depositpaid',
-      data: withOverride({ depositpaid: generatePrice() }),
-    },
-    {
-      field: 'checkin',
-      data: withOverride({ bookingdates: { checkin: generateDepositPaid(), checkout: generateValidDates().checkout } }),
-    },
-    {
-      field: 'checkout',
-      data: withOverride({ bookingdates: { checkin: generateValidDates().checkin, checkout: generateDepositPaid() } }),
-    },
-    {
-      field: 'additionalneeds',
-      data: withOverride({}, generateDepositPaid()),
-    },
-  ],
+    additionalneeds: generateAdditionalNeeds(),
+  },
 
-  // invalid values for booking dates
-  checkInMoreThanCheckOutBooking: withOverride({ bookingdates: generateInvalidDates() }),
-  checkInEqualCheckOutBooking: (() => {
-    const date = generateValidDates().checkin;
-    return withOverride({ bookingdates: { checkin: date, checkout: date } });
-  })(),
-  checkInInThePastBooking: (() => {
-    const checkin = generateDateInThePast();
-    const checkout = generateValidDates().checkout;
-    return withOverride({
-      bookingdates: {
-        checkin,
-        checkout,
-      },
-    });
-  })(),
+  emptyDepositPaid: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1,500),
+    depositpaid: '',
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  emptyCheckinBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: '',
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  emptyCheckoutBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: '',
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  emptyAdditionalNeedsBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: '',
+  },
+
+  noFirstnameBooking: {
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  noLastnameBooking: {
+    firstname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  noTotalPriceBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  noDepositPaid: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1,500),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  noCheckinBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  noCheckoutBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  noAdditionalNeedsBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+  },
+
+  invalidTypeFirstnameBooking: {
+    firstname: generateNumber(1, 500),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  invalidTypeLastnameBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateNumber(1, 500),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  invalidTypeTotalPriceBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateBooleanValue(),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  invalidTypeDepositPaid: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1,500),
+    depositpaid: generateNumber(1,500),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  invalidTypeCheckinBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateBooleanValue(),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  invalidTypeCheckoutBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateBooleanValue(),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  invalidTypeAdditionalNeedsBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateBooleanValue(),
+  },
+
+  checkInMoreThanCheckOutBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(6, 5),
+      checkout: generateDateInRange(1, 5),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  checkInEqualCheckOutBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 1),
+      checkout: generateDateInRange(1, 1),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
+  checkInInThePastBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(-5, -3),
+      checkout: generateDateInRange(1, 5),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
 };
