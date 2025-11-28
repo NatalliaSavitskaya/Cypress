@@ -671,4 +671,15 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       });
     });
   });
+
+  context('RestfulBooker.DeleteBooking.DELETE: When delete existing booking', () => {
+    it('RestfulBooker.DeleteBooking.DELETE: Then the selected booking is deleted', () => {
+      cy.deleteBooking_DELETE(createdBooking.bookingid).then((response) => {
+        expect(response.status).to.eq(201);
+        expect(response.body).to.eq("Created");
+      });
+    });
+  });
+
+
 });

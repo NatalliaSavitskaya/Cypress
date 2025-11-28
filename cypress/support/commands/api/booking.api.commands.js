@@ -1,6 +1,4 @@
 Cypress.Commands.add('createBooking_POST', (data, restOptions = {}) => {
-  const { body, additionalneeds = '' } = data;
-  const requestBody = { ...body, additionalneeds };
   return cy.request({
     method: 'POST',
     url: `${urls.apiUrls.booking}`,
@@ -34,13 +32,11 @@ Cypress.Commands.add('getBooking_GET', (id, restOptions = {}) => {
 });
 
 Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restOptions = {}) => {
-
-  return cy.createToken_POST({ failOnStatusCode: false }).then((response) => {
+  return cy.createToken_POST({ }).then((response) => {
     const token = response.body.token;
     cy.log('Token: ' + token);
 
     return cy.request({
-      failOnStatusCode: false,
       method: 'PATCH',
       url: `${urls.apiUrls.booking}${id}`,
       headers: {
@@ -49,6 +45,22 @@ Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restO
         'Cookie': `token=${token}`,
       },
       body: updatedParameters,
+      ...restOptions,
+    });
+  });
+});
+
+Cypress.Commands.add('deleteBooking_DELETE', (id, restOptions = {}) => {
+  return cy.createToken_POST({  }).then((response) => {
+    const token = response.body.token;
+    cy.log('Token: ' + token);
+
+    return cy.request({
+      method: 'DELETE',
+      url: `${urls.apiUrls.booking}${id}`,
+      headers: {
+        'Cookie': `token=${token}`,
+      },
       ...restOptions,
     });
   });
