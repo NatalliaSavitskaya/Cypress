@@ -270,6 +270,18 @@ export const testData = {
     additionalneeds: generateBooleanValue(),
   },
 
+  negativeTotalPriceBooking: {
+    firstname: generateRandomText(10),
+    lastname: generateRandomText(10),
+    totalprice: generateNumber(-100,-1),
+    depositpaid: generateBooleanValue(),
+    bookingdates: {
+      checkin: generateDateInRange(1, 5),
+      checkout: generateDateInRange(6, 10),
+    },
+    additionalneeds: generateAdditionalNeeds(),
+  },
+
   checkInMoreThanCheckOutBooking: {
     firstname: generateRandomText(10),
     lastname: generateRandomText(10),

@@ -1,4 +1,5 @@
 import { testData } from '../../test-data/booking.test-data.js';
+import { apiBooking } from '../../support/l10n.json';
 
 describe('RestfulBooker.Booking: Given No preconditions', () => {
   let createdBooking;
@@ -40,7 +41,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
 
   context('RestfulBooker.CreateBooking.POST: When create booking with empty TotalPrice', () => {
     // TODO: fix the bug api_createBooking_POST_emptyFieldValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/17
-    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with empty TotalPrice', () => {
+    it('RestfulBooker.CreateBooking.POST: Then Apartments are booked with null in TotalPrice', () => {
       cy.log(`Booking created: ${JSON.stringify(testData.emptyTotalPriceBooking, null, 2)}`);
       cy.createBooking_POST(testData.emptyTotalPriceBooking).then((response) => {
         expect(response.status).to.eq(200);
@@ -121,7 +122,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.noFirstnameBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -130,7 +131,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.noLastnameBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -139,7 +140,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.noTotalPriceBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -148,7 +149,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.noDepositPaid, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -157,7 +158,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.noCheckinBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -166,7 +167,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.noCheckoutBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -184,7 +185,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.invalidTypeFirstnameBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -193,7 +194,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.CreateBooking.POST: Then the error is displayed', () => {
       cy.createBooking_POST(testData.invalidTypeLastnameBooking, { failOnStatusCode: false }).then((response) => {
         expect(response.status).to.eq(500);
-        expect(response.body).to.equal('Internal Server Error');
+        expect(response.body).to.equal(apiBooking.errors.internalServerError);
       });
     });
   });
@@ -272,6 +273,16 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
+  context('RestfulBooker.CreateBooking.POST: When create booking with negative number in TotalPrice', () => {
+    //TODO: fix the bug api_createBooking_POST_negativeTotalPrice: https://github.com/NatalliaSavitskaya/Cypress/issues/53
+    it('RestfulBooker.CreateBooking.POST: Then the booking is created with negative TotalPrice', () => {
+      cy.createBooking_POST(testData.negativeTotalPriceBooking).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.booking).to.deep.equal(testData.negativeTotalPriceBooking);
+      });
+    });
+  });
+
   context('RestfulBooker.CreateBooking.POST: When create booking with Checkin later than CheckOut', () => {
     // TODO: fix the bug api_createBooking_POST_CheckInMoreThanCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/27
     it('RestfulBooker.CreateBooking.POST: Then the Apartments are booked', () => {
@@ -302,8 +313,8 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
-  context('RestfulBooker.GetBookingIds.GET: When search for all bookings created', () => {
-    it('RestfulBooker.GetBookingIds.GET: Then all unique booking IDs are got', () => {
+  context('RestfulBooker.GetBookingIds.GET: When search for all bookings', () => {
+    it('RestfulBooker.GetBookingIds.GET: Then all unique booking IDs are found', () => {
       cy.getBookingIds_GET().then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.be.an('array');
@@ -329,33 +340,48 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
+  context('RestfulBooker.GetBooking.GET: When search for booking by non-existing bookingId', () => {
+    it('RestfulBooker.GetBooking.GET: Then the error is displayed', () => {
+      cy.getBooking_GET(0, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq(apiBooking.errors.notFound);
+      });
+    });
+  });
+
   context('RestfulBooker.GetBookingIds.GET: When search for all bookings by firstname', () => {
-    it('RestfulBooker.GetBookingIds.GET: Then all IDs with such firstname are got', () => {
+    it('RestfulBooker.GetBookingIds.GET: Then all IDs with such firstname are found', () => {
       cy.getBookingIds_GET({ firstname: createdBooking.booking.firstname }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.be.an('array');
         expect(response.body.length).to.be.greaterThan(0);
         const ids = response.body.map((b) => b.bookingid);
         expect(ids).to.include(createdBooking.bookingid);
+        cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+          expect(response.body.firstname).to.eq(createdBooking.booking.firstname);
+        });
       });
     });
   });
 
   context('RestfulBooker.GetBookingIds.GET: When search for all bookings by lastname', () => {
-    it('RestfulBooker.GetBookingIds.GET: Then all IDs with such lastname are got', () => {
+    it('RestfulBooker.GetBookingIds.GET: Then all IDs with such lastname are found', () => {
       cy.getBookingIds_GET({ lastname: createdBooking.booking.lastname }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.be.an('array');
         expect(response.body.length).to.be.greaterThan(0);
         const ids = response.body.map((b) => b.bookingid);
         expect(ids).to.include(createdBooking.bookingid);
+        cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+          expect(response.body.lastname).to.eq(createdBooking.booking.lastname);
+        });
       });
     });
   });
 
   context('RestfulBooker.GetBookingIds.GET: When search for all bookings by checkin', () => {
     // TODO: fix the bug api_getBookingIds_GET_searchByCheckin: https://github.com/NatalliaSavitskaya/Cypress/issues/29
-    it.skip('RestfulBooker.GetBookingIds.GET: Then all IDs with later or equal checkin value are got', () => {
+    it.skip('RestfulBooker.GetBookingIds.GET: Then all IDs with later or equal checkin value are found', () => {
       cy.getBookingIds_GET({ checkin: createdBooking.booking.bookingdates.checkin }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.be.an('array');
@@ -530,7 +556,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
   context('RestfulBooker.UpdateBooking.PATCH: When update the Firstname with invalid datatype value', () => {
     // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in Firstname', () => {
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: testData.invalidTypeFirstnameBooking.firstname}).then((response) => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { firstname: testData.invalidTypeFirstnameBooking.firstname }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.firstname).to.eq(testData.invalidTypeFirstnameBooking.firstname);
       });
@@ -582,12 +608,12 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
   context('RestfulBooker.UpdateBooking.PATCH: When update the BookingDates with invalid datatype value', () => {
     // TODO: fix the bug api_updateBooking_PATCH_invalidFirstnameDataTypeValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/39
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with 1970-01-01 value in BookingDates', () => {
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
-        {
-          bookingdates: {
-            checkin: testData.invalidTypeCheckinBooking.bookingdates.checkin,
-            checkout: testData.invalidTypeCheckoutBooking.bookingdates.checkout
-          }}).then((response) => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, {
+        bookingdates: {
+          checkin: testData.invalidTypeCheckinBooking.bookingdates.checkin,
+          checkout: testData.invalidTypeCheckoutBooking.bookingdates.checkout,
+        },
+      }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.bookingdates.checkin).to.eq('1970-01-01');
         expect(response.body.bookingdates.checkout).to.eq('1970-01-01');
@@ -612,15 +638,27 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
+  context('RestfulBooker.UpdateBooking.PATCH: When update booking with negative number in TotalPrice', () => {
+    it('RestfulBooker.CreateBooking.POST: Then the booking is updated with the negative price', () => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, { totalprice: testData.negativeTotalPriceBooking.totalprice }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.totalprice).to.eq(testData.negativeTotalPriceBooking.totalprice);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.totalprice).to.eq(testData.negativeTotalPriceBooking.totalprice);
+      });
+    });
+  });
+
   context('RestfulBooker.UpdateBooking.PATCH: When update checkin to the value that is later than checkout', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInMoreThanCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/50
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with new values in BookingDates', () => {
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
-        {
-          bookingdates: {
-            checkin: testData.checkInMoreThanCheckOutBooking.bookingdates.checkin,
-            checkout: testData.checkInMoreThanCheckOutBooking.bookingdates.checkout
-          }}).then((response) => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, {
+        bookingdates: {
+          checkin: testData.checkInMoreThanCheckOutBooking.bookingdates.checkin,
+          checkout: testData.checkInMoreThanCheckOutBooking.bookingdates.checkout,
+        },
+      }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
@@ -635,12 +673,12 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
   context('RestfulBooker.UpdateBooking.PATCH: When update checkin to the value in the past', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInInThePastValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/49
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with new values in BookingDates', () => {
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
-        {
-          bookingdates: {
-            checkin: testData.checkInInThePastBooking.bookingdates.checkin,
-            checkout: testData.checkInInThePastBooking.bookingdates.checkout
-          }}).then((response) => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, {
+        bookingdates: {
+          checkin: testData.checkInInThePastBooking.bookingdates.checkin,
+          checkout: testData.checkInInThePastBooking.bookingdates.checkout,
+        },
+      }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
@@ -655,12 +693,12 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
   context('RestfulBooker.UpdateBooking.PATCH: When update checkin to the value equal to checkout', () => {
     // TODO: fix the bug api_updateBooking_PATCH_checkInEqualCheckOutValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/51
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with new values in BookingDates', () => {
-      cy.partialUpdateBooking_PATCH(createdBooking.bookingid,
-        {
-          bookingdates: {
-            checkin: testData.checkInEqualCheckOutBooking.bookingdates.checkin,
-            checkout: testData.checkInEqualCheckOutBooking.bookingdates.checkout
-          }}).then((response) => {
+      cy.partialUpdateBooking_PATCH(createdBooking.bookingid, {
+        bookingdates: {
+          checkin: testData.checkInEqualCheckOutBooking.bookingdates.checkin,
+          checkout: testData.checkInEqualCheckOutBooking.bookingdates.checkout,
+        },
+      }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
@@ -672,14 +710,255 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
-  context('RestfulBooker.DeleteBooking.DELETE: When delete existing booking', () => {
-    it('RestfulBooker.DeleteBooking.DELETE: Then the selected booking is deleted', () => {
-      cy.deleteBooking_DELETE(createdBooking.bookingid).then((response) => {
-        expect(response.status).to.eq(201);
-        expect(response.body).to.eq("Created");
+  context('RestfulBooker.UpdateBooking.PUT: When update all the parameters in booking with valid values', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the values', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.updatedValidBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.updatedValidBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body).to.deep.equal(testData.updatedValidBooking);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body).to.deep.equal(testData.updatedValidBooking);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave the Firstname empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the values', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyFirstnameBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyFirstnameBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body).to.deep.equal(testData.emptyFirstnameBooking);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body).to.deep.equal(testData.emptyFirstnameBooking);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave the Lastname empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the values', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyLastnameBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyLastnameBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body).to.deep.equal(testData.emptyLastnameBooking);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body).to.deep.equal(testData.emptyLastnameBooking);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave the TotalPrice empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the new values and null in TotalPrice', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyTotalPriceBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyTotalPriceBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.emptyTotalPriceBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyTotalPriceBooking.lastname);
+        expect(response.body.totalprice).is.null;
+        expect(response.body.depositpaid).to.eq(testData.emptyTotalPriceBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(testData.emptyTotalPriceBooking.additionalneeds);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq(testData.emptyTotalPriceBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyTotalPriceBooking.lastname);
+        expect(response.body.totalprice).is.null;
+        expect(response.body.depositpaid).to.eq(testData.emptyTotalPriceBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(testData.emptyTotalPriceBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave DepositPaid empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the new values and false DepositPaid', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyDepositPaid).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyDepositPaid, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.emptyDepositPaid.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyDepositPaid.lastname);
+        expect(response.body.totalprice).to.eq(testData.emptyDepositPaid.totalprice);
+        expect(response.body.depositpaid).to.eq(false);
+        expect(response.body.bookingdates.checkin).to.eq(testData.emptyDepositPaid.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.emptyDepositPaid.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(testData.emptyDepositPaid.additionalneeds);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq(testData.emptyDepositPaid.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyDepositPaid.lastname);
+        expect(response.body.totalprice).to.eq(testData.emptyDepositPaid.totalprice);
+        expect(response.body.depositpaid).to.eq(false);
+        expect(response.body.bookingdates.checkin).to.eq(testData.emptyDepositPaid.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.emptyDepositPaid.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(testData.emptyDepositPaid.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave CheckIn empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the new values and "0NaN-aN-aN" value in CheckIn', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyCheckinBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyCheckinBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.emptyCheckinBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyCheckinBooking.lastname);
+        expect(response.body.totalprice).to.eq(testData.emptyCheckinBooking.totalprice);
+        expect(response.body.depositpaid).to.eq(testData.emptyCheckinBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq('0NaN-aN-aN');
+        expect(response.body.bookingdates.checkout).to.eq(testData.emptyCheckinBooking.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(testData.emptyCheckinBooking.additionalneeds);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq(testData.emptyCheckinBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyCheckinBooking.lastname);
+        expect(response.body.totalprice).to.eq(testData.emptyCheckinBooking.totalprice);
+        expect(response.body.depositpaid).to.eq(testData.emptyCheckinBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq('0NaN-aN-aN');
+        expect(response.body.bookingdates.checkout).to.eq(testData.emptyCheckinBooking.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(testData.emptyCheckinBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave CheckOut empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the new values and "0NaN-aN-aN" value in CheckOut', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyCheckoutBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyCheckoutBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.emptyCheckoutBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyCheckoutBooking.lastname);
+        expect(response.body.totalprice).to.eq(testData.emptyCheckoutBooking.totalprice);
+        expect(response.body.depositpaid).to.eq(testData.emptyCheckoutBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq(testData.emptyCheckoutBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq('0NaN-aN-aN');
+        expect(response.body.additionalneeds).to.eq(testData.emptyCheckoutBooking.additionalneeds);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body.firstname).to.eq(testData.emptyCheckoutBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.emptyCheckoutBooking.lastname);
+        expect(response.body.totalprice).to.eq(testData.emptyCheckoutBooking.totalprice);
+        expect(response.body.depositpaid).to.eq(testData.emptyCheckoutBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq(testData.emptyCheckoutBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq('0NaN-aN-aN');
+        expect(response.body.additionalneeds).to.eq(testData.emptyCheckoutBooking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with valid parameters but leave AdditionalNeeds empty', () => {
+    it('RestfulBooker.UpdateBooking.PUT:  Then the booking is updated with the new values and empty AdditionalNeeds', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.emptyAdditionalNeedsBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyAdditionalNeedsBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body).to.deep.equal(testData.emptyAdditionalNeedsBooking);
+      });
+      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
+        expect(response.body).to.deep.equal(testData.emptyAdditionalNeedsBooking);
       });
     });
   });
 
 
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no Firstname', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the error message is displayed', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noFirstnameBooking, { failOnStatusCode: false }).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noFirstnameBooking, null, 2)}`);
+        expect(response.status).to.eq(400);
+        expect(response.body).to.equal(apiBooking.errors.badRequest);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no Lastname', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the error message is displayed', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noLastnameBooking, { failOnStatusCode: false }).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noLastnameBooking, null, 2)}`);
+        expect(response.status).to.eq(400);
+        expect(response.body).to.equal(apiBooking.errors.badRequest);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no TotalPrice', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the error message is displayed', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noTotalPriceBooking, { failOnStatusCode: false }).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noTotalPriceBooking, null, 2)}`);
+        expect(response.status).to.eq(400);
+        expect(response.body).to.equal(apiBooking.errors.badRequest);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no DepositPaid', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the error message is displayed', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noDepositPaid, { failOnStatusCode: false }).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noDepositPaid, null, 2)}`);
+        expect(response.status).to.eq(400);
+        expect(response.body).to.equal(apiBooking.errors.badRequest);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no Checkin', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the error message is displayed', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noCheckinBooking, { failOnStatusCode: false }).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noCheckinBooking, null, 2)}`);
+        expect(response.status).to.eq(400);
+        expect(response.body).to.equal(apiBooking.errors.badRequest);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no Checkout', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the error message is displayed', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noCheckoutBooking, { failOnStatusCode: false }).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noCheckoutBooking, null, 2)}`);
+        expect(response.status).to.eq(400);
+        expect(response.body).to.equal(apiBooking.errors.badRequest);
+      });
+    });
+  });
+
+  context('RestfulBooker.UpdateBooking.PUT: When update the booking with invalid parameters - no AdditionalNeeds', () => {
+    it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with new values for all parameters except AdditionalNeeds', () => {
+      cy.updateBooking_PUT(createdBooking.bookingid, testData.noAdditionalNeedsBooking).then((response) => {
+        cy.log(`Data for updating the booking:  ${JSON.stringify(testData.noAdditionalNeedsBooking, null, 2)}`);
+        expect(response.status).to.eq(200);
+        expect(response.body.firstname).to.eq(testData.noAdditionalNeedsBooking.firstname);
+        expect(response.body.lastname).to.eq(testData.noAdditionalNeedsBooking.lastname);
+        expect(response.body.totalprice).to.eq(testData.noAdditionalNeedsBooking.totalprice);
+        expect(response.body.depositpaid).to.eq(testData.noAdditionalNeedsBooking.depositpaid);
+        expect(response.body.bookingdates.checkin).to.eq(testData.noAdditionalNeedsBooking.bookingdates.checkin);
+        expect(response.body.bookingdates.checkout).to.eq(testData.noAdditionalNeedsBooking.bookingdates.checkout);
+        expect(response.body.additionalneeds).to.eq(createdBooking.booking.additionalneeds);
+      });
+    });
+  });
+
+  context('RestfulBooker.DeleteBooking.DELETE: When delete existing booking', () => {
+    // TODO: fix the bug api_deleteBooking_DLETE_correctResponceStatusCode: https://github.com/NatalliaSavitskaya/Cypress/issues/52
+    it('RestfulBooker.DeleteBooking.DELETE: Then the selected booking is deleted', () => {
+      cy.deleteBooking_DELETE(createdBooking.bookingid).then((response) => {
+        expect(response.status).to.eq(201);
+        expect(response.body).to.eq('Created');
+      });
+      cy.getBooking_GET(createdBooking.bookingid, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq(apiBooking.errors.notFound);
+      });
+    });
+  });
+
+  context('RestfulBooker.DeleteBooking.DELETE: When delete existing booking', () => {
+    it('RestfulBooker.DeleteBooking.DELETE: Then the error is displayed', () => {
+      cy.deleteBooking_DELETE(0, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(405);
+        expect(response.body).to.eq(apiBooking.errors.methodNotAllowed);
+      });
+    });
+  });
 });

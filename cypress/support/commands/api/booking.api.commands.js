@@ -34,7 +34,6 @@ Cypress.Commands.add('getBooking_GET', (id, restOptions = {}) => {
 Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restOptions = {}) => {
   return cy.createToken_POST({ }).then((response) => {
     const token = response.body.token;
-    cy.log('Token: ' + token);
 
     return cy.request({
       method: 'PATCH',
@@ -50,10 +49,27 @@ Cypress.Commands.add('partialUpdateBooking_PATCH', (id, updatedParameters, restO
   });
 });
 
+Cypress.Commands.add('updateBooking_PUT', (id, updatedParameters, restOptions = {}) => {
+  return cy.createToken_POST({ }).then((response) => {
+    const token = response.body.token;
+
+    return cy.request({
+      method: 'PUT',
+      url: `${urls.apiUrls.booking}${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cookie': `token=${token}`,
+      },
+      body: updatedParameters,
+      ...restOptions,
+    });
+  });
+});
+
 Cypress.Commands.add('deleteBooking_DELETE', (id, restOptions = {}) => {
   return cy.createToken_POST({  }).then((response) => {
     const token = response.body.token;
-    cy.log('Token: ' + token);
 
     return cy.request({
       method: 'DELETE',
