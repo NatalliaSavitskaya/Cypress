@@ -78,7 +78,13 @@
       "notFound": "Not Found",
       "forbidden": "Forbidden",
       "methodNotAllowed": "Method Not Allowed",
-      "badRequest": "Bad Request"
+      "badRequest": "Bad Request",
+      "badCredentials": "Bad credentials"
+    },
+    "defaultValues": {
+      "defaultDate": "1970-01-01",
+      "noneDate": "0NaN-aN-aN"
+
     }
   }
 }
