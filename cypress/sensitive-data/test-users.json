@@ -22,5 +22,9 @@
   "VisualUser": {
     "username": "visual_user",
     "password": "secret_sauce"
+  },
+  "AdminUser" : {
+    "username": "admin",
+    "password": "password123"
   }
 }
