@@ -1,7 +1,7 @@
 import { text } from './requirements';
 
 export function generateRandomText(length) {
-  let result = '';
+  let result = 'Test';
   const symbols = text.allowedSymbols;
   for (let i = 0; i < length; i++) {
     let randomIndex = Math.floor(Math.random() * symbols.length);

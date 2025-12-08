@@ -465,9 +465,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.firstname).to.eq(testData.updatedValidBooking.firstname);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.firstname).to.eq(testData.updatedValidBooking.firstname);
-      });
     });
   });
 
@@ -478,9 +475,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.lastname).to.eq(testData.updatedValidBooking.lastname);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.lastname).to.eq(testData.updatedValidBooking.lastname);
-      });
     });
   });
 
@@ -489,9 +483,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { totalprice: testData.updatedValidBooking.totalprice }).then((response) => {
         cy.log(`Updated TotalPrice from **${testData.validBooking.totalprice}** to **${testData.updatedValidBooking.totalprice}**`);
         expect(response.status).to.eq(200);
-        expect(response.body.totalprice).to.eq(testData.updatedValidBooking.totalprice);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.totalprice).to.eq(testData.updatedValidBooking.totalprice);
       });
     });
@@ -506,10 +497,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkin).to.eq(testData.updatedValidBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.updatedValidBooking.bookingdates.checkout);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.bookingdates.checkin).to.eq(testData.updatedValidBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.updatedValidBooking.bookingdates.checkout);
-      });
     });
   });
 
@@ -518,9 +505,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { additionalneeds: testData.updatedValidBooking.additionalneeds }).then((response) => {
         cy.log(`Updated AdditionalNeeds from **${testData.validBooking.additionalneeds}** to **${testData.updatedValidBooking.additionalneeds}**`);
         expect(response.status).to.eq(200);
-        expect(response.body.additionalneeds).to.eq(testData.updatedValidBooking.additionalneeds);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.additionalneeds).to.eq(testData.updatedValidBooking.additionalneeds);
       });
     });
@@ -533,9 +517,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.firstname).to.eq('');
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.firstname).to.eq('');
-      });
     });
   });
 
@@ -544,9 +525,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the empty value in Lastname', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { lastname: '' }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.lastname).to.eq('');
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.lastname).to.eq('');
       });
     });
@@ -559,9 +537,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.totalprice).to.be.null;
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.totalprice).to.be.null;
-      });
     });
   });
 
@@ -570,9 +545,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with false value in DepositPaid', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { depositpaid: '' }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.depositpaid).to.eq(false);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.depositpaid).to.eq(false);
       });
     });
@@ -586,10 +558,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.noneDate);
         expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.noneDate);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.noneDate);
-        expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.noneDate);
-      });
     });
   });
 
@@ -598,9 +566,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the empty value in AdditionalNeeds', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { additionalneeds: '' }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.additionalneeds).to.eq('');
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.additionalneeds).to.eq('');
       });
     });
@@ -613,9 +578,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.firstname).to.eq(testData.invalidTypeFirstnameBooking.firstname);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.firstname).to.eq(testData.invalidTypeFirstnameBooking.firstname);
-      });
     });
   });
 
@@ -624,9 +586,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in Lastname', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { lastname: testData.invalidTypeLastnameBooking.lastname }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.lastname).to.eq(testData.invalidTypeLastnameBooking.lastname);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.lastname).to.eq(testData.invalidTypeLastnameBooking.lastname);
       });
     });
@@ -639,9 +598,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.totalprice).to.be.null;
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.totalprice).to.be.null;
-      });
     });
   });
 
@@ -650,9 +606,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with true value in DepositPaid', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { depositpaid: testData.invalidTypeDepositPaid.depositpaid }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.depositpaid).to.eq(true);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.depositpaid).to.eq(true);
       });
     });
@@ -671,10 +624,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.defaultDate);
         expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.defaultDate);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.defaultDate);
-        expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.defaultDate);
-      });
     });
   });
 
@@ -685,9 +634,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.additionalneeds).to.eq(testData.invalidTypeAdditionalNeedsBooking.additionalneeds);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.additionalneeds).to.eq(testData.invalidTypeAdditionalNeedsBooking.additionalneeds);
-      });
     });
   });
 
@@ -695,9 +641,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the negative price', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { totalprice: testData.negativeTotalPriceBooking.totalprice }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.totalprice).to.eq(testData.negativeTotalPriceBooking.totalprice);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.totalprice).to.eq(testData.negativeTotalPriceBooking.totalprice);
       });
     });
@@ -713,10 +656,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         },
       }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
       });
@@ -736,10 +675,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
-      });
     });
   });
 
@@ -753,10 +688,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         },
       }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
       });
@@ -788,9 +719,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body).to.deep.equal(testData.updatedValidBooking);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body).to.deep.equal(testData.updatedValidBooking);
-      });
     });
   });
 
@@ -799,9 +727,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.emptyFirstnameBooking).then((response) => {
         cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyFirstnameBooking, null, 2)}`);
         expect(response.status).to.eq(200);
-        expect(response.body).to.deep.equal(testData.emptyFirstnameBooking);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body).to.deep.equal(testData.emptyFirstnameBooking);
       });
     });
@@ -814,9 +739,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body).to.deep.equal(testData.emptyLastnameBooking);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body).to.deep.equal(testData.emptyLastnameBooking);
-      });
     });
   });
 
@@ -825,15 +747,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.emptyTotalPriceBooking).then((response) => {
         cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyTotalPriceBooking, null, 2)}`);
         expect(response.status).to.eq(200);
-        expect(response.body.firstname).to.eq(testData.emptyTotalPriceBooking.firstname);
-        expect(response.body.lastname).to.eq(testData.emptyTotalPriceBooking.lastname);
-        expect(response.body.totalprice).is.null;
-        expect(response.body.depositpaid).to.eq(testData.emptyTotalPriceBooking.depositpaid);
-        expect(response.body.bookingdates.checkin).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.emptyTotalPriceBooking.bookingdates.checkout);
-        expect(response.body.additionalneeds).to.eq(testData.emptyTotalPriceBooking.additionalneeds);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.firstname).to.eq(testData.emptyTotalPriceBooking.firstname);
         expect(response.body.lastname).to.eq(testData.emptyTotalPriceBooking.lastname);
         expect(response.body.totalprice).is.null;
@@ -858,15 +771,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkout).to.eq(testData.emptyDepositPaid.bookingdates.checkout);
         expect(response.body.additionalneeds).to.eq(testData.emptyDepositPaid.additionalneeds);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.firstname).to.eq(testData.emptyDepositPaid.firstname);
-        expect(response.body.lastname).to.eq(testData.emptyDepositPaid.lastname);
-        expect(response.body.totalprice).to.eq(testData.emptyDepositPaid.totalprice);
-        expect(response.body.depositpaid).to.eq(false);
-        expect(response.body.bookingdates.checkin).to.eq(testData.emptyDepositPaid.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.emptyDepositPaid.bookingdates.checkout);
-        expect(response.body.additionalneeds).to.eq(testData.emptyDepositPaid.additionalneeds);
-      });
     });
   });
 
@@ -875,15 +779,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.emptyCheckinBooking).then((response) => {
         cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyCheckinBooking, null, 2)}`);
         expect(response.status).to.eq(200);
-        expect(response.body.firstname).to.eq(testData.emptyCheckinBooking.firstname);
-        expect(response.body.lastname).to.eq(testData.emptyCheckinBooking.lastname);
-        expect(response.body.totalprice).to.eq(testData.emptyCheckinBooking.totalprice);
-        expect(response.body.depositpaid).to.eq(testData.emptyCheckinBooking.depositpaid);
-        expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.noneDate);
-        expect(response.body.bookingdates.checkout).to.eq(testData.emptyCheckinBooking.bookingdates.checkout);
-        expect(response.body.additionalneeds).to.eq(testData.emptyCheckinBooking.additionalneeds);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.firstname).to.eq(testData.emptyCheckinBooking.firstname);
         expect(response.body.lastname).to.eq(testData.emptyCheckinBooking.lastname);
         expect(response.body.totalprice).to.eq(testData.emptyCheckinBooking.totalprice);
@@ -908,15 +803,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.noneDate);
         expect(response.body.additionalneeds).to.eq(testData.emptyCheckoutBooking.additionalneeds);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.firstname).to.eq(testData.emptyCheckoutBooking.firstname);
-        expect(response.body.lastname).to.eq(testData.emptyCheckoutBooking.lastname);
-        expect(response.body.totalprice).to.eq(testData.emptyCheckoutBooking.totalprice);
-        expect(response.body.depositpaid).to.eq(testData.emptyCheckoutBooking.depositpaid);
-        expect(response.body.bookingdates.checkin).to.eq(testData.emptyCheckoutBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.noneDate);
-        expect(response.body.additionalneeds).to.eq(testData.emptyCheckoutBooking.additionalneeds);
-      });
     });
   });
 
@@ -925,9 +811,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.emptyAdditionalNeedsBooking).then((response) => {
         cy.log(`Data for updating the booking:  ${JSON.stringify(testData.emptyAdditionalNeedsBooking, null, 2)}`);
         expect(response.status).to.eq(200);
-        expect(response.body).to.deep.equal(testData.emptyAdditionalNeedsBooking);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body).to.deep.equal(testData.emptyAdditionalNeedsBooking);
       });
     });
@@ -1034,9 +917,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.totalprice).to.be.null;
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.totalprice).to.be.null;
-      });
     });
   });
 
@@ -1045,9 +925,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with true value in DepositPaid', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.invalidTypeDepositPaid).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.depositpaid).to.eq(true);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.depositpaid).to.eq(true);
       });
     });
@@ -1060,9 +937,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.defaultDate);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.bookingdates.checkin).to.eq(apiBooking.defaultValues.defaultDate);
-      });
     });
   });
 
@@ -1071,9 +945,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with 1970-01-01 value in Checkout', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.invalidTypeCheckoutBooking).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.defaultDate);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.bookingdates.checkout).to.eq(apiBooking.defaultValues.defaultDate);
       });
     });
@@ -1086,9 +957,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(200);
         expect(response.body.additionalneeds).to.eq(testData.invalidTypeAdditionalNeedsBooking.additionalneeds);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.additionalneeds).to.eq(testData.invalidTypeAdditionalNeedsBooking.additionalneeds);
-      });
     });
   });
 
@@ -1096,9 +964,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with the negative price', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.negativeTotalPriceBooking).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.totalprice).to.eq(testData.negativeTotalPriceBooking.totalprice);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.totalprice).to.eq(testData.negativeTotalPriceBooking.totalprice);
       });
     });
@@ -1109,10 +974,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with new values in BookingDates', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.checkInMoreThanCheckOutBooking).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInMoreThanCheckOutBooking.bookingdates.checkout);
       });
@@ -1127,10 +988,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
       });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
-        expect(response.body.bookingdates.checkin).to.eq(testData.checkInInThePastBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.checkInInThePastBooking.bookingdates.checkout);
-      });
     });
   });
 
@@ -1139,10 +996,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PUT: Then the booking is updated with new values in BookingDates', () => {
       cy.updateBooking_PUT(authToken, createdBooking.bookingid, testData.checkInEqualCheckOutBooking).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
-        expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
-      });
-      cy.getBooking_GET(createdBooking.bookingid).then((response) => {
         expect(response.body.bookingdates.checkin).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.checkInEqualCheckOutBooking.bookingdates.checkout);
       });
@@ -1182,10 +1035,6 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
       cy.deleteBooking_DELETE(authToken, createdBooking.bookingid).then((response) => {
         expect(response.status).to.eq(201);
         expect(response.body).to.eq('Created');
-      });
-      cy.getBooking_GET(createdBooking.bookingid, { failOnStatusCode: false }).then((response) => {
-        expect(response.status).to.eq(404);
-        expect(response.body).to.eq(apiBooking.errors.notFound);
       });
     });
   });
