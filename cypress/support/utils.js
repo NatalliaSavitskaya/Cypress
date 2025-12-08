@@ -24,8 +24,8 @@ export function generateBooleanValue() {
 
 export function generateDateInRange(daysFromTodayMin, daysFromTodayMax){
   const todayDate = new Date();
-  const randomOffset = Math.floor(Math.random() * daysFromTodayMax) + daysFromTodayMin;
+  const randomOffset = Math.floor(Math.random() * (daysFromTodayMax - daysFromTodayMin + 1)) + daysFromTodayMin;
   const randomDate = new Date(todayDate.getTime() + randomOffset * 24 * 60 * 60 * 1000);
   const formatDate = (date) => date.toISOString().split('T')[0];
-  return formatDate(randomDate)
+  return formatDate(randomDate);
 }

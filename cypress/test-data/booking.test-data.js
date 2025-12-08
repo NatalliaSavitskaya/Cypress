@@ -64,7 +64,7 @@ export const testData = {
   emptyDepositPaid: {
     firstname: generateRandomText(10),
     lastname: generateRandomText(10),
-    totalprice: generateNumber(1,500),
+    totalprice: generateNumber(1, 500),
     depositpaid: '',
     bookingdates: {
       checkin: generateDateInRange(1, 5),
@@ -145,7 +145,7 @@ export const testData = {
   noDepositPaid: {
     firstname: generateRandomText(10),
     lastname: generateRandomText(10),
-    totalprice: generateNumber(1,500),
+    totalprice: generateNumber(1, 500),
     bookingdates: {
       checkin: generateDateInRange(1, 5),
       checkout: generateDateInRange(6, 10),
@@ -225,8 +225,8 @@ export const testData = {
   invalidTypeDepositPaid: {
     firstname: generateRandomText(10),
     lastname: generateRandomText(10),
-    totalprice: generateNumber(1,500),
-    depositpaid: generateNumber(1,500),
+    totalprice: generateNumber(1, 500),
+    depositpaid: generateNumber(1, 500),
     bookingdates: {
       checkin: generateDateInRange(1, 5),
       checkout: generateDateInRange(6, 10),
@@ -288,7 +288,7 @@ export const testData = {
     totalprice: generateNumber(1, 500),
     depositpaid: generateBooleanValue(),
     bookingdates: {
-      checkin: generateDateInRange(6, 5),
+      checkin: generateDateInRange(6, 10),
       checkout: generateDateInRange(1, 5),
     },
     additionalneeds: generateAdditionalNeeds(),

@@ -17,8 +17,8 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     cleanUp(idsForCleanUp);
   });
 
-  context('RestfulBooker.Auth.GET: When valid credentials are provided', () => {
-    it('RestfulBooker.Auth.GET: Then authentication token is generated', () => {
+  context('RestfulBooker.Auth.POST: When valid credentials are provided', () => {
+    it('RestfulBooker.Auth.POST: Then authentication token is generated', () => {
       cy.createToken_POST(AdminUser).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.have.property('token');
@@ -29,9 +29,9 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     });
   });
 
-  context('RestfulBooker.Auth.GET: When invalid credentials are provided', () => {
-    //TODO: fix the bug api_auth_GET_failedAuthenticationStatusCode: https://github.com/NatalliaSavitskaya/Cypress/issues/55
-    it('RestfulBooker.Auth.GET: Then the error message is displayed', () => {
+  context('RestfulBooker.Auth.POST: When invalid credentials are provided', () => {
+    //TODO: fix the bug api_auth_POST_failedAuthenticationStatusCode: https://github.com/NatalliaSavitskaya/Cypress/issues/55
+    it('RestfulBooker.Auth.POST: Then the error message is displayed', () => {
       cy.createToken_POST(StandardUser).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.have.property('reason');
@@ -501,7 +501,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
     it('RestfulBooker.UpdateBooking.PATCH: Then the booking is updated with the new value in BookingDates', () => {
       cy.partialUpdateBooking_PATCH(authToken, createdBooking.bookingid, { bookingdates: testData.updatedValidBooking.bookingdates }).then((response) => {
         cy.log(`Updated BookingDates from **${testData.validBooking.bookingdates.checkin}**, **${testData.validBooking.bookingdates.checkout}**
-         to **${testData.updatedValidBooking.bookingdates.checkin}**? **${testData.updatedValidBooking.bookingdates.checkout}**`);
+         to **${testData.updatedValidBooking.bookingdates.checkin}**, **${testData.updatedValidBooking.bookingdates.checkout}**`);
         expect(response.status).to.eq(200);
         expect(response.body.bookingdates.checkin).to.eq(testData.updatedValidBooking.bookingdates.checkin);
         expect(response.body.bookingdates.checkout).to.eq(testData.updatedValidBooking.bookingdates.checkout);
@@ -1177,7 +1177,7 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
   });
 
   context('RestfulBooker.DeleteBooking.DELETE: When delete existing booking', () => {
-    // TODO: fix the bug api_deleteBooking_DLETE_correctResponceStatusCode: https://github.com/NatalliaSavitskaya/Cypress/issues/52
+    // TODO: fix the bug api_deleteBooking_DELETE_correctResponseStatusCode: https://github.com/NatalliaSavitskaya/Cypress/issues/52
     it('RestfulBooker.DeleteBooking.DELETE: Then the selected booking is deleted', () => {
       cy.deleteBooking_DELETE(authToken, createdBooking.bookingid).then((response) => {
         expect(response.status).to.eq(201);
