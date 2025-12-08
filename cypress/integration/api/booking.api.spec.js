@@ -1036,6 +1036,10 @@ describe('RestfulBooker.Booking: Given No preconditions', () => {
         expect(response.status).to.eq(201);
         expect(response.body).to.eq('Created');
       });
+      cy.getBooking_GET(createdBooking.bookingid, { failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq(apiBooking.errors.notFound);
+      });
     });
   });
 
