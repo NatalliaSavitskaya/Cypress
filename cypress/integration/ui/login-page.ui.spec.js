@@ -1,8 +1,5 @@
 import requirements from '../../support/requirements.js';
-<<<<<<< HEAD
-import { genRandomText } from '../../support/utils';
-=======
->>>>>>> 2b589905c50ef1cc774925dc6781ae8062faf2ca
+import { generateRandomText } from '../../support/utils';
 
 describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
   before(() => {
@@ -76,14 +73,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
     // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
-<<<<<<< HEAD
-      let randomText = genRandomText();
+      let randomText = generateRandomText(5);
       cy.get(loginPage.username).type(randomText, { delay: 0 });
-=======
-      cy.getRandomText().then((randomText) => {
-        cy.get(loginPage.username).type(randomText, { delay: 0 });
-      });
->>>>>>> 2b589905c50ef1cc774925dc6781ae8062faf2ca
       cy.get(loginPage.password).type(users.StandardUser.password, { delay: 0 });
       cy.then(() => {
         cy.get(loginPage.login).click();
@@ -119,14 +110,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     // TODO: fix the bug loginPage_errorMessageValidation: https://github.com/NatalliaSavitskaya/Cypress/issues/16#issue-3300384795
     before(() => {
       cy.get(loginPage.username).type(users.StandardUser.username, { delay: 0 });
-<<<<<<< HEAD
-      let randomText = genRandomText();
+      let randomText = generateRandomText(5);
       cy.get(loginPage.password).type(randomText, { delay: 0 });
-=======
-      cy.getRandomText().then((randomText) => {
-        cy.get(loginPage.password).type(randomText, { delay: 0 });
-      });
->>>>>>> 2b589905c50ef1cc774925dc6781ae8062faf2ca
       cy.then(() => {
         cy.get(loginPage.login).click();
       });
@@ -248,14 +233,8 @@ describe('LoginPage: Given Login page opened', { testIsolation: false }, () => {
     // TODO: fix the bug loginPage_invalidFieldFrame: https://github.com/NatalliaSavitskaya/Cypress/issues/5#issue-3300161126
     before(() => {
       cy.get(loginPage.username).type(users.LockedUser.username, { delay: 0 });
-<<<<<<< HEAD
-      let randomText = genRandomText();
+      let randomText = generateRandomText(5);
       cy.get(loginPage.password).type(randomText, { delay: 0 });
-=======
-      cy.getRandomText().then((randomText) => {
-        cy.get(loginPage.password).type(randomText, { delay: 0 });
-      });
->>>>>>> 2b589905c50ef1cc774925dc6781ae8062faf2ca
       cy.then(() => {
         cy.get(loginPage.login).click();
       });
